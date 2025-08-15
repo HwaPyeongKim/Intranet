@@ -2,18 +2,16 @@
 <%@ include file="../header.jsp" %>
 
 <section id="login">
-    <form method="post" action="login" class="form">
+    <form method="post" action="login" class="form shadow">
         <h2>로그인</h2>
         <div class="field">
-            <label for="userid">아이디</label>
             <div>
-                <input type="text" name="userid" id="userid" value="${dto.userid}" />
+                <input type="text" name="userid" id="userid" value="${dto.userid}" placeholder="아이디" />
             </div>
         </div>
         <div class="field">
-            <label for="pwd">패스워드</label>
             <div>
-                <input type="password" name="pwd" id="pwd" />
+                <input type="password" name="pwd" id="pwd" placeholder="패스워드" />
             </div>
         </div>
         <p class="notice">${msg}</p>

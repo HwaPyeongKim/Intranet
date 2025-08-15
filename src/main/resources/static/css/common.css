@@ -1,21 +1,27 @@
-input[type=button], input[type=submit], button {padding: 25px; border: 1px solid #32a2c6; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold; cursor: pointer;}
+input[type=button], input[type=submit], button {padding: 25px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold; cursor: pointer;}
 
-input[type=text], input[type=password], input[type=email] {padding: 5px;}
+input[type=text], input[type=password], input[type=email] {padding: 5px; border: 0; border-bottom: 1px solid #000; outline: 0;}
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {border-bottom: 2px solid #50bde2;}
 
 #wrap {width: 100%; max-width:1200px; margin: 0 auto;}
-h2 {margin: 30px 0; font-size: 2em;}
+h2 {margin: 10px 0 30px; font-size: 2em;}
 
 .main_color {color: #50bde2;}
 .sub_color {color: #fff;}
 p.notice {color: #f00;}
+.shadow {box-shadow: 3px 3px 10px #999;}
 
 .field {display: flex; margin: 10px 0;}
 .field label {flex: 1; line-height: 40px;}
 .field div {flex: 5;}
 .field div input {width: 100%; height: 40px;}
-.btns {display: flex;}
-.btns input, .btns button, .btns a {flex: 1; margin-right: 5px;}
+.field div #imgPrev {margin-bottom: 10px;}
+.field div #imgPrev img {max-width: 500px;}
+
+.btns {display: flex; margin-top: 30px;}
+.btns input, .btns button, .btns a {flex: 1; margin-right: 10px;}
 .btns input:last-child, .btns button:last-child, .btns a:last-child {margin-right: 0;}
+
 
 div.table {border: 1px solid #000; margin: 30px 0;}
 div.table > div.row {display: flex; justify-content: space-between; border-bottom: 1px solid #000;}

@@ -1,2 +1,5 @@
 section#login {display: flex; align-items: center; justify-content: center; height: 100vh;}
-section#login form {width: 100%; max-width: 400px; border: 1px solid #000; padding: 20px;}
+section#login form {width: 100%; max-width: 400px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
+
+section#join {display: flex; align-items: center; justify-content: center; height: 100vh;}
+section#join form {width: 100%; max-width: 700px; padding: 20px; border: 1px solid #000; border-radius: 10px;}

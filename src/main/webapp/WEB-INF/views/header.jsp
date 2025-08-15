@@ -13,6 +13,7 @@
 
     <%--개별 링크--%>
     <link rel="stylesheet" type="text/css" href="/css/member.css">
+    <script src="/scripts/common.js"></script>
 </head>
 <body>
 
