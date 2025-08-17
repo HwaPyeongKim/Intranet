@@ -5,4 +5,8 @@
 
 <mapper namespace="com.example.intranet.dao.IMemberDao">
 
+    <insert id="insert" parameterType="com.example.intranet.dto.MemberDto">
+        insert into member (name, userid, pwd, number, email, phone, image, postcode, address1, address2) values (#{name}, #{userid}, #{pwd}, #{number}, #{email}, #{phone}, #{image}, #{postcode}, #{address1}, #{address2})
+    </insert>
+
 </mapper>

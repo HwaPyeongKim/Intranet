@@ -23,7 +23,14 @@
         </div>
         <div class="field">
             <div>
-                <input type="text" name="name" value="${dto.name}" placeholder="주민등록번호" maxlength="13" />
+                <input type="text" name="name" value="${dto.name}" placeholder="이름" />
+            </div>
+        </div>
+        <div class="field">
+            <div class="number">
+                <input type="text" name="number1" value="${number1}" placeholder="주민등록번호" maxlength="6" />
+                <span>-</span>
+                <input type="text" name="number2" value="${number2}" placeholder="주민등록번호 뒷자리" maxlength="7" />
             </div>
         </div>
         <div class="field">
@@ -32,19 +39,29 @@
             </div>
         </div>
         <div class="field">
-            <div>
-                <input type="text" name="phone" value="${dto.phone}" placeholder="휴대전화번호" />
+            <div class="phone">
+                <select name="phone1">
+                    <option value="">휴대전화번호</option>
+                    <option value="010"<c:if test="${phone1 == '010'}"> selected</c:if>>010</option>
+                    <option value="011"<c:if test="${phone1 == '011'}"> selected</c:if>>011</option>
+                    <option value="016"<c:if test="${phone1 == '016'}"> selected</c:if>>016</option>
+                    <option value="017"<c:if test="${phone1 == '017'}"> selected</c:if>>017</option>
+                </select>
+                <span>-</span>
+                <input type="text" name="phone2" value="${phone2}" />
+                <span>-</span>
+                <input type="text" name="phone3" value="${phone3}" />
+            </div>
+        </div>
+        <div class="field">
+            <div class="address">
+                <input type="text" name="postcode" id="postcode" value="${dto.postcode}" placeholder="우편번호" readonly />
+                <button type="button" id="btn_findAddress" onclick="findAddress()">검색</button>
             </div>
         </div>
         <div class="field">
             <div>
-                <input type="text" name="postcode" value="${dto.postcode}" placeholder="우편번호" readonly />
-                <button type="button" onclick="postcode()">검색</button>
-            </div>
-        </div>
-        <div class="field">
-            <div>
-                <input type="text" name="address1" value="${dto.address1}" placeholder="주소" readonly />
+                <input type="text" name="address1" id="address1" value="${dto.address1}" placeholder="주소" readonly />
             </div>
         </div>
         <div class="field">
@@ -53,7 +70,7 @@
             </div>
         </div>
         <div class="field">
-            <label for="imgPrevBtn">Image</label>
+            <label for="imgPrevBtn">프로필 이미지</label>
             <div>
                 <div id="imgPrev">
                     <c:if test="${not empty dto.image}">
@@ -69,18 +86,29 @@
             <input type="button" value="뒤로가기" onclick="history.back()" />
         </div>
     </form>
-</section>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript">
-    function postcode(){
-        new daum.Postcode( {
-            oncomplete: function(data) {
-                document.getElementById('postcode').value = data.zonecode;
-                document.getElementById("address1").value = addr;
-            }
-        }).open();
-    }
-</script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript">
+        function findAddress(){
+            new daum.Postcode( {
+                oncomplete: function(data) {
+                    var addr = ''; // 주소 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('postcode').value = data.zonecode;
+                    document.getElementById("address1").value = addr;
+                }
+            }).open();
+        }
+    </script>
+
+</section>
 
 <%@ include file="../footer.jsp" %>

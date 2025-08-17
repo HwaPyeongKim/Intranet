@@ -1,5 +1,15 @@
 section#login {display: flex; align-items: center; justify-content: center; height: 100vh;}
 section#login form {width: 100%; max-width: 400px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
 
-section#join {display: flex; align-items: center; justify-content: center; height: 100vh;}
+section#join {display: flex; justify-content: center; margin-top: 50px;}
 section#join form {width: 100%; max-width: 700px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
+
+.field div span {line-height: 40px;}
+.field div.number {display: flex; justify-content: space-between;}
+.field div.number input {width: 48%;}
+.field div.phone {display: flex; justify-content: space-between;}
+.field div.phone select {height: 40px; text-align: center;}
+.field div.phone select, .field div.phone input {width: 30%;}
+.field div.address {display: flex; justify-content: space-between;}
+.field div.address input[type=text] {width: 85%;}
+.field div.address button {width: 10%; padding: 5px;}

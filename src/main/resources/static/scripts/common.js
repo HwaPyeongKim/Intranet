@@ -11,13 +11,20 @@ $(function(){
             contentType: false,
             processData: false,
             success: function(response) {
-                $("#image").val(response.fidx);
                 $("#imgPrev").html("<img src='"+response.url+"' alt='"+response.filename+"' />");
-                $("#image").val(response.url);
+                $("#image").val(response.fidx);
             },
             error: function() {
                 alert("이미지 업로드에 실패했습니다.");
             }
         })
+    });
+
+    $("#postcode").click(function(){
+        $("#findAddress").trigger(findAddress());
+    });
+
+    $("#address1").click(function(){
+        $("#findAddress").trigger(findAddress());
     });
 })
