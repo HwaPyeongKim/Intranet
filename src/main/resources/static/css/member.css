@@ -5,6 +5,9 @@ section#join {display: flex; justify-content: center; margin-top: 50px;}
 section#join form {width: 100%; max-width: 700px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
 
 .field div span {line-height: 40px;}
+.field div.userid {display: flex; justify-content: space-between;}
+.field div.userid input[type=text] {width: 85%;}
+.field div.userid button {width: 14%; padding: 5px;}
 .field div.number {display: flex; justify-content: space-between;}
 .field div.number input {width: 48%;}
 .field div.phone {display: flex; justify-content: space-between;}

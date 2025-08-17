@@ -2,13 +2,15 @@
 <%@ include file="../header.jsp" %>
 
 <section id="join">
-    <form method="post" action="join" enctype="multipart/form-data" class="form imageForm shadow">
+    <form method="post" action="join" name="join" enctype="multipart/form-data" class="form imageForm shadow">
         <input type="hidden" name="image" id="image" value="${dto.image}" />
+        <input type="hidden" name="useridChk" id="useridChk" />
 
         <h2>회원가입</h2>
         <div class="field">
-            <div>
-                <input type="text" name="userid" value="${dto.userid}" placeholder="아이디" />
+            <div class="userid">
+                <input type="text" name="userid" id="userid" value="${dto.userid}" placeholder="아이디" />
+                <button type="button" onclick="idChk()">중복검사</button>
             </div>
         </div>
         <div class="field">
@@ -48,9 +50,9 @@
                     <option value="017"<c:if test="${phone1 == '017'}"> selected</c:if>>017</option>
                 </select>
                 <span>-</span>
-                <input type="text" name="phone2" value="${phone2}" />
+                <input type="text" name="phone2" value="${phone2}" maxlength="4" />
                 <span>-</span>
-                <input type="text" name="phone3" value="${phone3}" />
+                <input type="text" name="phone3" value="${phone3}" maxlength="4" />
             </div>
         </div>
         <div class="field">

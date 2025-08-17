@@ -31,7 +31,7 @@ public class MemberController {
 
     @PostMapping("login")
     public String login(@RequestParam("userid") String userid, @RequestParam("pwd") String pwd) {
-        return "redirect:/main";
+        return "main";
     }
 
     @GetMapping("joinForm")
@@ -74,7 +74,7 @@ public class MemberController {
             memberdto.setPhone(phone1+"-"+phone2+"-"+phone3);
             ms.insert(memberdto);
             model.addAttribute("msg", "회원가입이 완료되었습니다.");
-            url = "redirect:/login";
+            url = "member/login";
         }
         model.addAttribute("number1", number1);
         model.addAttribute("number2", number2);
@@ -85,4 +85,8 @@ public class MemberController {
         return url;
     }
 
+    @GetMapping("/chkIdForm")
+    public String chkId(@RequestParam("userid") String userid, Model model) {
+        return "member/chkId";
+    }
 }
