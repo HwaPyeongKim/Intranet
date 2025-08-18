@@ -16,7 +16,7 @@ public class MemberDto {
     private String number;
     private String email;
     private String phone;
-    private String image;
+    private int image;
     private String postcode;
     private String address1;
     private String address2;

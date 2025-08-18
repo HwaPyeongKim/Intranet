@@ -9,4 +9,8 @@
         insert into member (name, userid, pwd, number, email, phone, image, postcode, address1, address2) values (#{name}, #{userid}, #{pwd}, #{number}, #{email}, #{phone}, #{image}, #{postcode}, #{address1}, #{address2})
     </insert>
 
+    <select id="getMember" resultType="com.example.intranet.dto.MemberDto">
+        select * from member where userid = #{userid}
+    </select>
+
 </mapper>

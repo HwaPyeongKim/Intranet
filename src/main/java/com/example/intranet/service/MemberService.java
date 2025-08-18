@@ -14,4 +14,7 @@ public class MemberService {
     public void insert(MemberDto memberdto) {
         mdao.insert(memberdto);
     }
+    public MemberDto getMember(String userid) {
+        return mdao.getMember(userid);
+    }
 }
