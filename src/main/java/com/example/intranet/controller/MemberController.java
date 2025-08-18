@@ -19,10 +19,13 @@ public class MemberController {
     MemberService ms;
 
     @GetMapping("/")
-    public String index(HttpSession session) {
+    public String index(HttpSession session, Model model) {
         String url = "member/login";
         if (session.getAttribute("loginUser") != null) {
-            url = "redirect:/main";
+            model.addAttribute("loginUser", session.getAttribute("loginUser"));
+
+
+            url = "/main";
         }
         return url;
     }
@@ -32,8 +35,8 @@ public class MemberController {
         return "member/login";
     }
 
-    @PostMapping("login")
-    public String login(@RequestParam("userid") String userid, @RequestParam("pwd") String pwd,BindingResult result, HttpSession session, Model model) {
+    @PostMapping("/login")
+    public String login(@RequestParam("userid") String userid, @RequestParam("pwd") String pwd, HttpSession session, Model model) {
         String url = "redirect:/loginForm";
 
         if (userid.equals("")) {
@@ -48,7 +51,7 @@ public class MemberController {
                 model.addAttribute("msg", "아이디와 패스워드를 확인해주세요.");
             } else {
                 session.setAttribute("loginUser", mdto);
-                url = "redirect:/main";
+                url = "/main";
             }
         }
         return url;
