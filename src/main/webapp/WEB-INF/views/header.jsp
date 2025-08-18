@@ -29,7 +29,7 @@
             <li><a href="work">업무관리</a></li>
             <li><a href="requests">전자결제</a></li>
             <li><a href="mypage">마이페이지</a></li>
-            <li class="profile">#프로필</li>
+            <li class="profile">#프로필테스트테스트</li>
         </ul>
     </header>
     </c:if>
