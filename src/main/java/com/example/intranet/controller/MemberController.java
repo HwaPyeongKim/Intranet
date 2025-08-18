@@ -1,6 +1,7 @@
 package com.example.intranet.controller;
 
 import com.example.intranet.dto.FileDto;
+import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
 import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 @Controller
@@ -26,15 +29,23 @@ public class MemberController {
     @GetMapping("/")
     public String index(HttpSession session, Model model) {
         String url = "member/login";
-        FileDto fdto = null;
         if (session.getAttribute("loginUser") != null) {
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-            fdto = fs.getFile(mdto.getImage());
+            FileDto fdto = fs.getFile(mdto.getImage());
             model.addAttribute("loginUser", mdto);
-            model.addAttribute("fdto", fdto);
-            url = "/main";
+            model.addAttribute("profileImg", fdto.getPath());
+
+            url = "main";
         }
         return url;
+    }
+
+    @GetMapping("/main")
+    public String main(HttpSession session, Model model) {
+
+
+
+        return "/main";
     }
 
     @GetMapping("/loginForm")
@@ -44,7 +55,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public String login(@RequestParam("userid") String userid, @RequestParam("pwd") String pwd, HttpSession session, Model model) {
-        String url = "redirect:/loginForm";
+        String url = "member/login";
 
         if (userid.equals("")) {
             model.addAttribute("msg", "아이디를 입력해주세요.");
@@ -57,8 +68,15 @@ public class MemberController {
             } else if (!mdto.getPwd().equals(pwd)) {
                 model.addAttribute("msg", "아이디와 패스워드를 확인해주세요.");
             } else {
+                FileDto fdto = fs.getFile(mdto.getImage());
                 session.setAttribute("loginUser", mdto);
-                url = "/main";
+                session.setAttribute("profileimg", fs.getFile(mdto.getImage()));
+                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                MemberAttendanceDto madto = ms.selectAttendance(mdto.getMidx(),date);
+                if (madto == null) {
+                    ms.insertAttendance(mdto.getMidx());
+                }
+                url = "redirect:/";
             }
         }
         return url;
@@ -119,7 +137,7 @@ public class MemberController {
 
     @PostMapping("/idcheck")
     @ResponseBody
-    public HashMap chkId(@RequestParam("userid") String userid, Model model) {
+    public HashMap<String, Object> chkId(@RequestParam("userid") String userid, Model model) {
         MemberDto mdto = ms.getMember(userid);
         HashMap<String, Object> result = new HashMap<>();
         if (mdto == null){
@@ -128,6 +146,36 @@ public class MemberController {
             result.put("result", 0);
         }
         result.put("userid", userid);
+        return result;
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session, Model model) {
+        session.removeAttribute("loginUser");
+        return "redirect:/";
+    }
+
+    @GetMapping("/workout")
+    public String workout(@RequestParam("midx") int midx, HttpSession session, Model model) {
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        ms.workout(midx,date);
+        session.removeAttribute("loginUser");
+        model.addAttribute("msg", "퇴근 처리되었습니다.");
+        return "member/login";
+    }
+
+    @PostMapping("/checkWorkout")
+    @ResponseBody
+    public HashMap<String, Object> checkWorkout(@RequestParam("midx") String midx, HttpSession session, Model model) {
+        HashMap<String, Object> result = new HashMap<>();
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        MemberAttendanceDto madto = ms.checkWorkout(Integer.parseInt(midx), date);
+        if (madto != null) {
+            result.put("result", 1);
+            result.put("endtime", madto.getEndtime().toString());
+        } else {
+            result.put("result", 0);
+        }
         return result;
     }
 }

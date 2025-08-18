@@ -15,6 +15,9 @@ header {display: flex; justify-content: space-between; line-height: 60px;}
 header #logo {}
 header .nav {display: flex;}
 header .nav li {margin-left: 20px;}
+header .nav li.profile img {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}
+header .nav li.profile span {display: inline-block;}
+header .nav li.profile button {padding: 5px;}
 
 .field {display: flex; margin: 10px 0;}
 .field label {flex: 1; line-height: 40px;}

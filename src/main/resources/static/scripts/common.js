@@ -1,4 +1,31 @@
+function workout(midx) {
+    $()
+
+    if (confirm("정말로 퇴근하시겠습니까?")) {
+        location.href = "workout?midx="+midx;
+    }
+}
+
 $(function(){
+    $("#workoutBtn").click(function(){
+        var midx = $(this).attr("data-midx");
+        $.ajax({
+            url: "checkWorkout",
+            type: "POST",
+            data: {midx: midx},
+            success: function(response) {
+                if (response.result == 1) {
+                    alert("이미 퇴근처리가 되었습니다.\n퇴근시간 : "+response.endtime);
+                } else {
+                    location.href = "workout?midx="+midx;
+                }
+            },
+            error: function() {
+                alert("오류가 발생했습니다. 관리자에게 문의해주세요.");
+            }
+        })
+    });
+
     $("#imgPrevBtn").change(function(){
         var form = $(".imageForm")[0];
         var formData = new FormData(form);

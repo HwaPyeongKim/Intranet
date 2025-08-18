@@ -30,10 +30,10 @@
             <li><a href="requests">전자결제테스트2</a></li>
             <li><a href="mypage">마이페이지</a></li>
             <li class="profile">
-                <a href="#">
-                    <img src="${fdto.path}" />
-                    <span>${loginUser.name}</span>
-                </a>
+                <img src="${profileImg}" />
+                <span>${loginUser.name}</span>
+                <button type="button" onclick="location.href='logout'">로그아웃</button>
+                <button type="button" data-midx="${loginUser.midx}" id="workoutBtn">퇴근</button>
             </li>
         </ul>
 
