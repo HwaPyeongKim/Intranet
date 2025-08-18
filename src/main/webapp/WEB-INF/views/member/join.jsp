@@ -6,7 +6,7 @@
         <input type="hidden" name="image" id="image" value="${dto.image}" />
         <input type="hidden" name="useridChk" id="useridChk" />
 
-        <h2>회원가입</h2>
+        <h2>회원가입21</h2>
         <div class="field">
             <div class="userid">
                 <input type="text" name="userid" id="userid" value="${dto.userid}" placeholder="아이디" />
