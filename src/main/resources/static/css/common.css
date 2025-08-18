@@ -11,6 +11,11 @@ h2 {margin: 10px 0 30px; font-size: 2em;}
 p.notice {color: #f00;}
 .shadow {box-shadow: 3px 3px 10px #999;}
 
+header {display: flex; justify-content: space-between; line-height: 60px;}
+header #logo {}
+header .nav {display: flex;}
+header .nav li {margin-left: 20px;}
+
 .field {display: flex; margin: 10px 0;}
 .field label {flex: 1; line-height: 40px;}
 .field div {flex: 5;}

@@ -19,3 +19,17 @@
 <body>
 
 <div id="wrap"> <!--wrap 시작-->
+
+    <c:if test="${loginUser != null}">
+    <header>
+        <a href="/" id="logo">로고</a>
+        <ul class="nav">
+            <li><a href="board">게시판</a></li>
+            <li><a href="schedule">일정관리</a></li>
+            <li><a href="work">업무관리</a></li>
+            <li><a href="requests">전자결제</a></li>
+            <li><a href="mypage">마이페이지</a></li>
+            <li class="profile">#프로필</li>
+        </ul>
+    </header>
+    </c:if>
