@@ -24,8 +24,10 @@
     <header>
         <a href="/" id="logo">로고</a>
         <ul class="nav">
-            <li><a href="board">게시판ss테스트333</a></li>
-            <li><a href="schedule">일정관리di</a></li>
+
+            <li><a href="board">게시판23</a></li>
+            <li><a href="schedule">일정관리</a></li>
+
             <li><a href="work">업무관리</a></li>
             <li><a href="requests">전자결제테스트2</a></li>
             <li><a href="mypage">마이페이지</a></li>

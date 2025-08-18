@@ -10,9 +10,10 @@
         <div class="field">
             <div class="userid">
                 <input type="text" name="userid" id="userid" value="${dto.userid}" placeholder="아이디" />
-                <button type="button" onclick="idChk()">중복검사</button>
+                <button type="button" id="chkUserid">중복검사</button>
             </div>
         </div>
+        <p class="notice" id="idcheck"></p>
         <div class="field">
             <div>
                 <input type="password" name="pwd" placeholder="패스워드" />

@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface IMemberDao {
     void insert(MemberDto memberdto);
+    MemberDto getMember(String userid);
 }

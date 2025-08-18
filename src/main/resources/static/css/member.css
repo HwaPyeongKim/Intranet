@@ -16,3 +16,5 @@ section#join form {width: 100%; max-width: 700px; padding: 20px; border: 1px sol
 .field div.address {display: flex; justify-content: space-between;}
 .field div.address input[type=text] {width: 85%;}
 .field div.address button {width: 10%; padding: 5px;}
+
+.popup {width: 400px; margin: 40px auto;}
