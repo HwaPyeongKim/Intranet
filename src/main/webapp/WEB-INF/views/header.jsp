@@ -31,5 +31,6 @@
             <li><a href="mypage">마이페이지</a></li>
             <li class="profile">#프로필테스트테스트</li>
         </ul>
+
     </header>
     </c:if>
