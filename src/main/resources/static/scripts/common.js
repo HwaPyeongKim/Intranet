@@ -30,7 +30,7 @@ $(function(){
         var form = $(".imageForm")[0];
         var formData = new FormData(form);
         $.ajax({
-            url: "fileup",
+            url: "imgup",
             type: "POST",
             enctype: "multipart/form-data",
             data: formData,
@@ -43,6 +43,26 @@ $(function(){
             },
             error: function() {
                 alert("이미지 업로드에 실패했습니다.");
+            }
+        })
+    });
+
+    $("#fileBtn").change(function(){
+        var form = $(".fileForm")[0];
+        var formData = new FormData(form);
+        $.ajax({
+            url: "fileup",
+            type: "POST",
+            enctype: "multipart/form-data",
+            data: formData,
+            timeout: 10000,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $("#fidx").val(response.fidx);
+            },
+            error: function() {
+                alert("첨부파일 업로드에 실패했습니다.");
             }
         })
     });

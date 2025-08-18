@@ -29,9 +29,9 @@ public class FileController {
     ServletContext context;
 
 
-    @PostMapping("/fileup")
+    @PostMapping("/imgup")
     @ResponseBody
-    public HashMap<String, Object> fileup(@RequestParam("imgPrev") MultipartFile file, HttpServletRequest request, Model model){
+    public HashMap<String, Object> imgup(@RequestParam("imgPrev") MultipartFile file, HttpServletRequest request, Model model){
         HashMap<String, Object> result = new HashMap<String, Object>();
 
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -63,6 +63,44 @@ public class FileController {
         result.put("fidx", fidx);
         result.put("filename", filename);
         result.put("url", "/images/"+date+"/"+filename);
+
+        return result;
+    }
+
+    @PostMapping("/fileup")
+    @ResponseBody
+    public HashMap<String, Object> fileup(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model){
+        HashMap<String, Object> result = new HashMap<String, Object>();
+
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String path = context.getRealPath("/files/"+date);
+        File folder = new File(path);
+        if (!folder.exists()){
+            folder.mkdirs();
+        }
+
+        String filename = file.getOriginalFilename();
+        long size = file.getSize();
+        FileDto fdto = new FileDto();
+        fdto.setOriginalname(filename);
+        // fdto.setPath(path);
+        fdto.setPath("/files/"+date+"/"+filename);
+        fdto.setSize((int) size);
+        fs.insert(fdto);
+        int fidx = fdto.getFidx();
+
+        String uploadPath = path + "/" + filename;
+        try {
+            file.transferTo(new File(uploadPath));
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        result.put("fidx", fidx);
+        result.put("filename", filename);
+        result.put("url", "/files/"+date+"/"+filename);
 
         return result;
     }

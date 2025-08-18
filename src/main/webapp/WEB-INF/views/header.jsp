@@ -15,6 +15,7 @@
     <%--개별 링크--%>
     <link rel="stylesheet" type="text/css" href="/css/member.css">
     <script src="/scripts/member.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/board.css">
     <script src="/scripts/board.js"></script>
 </head>
 <body>
@@ -23,7 +24,7 @@
 
     <c:if test="${loginUser != null}">
     <header>
-        <a href="/" id="logo">로고</a
+        <a href="/" id="logo">로고</a>
 
         <ul class="nav">
             <c:if test="${loginUser.level > 1}">

@@ -3,10 +3,10 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.intranet.dao.IMemberDao">
+<mapper namespace="com.example.intranet.dao.IBoardDao">
 
-    <select id="selectProduct" resultType="com.example.intranet.dto.BoardDto">
-        select * from board where deleteyn = 'N' order by writedate desc;
+    <select id="select" resultType="com.example.intranet.dto.BoardDto">
+        select * from board where deleteyn = 'N' order by writedate desc
     </select>
 
 </mapper>
