@@ -15,6 +15,7 @@
     <%--개별 링크--%>
     <link rel="stylesheet" type="text/css" href="/css/member.css">
     <script src="/scripts/member.js"></script>
+    <script src="/scripts/board.js"></script>
 </head>
 <body>
 
@@ -22,12 +23,16 @@
 
     <c:if test="${loginUser != null}">
     <header>
-        <a href="/" id="logo">로고</a>
+        <a href="/" id="logo">로고</a
+
         <ul class="nav">
+            <c:if test="${loginUser.level > 1}">
+            <li><a href="admin">관리자</a></li>
+            </c:if>
             <li><a href="board">게시판</a></li>
             <li><a href="schedule">일정관리</a></li>
             <li><a href="work">업무관리</a></li>
-            <li><a href="requests">전자결제테스트2</a></li>
+            <li><a href="requests">전자결제</a></li>
             <li><a href="mypage">마이페이지</a></li>
             <li class="profile">
                 <img src="${profileImg}" />
