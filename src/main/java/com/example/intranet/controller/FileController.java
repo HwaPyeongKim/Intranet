@@ -45,7 +45,8 @@ public class FileController {
         long size = file.getSize();
         FileDto fdto = new FileDto();
         fdto.setOriginalname(filename);
-        fdto.setPath(path);
+        // fdto.setPath(path);
+        fdto.setPath("/images/"+date+"/"+filename);
         fdto.setSize((int) size);
         fs.insert(fdto);
         int fidx = fdto.getFidx();

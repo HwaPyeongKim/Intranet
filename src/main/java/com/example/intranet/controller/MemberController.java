@@ -1,6 +1,8 @@
 package com.example.intranet.controller;
 
+import com.example.intranet.dto.FileDto;
 import com.example.intranet.dto.MemberDto;
+import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -18,13 +20,18 @@ public class MemberController {
     @Autowired
     MemberService ms;
 
+    @Autowired
+    FileService fs;
+
     @GetMapping("/")
     public String index(HttpSession session, Model model) {
         String url = "member/login";
+        FileDto fdto = null;
         if (session.getAttribute("loginUser") != null) {
-            model.addAttribute("loginUser", session.getAttribute("loginUser"));
-
-
+            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+            fdto = fs.getFile(mdto.getImage());
+            model.addAttribute("loginUser", mdto);
+            model.addAttribute("fdto", fdto);
             url = "/main";
         }
         return url;
@@ -92,7 +99,7 @@ public class MemberController {
             model.addAttribute("msg", "우편번호를 입력해주세요.");
         } else if (memberdto.getAddress1().equals("")) {
             model.addAttribute("msg", "주소를 입력해주세요.");
-        } else if (memberdto.getImage() != 0) {
+        } else if (memberdto.getImage() == 0) {
             model.addAttribute("msg", "프로필 이미지를 입력해주세요.");
         } else {
             memberdto.setNumber(number1+"-"+number2);

@@ -29,7 +29,12 @@
             <li><a href="work">업무관리</a></li>
             <li><a href="requests">전자결제테스트2</a></li>
             <li><a href="mypage">마이페이지</a></li>
-            <li class="profile">#프로필테스트테스트</li>
+            <li class="profile">
+                <a href="#">
+                    <img src="${fdto.path}" />
+                    <span>${loginUser.name}</span>
+                </a>
+            </li>
         </ul>
 
     </header>
