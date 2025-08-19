@@ -13,4 +13,19 @@
         select * from member where userid = #{userid}
     </select>
 
+    <insert id="insertAttendance">
+        insert into member_attendance (midx) values (#{midx})
+    </insert>
+
+    <select id="selectAttendance" resultType="com.example.intranet.dto.MemberAttendanceDto">
+        select * from member_attendance where midx = #{midx} and date = #{date}
+    </select>
+
+    <update id="workout">
+        update member_attendance set endtime = now() where midx = #{midx} and date = #{date} and endtime is null
+    </update>
+
+    <select id="checkWorkout" resultType="com.example.intranet.dto.MemberAttendanceDto">
+        select midx, starttime, date_format(endtime, '%Y-%m-%d %H:%i:%s') AS endtime from member_attendance where midx = #{midx} and date = #{date} and endtime is not null
+    </select>
 </mapper>

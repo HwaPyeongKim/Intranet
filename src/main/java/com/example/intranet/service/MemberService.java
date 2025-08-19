@@ -1,6 +1,7 @@
 package com.example.intranet.service;
 
 import com.example.intranet.dao.IMemberDao;
+import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,17 @@ public class MemberService {
     }
     public MemberDto getMember(String userid) {
         return mdao.getMember(userid);
+    }
+    public void insertAttendance(int midx) {
+        mdao.insertAttendance(midx);
+    }
+    public void workout(int midx, String date) {
+        mdao.workout(midx,date);
+    }
+    public MemberAttendanceDto selectAttendance(int midx, String date) {
+        return mdao.selectAttendance(midx,date);
+    }
+    public MemberAttendanceDto checkWorkout(int midx, String date) {
+        return mdao.checkWorkout(midx,date);
     }
 }

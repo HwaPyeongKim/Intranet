@@ -15,6 +15,8 @@
     <%--개별 링크--%>
     <link rel="stylesheet" type="text/css" href="/css/member.css">
     <script src="/scripts/member.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/board.css">
+    <script src="/scripts/board.js"></script>
 </head>
 <body>
 
@@ -23,15 +25,22 @@
     <c:if test="${loginUser != null}">
     <header>
         <a href="/" id="logo">로고</a>
+
         <ul class="nav">
-
-            <li><a href="board">게시판23</a></li>
+            <c:if test="${loginUser.level > 1}">
+            <li><a href="admin">관리자</a></li>
+            </c:if>
+            <li><a href="board">게시판</a></li>
             <li><a href="schedule">일정관리</a></li>
-
             <li><a href="work">업무관리</a></li>
-            <li><a href="requests">전자결제테스트2</a></li>
+            <li><a href="requests">전자결제</a></li>
             <li><a href="mypage">마이페이지</a></li>
-            <li class="profile">#프로필테스트테스트</li>
+            <li class="profile">
+                <img src="${profileImg}" />
+                <span>${loginUser.name}</span>
+                <button type="button" onclick="location.href='logout'">로그아웃</button>
+                <button type="button" data-midx="${loginUser.midx}" id="workoutBtn">퇴근</button>
+            </li>
         </ul>
 
     </header>
