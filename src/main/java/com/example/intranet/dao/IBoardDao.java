@@ -14,4 +14,6 @@ public interface IBoardDao {
     void insert(BoardDto boarddto);
     int getAllCount();
     boolean addRead(int bidx, int midx, String reader);
+    void delete(int bidx);
+    BoardDto checkBoardPwd(int bidx, String pwd);
 }

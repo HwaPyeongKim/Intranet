@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,6 +70,33 @@ public class BoardController {
             model.addAttribute("item", bdto);
             url = "board/view";
         }
+        return url;
+    }
+
+    @PostMapping("/checkBoardPwd")
+    @ResponseBody
+    public HashMap<String, Object> checkBoardPwd(@RequestParam("bidx") int bidx, @RequestParam("pwd") String pwd) {
+        HashMap<String, Object> result = new HashMap<>();
+        BoardDto bdto = bs.checkBoardPwd(bidx,pwd);
+        if (bdto != null){
+            result.put("result", 1);
+        }else{
+            result.put("result", 0);
+        }
+        return result;
+    }
+
+    @GetMapping("/editBoard")
+    public String editBoard(@RequestParam("bidx") int bidx, @RequestParam("action") String action, HttpSession session, Model model) {
+        String url = "redirect:/viewBoard?bidx="+bidx;
+
+        if (action.equals("update")) {
+            url = "redirect:/updateFrom?bidx="+bidx;
+        } else if (action.equals("delete")) {
+            bs.delete(bidx);
+            url = "redirect:/board";
+        }
+
         return url;
     }
 }

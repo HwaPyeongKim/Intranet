@@ -24,7 +24,7 @@
         <c:choose>
             <c:when test="${empty list}">
                 <div class="row empty">
-                    <div class="col">게시물이 존재하지 않습니다.1</div>
+                    <div class="col">게시물이 존재하지 않습니다.</div>
                 </div>
             </c:when>
             <c:otherwise>
@@ -41,15 +41,17 @@
         </c:choose>
     </div>
 
-    <div class="paging">
-        <c:if test="${paging.prev}"><a href="board?page=${paging.beginPage-1}">Prev</a></c:if>
+    <c:if test="${not empty list}">
+        <div class="paging">
+            <c:if test="${paging.prev}"><a href="board?page=${paging.beginPage-1}">Prev</a></c:if>
 
-        <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-            <a href="board?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
-        </c:forEach>
+            <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+                <a href="board?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
+            </c:forEach>
 
-        <c:if test="${paging.next}"><a href="board?page=${paging.endPage+1}">Next</a></c:if>
-    </div>
+            <c:if test="${paging.next}"><a href="board?page=${paging.endPage+1}">Next</a></c:if>
+        </div>
+    </c:if>
 
 </section>
 

@@ -18,7 +18,6 @@ public class BoardService {
     IBoardDao bdao;
 
     public HashMap<String, Object> select(HttpServletRequest request) {
-
         HttpSession session = request.getSession();
 
         if (request.getParameter("first") != null) {
@@ -45,7 +44,7 @@ public class BoardService {
         Paging paging = new Paging();
         paging.setPage(page);
         paging.setDisplayPage(10);
-        paging.setDisplayRow(3);
+        paging.setDisplayRow(10);
         int count = bdao.getAllCount();
         paging.setTotalCount(count);
         paging.calPaging();
@@ -59,12 +58,14 @@ public class BoardService {
         ArrayList<BoardDto> lists = bdao.select();
         ArrayList<BoardDto> list = new ArrayList<>();
 
-        for (int i=paging.getStartNum(); i<lists.size(); i++) {
-            BoardDto bdto = lists.get(i);
-            bdto.setLoopnum(i+1);
-            list.add(bdto);
-            if (i == paging.getStartNum() + paging.getDisplayRow() - 1) {
-                break;
+        if (lists.size() > 0) {
+            for (int i=paging.getStartNum(); i<lists.size(); i++) {
+                BoardDto bdto = lists.get(i);
+                bdto.setLoopnum(i+1);
+                list.add(bdto);
+                if (i == paging.getStartNum() + paging.getDisplayRow() - 1) {
+                    break;
+                }
             }
         }
 
@@ -80,6 +81,7 @@ public class BoardService {
     public void insert(BoardDto boarddto) {
         bdao.insert(boarddto);
     }
+
     public void addRead(int bidx, int midx) {
         BoardDto bdto = selectOne(bidx);
         String reader = bdto.getReader();
@@ -88,6 +90,15 @@ public class BoardService {
         } else {
             reader = ""+midx;
         }
-        boolean checkread = bdao.addRead(bidx,midx,reader);
+        System.out.println("reader:"+reader);
+        bdao.addRead(bidx,midx,reader);
+    }
+
+    public void delete(int bidx) {
+        bdao.delete(bidx);
+    }
+
+    public BoardDto checkBoardPwd(int bidx, String pwd) {
+        return bdao.checkBoardPwd(bidx,pwd);
     }
 }

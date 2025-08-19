@@ -29,7 +29,15 @@
     </select>
 
     <update id="addRead">
-        update board set readcount = readcount + 1, reader = #{reader} where bidx = #{bidx} and find_in_set(#{midx},reader) = 0
+        update board set readcount = readcount + 1, reader = #{reader} where bidx = #{bidx} and (find_in_set(#{midx},reader) = 0 or find_in_set(#{midx},reader) is null)
     </update>
+
+    <select id="checkBoardPwd">
+        select * from board where bidx = #{bidx} and pwd = #{pwd}
+    </select>
+
+    <delete id="delete">
+        delete from board where bidx = #{bidx}
+    </delete>
 
 </mapper>
