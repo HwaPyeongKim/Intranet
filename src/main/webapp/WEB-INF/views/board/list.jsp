@@ -24,7 +24,7 @@
         <c:choose>
             <c:when test="${empty list}">
                 <div class="row empty">
-                    <div class="col">게시물이 존재하지 않습니다.</div>
+                    <div class="col">게시물이 존재하지 않습니다.1</div>
                 </div>
             </c:when>
             <c:otherwise>
