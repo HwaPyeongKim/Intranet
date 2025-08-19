@@ -9,4 +9,8 @@
         insert into file (originalname, path, size) values (#{originalname}, #{path}, #{size})
     </insert>
 
+    <select id="getFile" resultType="com.example.intranet.dto.FileDto">
+        select * from file where fidx = #{image}
+    </select>
+
 </mapper>

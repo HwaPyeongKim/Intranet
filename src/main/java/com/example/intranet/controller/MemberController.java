@@ -1,6 +1,9 @@
 package com.example.intranet.controller;
 
+import com.example.intranet.dto.FileDto;
+import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
+import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -10,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 @Controller
@@ -18,13 +23,29 @@ public class MemberController {
     @Autowired
     MemberService ms;
 
+    @Autowired
+    FileService fs;
+
     @GetMapping("/")
-    public String index(HttpSession session) {
+    public String index(HttpSession session, Model model) {
         String url = "member/login";
         if (session.getAttribute("loginUser") != null) {
-            url = "redirect:/main";
+            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+            FileDto fdto = fs.getFile(mdto.getImage());
+            model.addAttribute("loginUser", mdto);
+            model.addAttribute("profileImg", fdto.getPath());
+
+            url = "main";
         }
         return url;
+    }
+
+    @GetMapping("/main")
+    public String main(HttpSession session, Model model) {
+
+
+
+        return "/main";
     }
 
     @GetMapping("/loginForm")
@@ -32,9 +53,9 @@ public class MemberController {
         return "member/login";
     }
 
-    @PostMapping("login")
-    public String login(@RequestParam("userid") String userid, @RequestParam("pwd") String pwd,BindingResult result, HttpSession session, Model model) {
-        String url = "redirect:/loginForm";
+    @PostMapping("/login")
+    public String login(@RequestParam("userid") String userid, @RequestParam("pwd") String pwd, HttpSession session, Model model) {
+        String url = "member/login";
 
         if (userid.equals("")) {
             model.addAttribute("msg", "아이디를 입력해주세요.");
@@ -47,8 +68,15 @@ public class MemberController {
             } else if (!mdto.getPwd().equals(pwd)) {
                 model.addAttribute("msg", "아이디와 패스워드를 확인해주세요.");
             } else {
+                FileDto fdto = fs.getFile(mdto.getImage());
                 session.setAttribute("loginUser", mdto);
-                url = "redirect:/main";
+                session.setAttribute("profileimg", fs.getFile(mdto.getImage()));
+                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                MemberAttendanceDto madto = ms.selectAttendance(mdto.getMidx(),date);
+                if (madto == null) {
+                    ms.insertAttendance(mdto.getMidx());
+                }
+                url = "redirect:/";
             }
         }
         return url;
@@ -89,7 +117,7 @@ public class MemberController {
             model.addAttribute("msg", "우편번호를 입력해주세요.");
         } else if (memberdto.getAddress1().equals("")) {
             model.addAttribute("msg", "주소를 입력해주세요.");
-        } else if (memberdto.getImage() != 0) {
+        } else if (memberdto.getImage() == 0) {
             model.addAttribute("msg", "프로필 이미지를 입력해주세요.");
         } else {
             memberdto.setNumber(number1+"-"+number2);
@@ -109,7 +137,7 @@ public class MemberController {
 
     @PostMapping("/idcheck")
     @ResponseBody
-    public HashMap chkId(@RequestParam("userid") String userid, Model model) {
+    public HashMap<String, Object> chkId(@RequestParam("userid") String userid, Model model) {
         MemberDto mdto = ms.getMember(userid);
         HashMap<String, Object> result = new HashMap<>();
         if (mdto == null){
@@ -118,6 +146,36 @@ public class MemberController {
             result.put("result", 0);
         }
         result.put("userid", userid);
+        return result;
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session, Model model) {
+        session.removeAttribute("loginUser");
+        return "redirect:/";
+    }
+
+    @GetMapping("/workout")
+    public String workout(@RequestParam("midx") int midx, HttpSession session, Model model) {
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        ms.workout(midx,date);
+        session.removeAttribute("loginUser");
+        model.addAttribute("msg", "퇴근 처리되었습니다.");
+        return "member/login";
+    }
+
+    @PostMapping("/checkWorkout")
+    @ResponseBody
+    public HashMap<String, Object> checkWorkout(@RequestParam("midx") String midx, HttpSession session, Model model) {
+        HashMap<String, Object> result = new HashMap<>();
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        MemberAttendanceDto madto = ms.checkWorkout(Integer.parseInt(midx), date);
+        if (madto != null) {
+            result.put("result", 1);
+            result.put("endtime", madto.getEndtime().toString());
+        } else {
+            result.put("result", 0);
+        }
         return result;
     }
 }
