@@ -19,4 +19,5 @@ public class CalendarDto {
     private String start1;
     private String end;
     private boolean allDay;
+    private int midx;
 }

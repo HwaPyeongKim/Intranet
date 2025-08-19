@@ -13,10 +13,11 @@ public interface CalendarService {
      * @return
      * @throws Exception
      */
-    List<CalendarDto> calendarList() throws Exception;
+    List<CalendarDto> calendarList(int midx) throws Exception;
 
     /**
      * 캘린더 일정 저장하기
+     *
      * @param vo
      * @throws Exception
      */

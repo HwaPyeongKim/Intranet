@@ -1,9 +1,14 @@
 package com.example.intranet.controller.calendar;
 
+import com.example.intranet.dto.FileDto;
+import com.example.intranet.dto.MemberDto;
+import com.example.intranet.service.FileService;
 import com.example.intranet.service.calendar.CalendarService;
 import com.example.intranet.dto.calendar.CalendarDto;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZoneId;
@@ -21,16 +26,27 @@ public class CalendarController {
         패키지명 변경
         RestController -> Controller 로 바꿈
         그에 따라 각 메소드에 ResponseBody 어노테이션 붙임
+        일정기능을 유저별로 사용할수 있게하기 위해 midx 추가
     */
 
-    @GetMapping("/calendar")
-    public String calendar(){
-        return "calendar/calendar";
-    }
-
-
+    @Autowired
+    FileService fs;
     @Autowired
     private CalendarService calendarService;
+
+    @GetMapping("/calendar")
+    public String calendar(HttpSession session, Model model){
+        // String url = "member/login";
+        if (session.getAttribute("loginUser") != null) {
+            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+            FileDto fdto = fs.getFile(mdto.getImage());
+            model.addAttribute("loginUser", mdto);
+            model.addAttribute("profileImg", fdto.getPath());
+            // url = "calendar/calendar";
+
+        }
+        return "calendar/calendar";
+    }
 
     /**
      * 캘린더 일정 조회하기
@@ -39,8 +55,10 @@ public class CalendarController {
      */
     @ResponseBody
     @RequestMapping("/calendarList")
-    public List<CalendarDto> calendarList() throws Exception{
-        List<CalendarDto> vo = calendarService.calendarList();
+    public List<CalendarDto> calendarList(HttpSession session) throws Exception{
+        // 로그인 유저의 midx로 select
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        List<CalendarDto> vo = calendarService.calendarList(mdto.getMidx());
 
         return vo;
     }
@@ -53,7 +71,7 @@ public class CalendarController {
      */
     @ResponseBody
     @PostMapping("/calendarSave")
-    public CalendarDto calendarSave(@RequestBody Map<String, Object> map) throws Exception {
+    public CalendarDto calendarSave(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
 
         CalendarDto vo = new CalendarDto();
         vo.setTitle((String) map.get("title"));
@@ -69,6 +87,11 @@ public class CalendarController {
         vo.setAllDay((Boolean) map.get("allDay"));
 
         // 저장한 일정의 key 값을 포함한 데이터를 다시 반환
+
+        // 일정 DB에 로그인 유저의 midx를 같이 insert
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        vo.setMidx(mdto.getMidx());
+
         calendarService.calendarSave(vo);
 
         return vo;

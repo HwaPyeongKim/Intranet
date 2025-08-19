@@ -16,8 +16,8 @@ public class CalendarServiceImpl implements CalendarService {
     private ICalendarDao calendarMapper;
 
     @Override
-    public List<CalendarDto> calendarList() throws Exception {
-        return calendarMapper.calendarList();
+    public List<CalendarDto> calendarList(int midx) throws Exception {
+        return calendarMapper.calendarList(midx);
     }
 
     @Override

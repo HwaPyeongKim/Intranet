@@ -25,6 +25,7 @@
             DATE_FORMAT(CALENDAR_END, '%Y-%m-%d %H:%i:%s') AS END,
             ALL_DAY AS allDay
         FROM CALENDAR
+        WHERE midx = #{midx}
     </select>
 
     <!-- 일정 저장하기 -->
@@ -39,12 +40,14 @@
             CALENDAR_TITLE,
             CALENDAR_START,
             CALENDAR_END,
-            ALL_DAY
+            ALL_DAY,
+            MIDX
         ) values (
                          #{title},
                          DATE_FORMAT(#{start1}, '%Y-%m-%d %H:%i:%s'),
                          DATE_FORMAT(#{end}, '%Y-%m-%d %H:%i:%s'),
-                         #{allDay}
+                         #{allDay},
+                         #{midx}
                  )
     </insert>
 
