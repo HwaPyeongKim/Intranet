@@ -16,6 +16,7 @@
     <!--
         수정사항
         TO_CHAR()를 DATE_FORMAT()로 변경
+        where에 midx 추가
     -->
     <select id="calendarList" resultType="com.example.intranet.dto.calendar.CalendarDto">
         SELECT
@@ -34,6 +35,7 @@
         수정사항
         TO_DATE()를 DATE_FORMAT()로 변경
         Auto Increment 추가로 CALENDAR_NO를 인서트 하는 부분을 지움
+        유저의 midx를 같이 insert
     -->
     <insert id="calendarSave" parameterType="com.example.intranet.dto.calendar.CalendarDto" useGeneratedKeys="true" keyColumn="CALENDAR_NO" keyProperty="calendarNo" >
         INSERT INTO CALENDAR(

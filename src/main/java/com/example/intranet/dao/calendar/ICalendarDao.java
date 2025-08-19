@@ -12,6 +12,7 @@ public interface ICalendarDao {
         수정사항
         CalendarMapper -> ICalendarDao
         패키지명 변경
+        calendarList에 midx 추가
     */
 
     /**

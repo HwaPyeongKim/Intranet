@@ -4,7 +4,10 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <script>
     // 원본 https://greed-yb.tistory.com/274
-    // 수정사항 없음
+    /*
+        수정사항
+        로그인 유저만 일정을 볼수있고 추가할수 있음
+    */
     $(document).ready(function () {
         let calendarTag = $('#calendar')[0];                    // full-calendar 생성하기
         let calendar = new FullCalendar.Calendar(calendarTag, {
@@ -43,6 +46,10 @@
                 console.log("eventRemove : " + obj);
             },
             select: function (arg) {          // 일자를 드래그하면 실행됨
+                if(${empty loginUser}){
+                    alert('로그인이 필요합니다');
+                    return;
+                }
                 let title = prompt('일정 입력');
                 if (title) {
                     let newData = {
@@ -68,6 +75,8 @@
                                     allDay: data.allDay,
                                     editable: true                 // default : false 이벤트 드래그 등의 편집여부를 설정함
                                 });
+                            }else{
+                                alert('로그인이 필요합니다');
                             }
                         }
                     })
@@ -151,7 +160,7 @@
 </script>
 
 <div class="form-group">
-    <div id='calendar-container'>
+    <div id='calendar-container' style="width: 500px">
         <div id="calendar"></div>
     </div>
 </div>

@@ -12,6 +12,7 @@ public class CalendarDto {
         수정사항
         CalendarVo -> CalendarDto 로 변경
         패키지명 변경
+        로그인 전용 기능으로 만들기 위해 midx 추가
      */
 
     private Long calendarNo;

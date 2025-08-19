@@ -26,7 +26,7 @@ public class CalendarController {
         패키지명 변경
         RestController -> Controller 로 바꿈
         그에 따라 각 메소드에 ResponseBody 어노테이션 붙임
-        일정기능을 유저별로 사용할수 있게하기 위해 midx 추가
+        일정조회, 일정추가 기능에 midx 추가, 이제 로그인 유저 전용 기능
     */
 
     @Autowired
@@ -57,9 +57,11 @@ public class CalendarController {
     @RequestMapping("/calendarList")
     public List<CalendarDto> calendarList(HttpSession session) throws Exception{
         // 로그인 유저의 midx로 select
-        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-        List<CalendarDto> vo = calendarService.calendarList(mdto.getMidx());
-
+        List<CalendarDto> vo = null;
+        if(session.getAttribute("loginUser") != null){
+            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+            vo = calendarService.calendarList(mdto.getMidx());
+        }
         return vo;
     }
 
@@ -73,27 +75,31 @@ public class CalendarController {
     @PostMapping("/calendarSave")
     public CalendarDto calendarSave(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
 
-        CalendarDto vo = new CalendarDto();
-        vo.setTitle((String) map.get("title"));
+        CalendarDto vo = null;
+        // 로그인시만 일정추가 기능을 사용가능
+        if(session.getAttribute("loginUser") != null){
+            vo = new CalendarDto();
+            vo.setTitle((String) map.get("title"));
 
-        // UTC 시간을 LocalDateTime으로 변환
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        ZonedDateTime startUTC = ZonedDateTime.parse((String) map.get("start"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul"));
-        ZonedDateTime endUTC = map.get("end") != null ? ZonedDateTime.parse((String) map.get("end"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul")) : null;
+            // 일정 DB에 로그인 유저의 midx를 같이 insert
+            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+            vo.setMidx(mdto.getMidx());
 
-        // 한국 시간으로 변환하여 저장
-        vo.setStart1(startUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        vo.setEnd(endUTC != null ? endUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : null);
-        vo.setAllDay((Boolean) map.get("allDay"));
+            // UTC 시간을 LocalDateTime으로 변환
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+            ZonedDateTime startUTC = ZonedDateTime.parse((String) map.get("start"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul"));
+            ZonedDateTime endUTC = map.get("end") != null ? ZonedDateTime.parse((String) map.get("end"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul")) : null;
+
+            // 한국 시간으로 변환하여 저장
+            vo.setStart1(startUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            vo.setEnd(endUTC != null ? endUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : null);
+            vo.setAllDay((Boolean) map.get("allDay"));
+
+
+            calendarService.calendarSave(vo);
+        }
 
         // 저장한 일정의 key 값을 포함한 데이터를 다시 반환
-
-        // 일정 DB에 로그인 유저의 midx를 같이 insert
-        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-        vo.setMidx(mdto.getMidx());
-
-        calendarService.calendarSave(vo);
-
         return vo;
     }
 
