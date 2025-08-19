@@ -5,12 +5,14 @@
 
     <form method="post" action="writeBoard" name="writeBoard" enctype="multipart/form-data" class="form fileForm shadow">
         <input type="hidden" name="fidx" id="fidx" />
+        <input type="hidden" name="midx" value="${loginUser.midx}" />
 
         <h2>게시글 작성</h2>
 
         <c:choose>
             <c:when test="${loginUser.level == 3}">
             <div class="field">
+                <label>분류</label>
                 <div>
                     <label for="notice">공지사항</label>
                     <input type="radio" name="category" id="notice" value="notice" />
@@ -31,7 +33,7 @@
         </div>
         <div class="field">
             <div>
-                <input type="text" name="name" value="${dto.title}" placeholder="제목" />
+                <input type="text" name="title" value="${dto.title}" placeholder="제목" />
             </div>
         </div>
         <div class="field">
@@ -52,7 +54,6 @@
             </div>
         </div>
         <p class="notice">${msg}</p>
-
         <div class="btns">
             <input type="submit" value="저장하기" />
             <input type="button" value="뒤로가기" onclick="history.back()" />

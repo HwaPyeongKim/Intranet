@@ -10,6 +10,7 @@ public class BoardDto {
     private String category;
     private String title;
     private String content;
+    private String pwd;
     private String fidx;
     private int midx;
     private Timestamp updatedate;
@@ -20,4 +21,8 @@ public class BoardDto {
     private String showyn;
     private String deleteyn;
     private int loopnum; // 번호를 위한 변수
+
+    private String name; // member 테이블 조인
+    private String originalname; // file 테이블 조인
+    private String path; // file 테이블 조인
 }

@@ -152,6 +152,7 @@ public class MemberController {
     @GetMapping("/logout")
     public String logout(HttpSession session, Model model) {
         session.removeAttribute("loginUser");
+        session.removeAttribute("profileimg");
         return "redirect:/";
     }
 

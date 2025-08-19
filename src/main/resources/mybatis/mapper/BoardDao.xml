@@ -6,7 +6,30 @@
 <mapper namespace="com.example.intranet.dao.IBoardDao">
 
     <select id="select" resultType="com.example.intranet.dto.BoardDto">
-        select * from board where deleteyn = 'N' order by writedate desc
+        select b.*, m.name from board b
+        left join member m on m.midx = b.midx
+        where b.deleteyn = 'N'
+        order by b.writedate desc
     </select>
+
+    <select id="selectOne" resultType="com.example.intranet.dto.BoardDto">
+        select b.*, m.name, f.originalname, f.path
+        from board b
+        left join member m on m.midx = b.midx
+        left join file f on f.fidx = b.fidx
+        where b.bidx = #{bidx}
+    </select>
+
+    <insert id="insert" parameterType="com.example.intranet.dto.BoardDto" useGeneratedKeys="true" keyProperty="bidx">
+        insert into board (category, title, content, pwd, midx, fidx) values (#{category}, #{title}, #{content}, #{pwd}, #{midx}, #{fidx})
+    </insert>
+
+    <select id="getAllCount" resultType="_int">
+        select count(*) from board where deleteyn = 'N'
+    </select>
+
+    <update id="addRead">
+        update board set readcount = readcount + 1, reader = #{reader} where bidx = #{bidx} and find_in_set(#{midx},reader) = 0
+    </update>
 
 </mapper>

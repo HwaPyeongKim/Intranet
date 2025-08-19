@@ -1,6 +1,7 @@
 package com.example.intranet.dao;
 
 import com.example.intranet.dto.BoardDto;
+import com.example.intranet.dto.Paging;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -9,4 +10,8 @@ import java.util.ArrayList;
 public interface IBoardDao {
 
     ArrayList<BoardDto> select();
+    BoardDto selectOne(int bidx);
+    void insert(BoardDto boarddto);
+    int getAllCount();
+    boolean addRead(int bidx, int midx, String reader);
 }

@@ -42,23 +42,52 @@ public class BoardService {
             key = (String) session.getAttribute("key");
         }
 
-//        Paging paging = new Paging();
-//        paging.setPage(page);
-//        paging.setDisplayPage(10);
-//        paging.setDisplayRow(10);
-//        int count = bdao.getAllCount(key);
-//        paging.setTotalCount(count);
-//        paging.calPaging();
-//
-//        if (page > paging.getEndPage()) {
-//            paging.setPage(paging.getEndPage());
-//            paging.calPaging();
-//        }
+        Paging paging = new Paging();
+        paging.setPage(page);
+        paging.setDisplayPage(10);
+        paging.setDisplayRow(3);
+        int count = bdao.getAllCount();
+        paging.setTotalCount(count);
+        paging.calPaging();
+
+        if (page > paging.getEndPage()) {
+            paging.setPage(paging.getEndPage());
+            paging.calPaging();
+        }
 
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<BoardDto> list = bdao.select();
+        ArrayList<BoardDto> lists = bdao.select();
+        ArrayList<BoardDto> list = new ArrayList<>();
+
+        for (int i=paging.getStartNum(); i<lists.size(); i++) {
+            BoardDto bdto = lists.get(i);
+            bdto.setLoopnum(i+1);
+            list.add(bdto);
+            if (i == paging.getStartNum() + paging.getDisplayRow() - 1) {
+                break;
+            }
+        }
+
         result.put("list", list);
+        result.put("paging", paging);
 
         return result;
+    }
+    public BoardDto selectOne(int bidx) {
+        return bdao.selectOne(bidx);
+    }
+
+    public void insert(BoardDto boarddto) {
+        bdao.insert(boarddto);
+    }
+    public void addRead(int bidx, int midx) {
+        BoardDto bdto = selectOne(bidx);
+        String reader = bdto.getReader();
+        if (reader != null) {
+            reader += ", " + midx;
+        } else {
+            reader = ""+midx;
+        }
+        boolean checkread = bdao.addRead(bidx,midx,reader);
     }
 }

@@ -38,7 +38,7 @@ $(function(){
             contentType: false,
             processData: false,
             success: function(response) {
-                $("#imgPrev").html("<img src='"+response.url+"' alt='"+response.filename+"' />");
+                $("#imgPrev").attr("display","block").html("<img src='"+response.url+"' alt='"+response.filename+"' />");
                 $("#image").val(response.fidx);
             },
             error: function() {

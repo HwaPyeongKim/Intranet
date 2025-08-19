@@ -30,8 +30,8 @@
             <c:otherwise>
                 <c:forEach items="${list}" var="item">
                     <div class="row">
-                        <div class="col"></div>
-                        <div class="col title"><a href="#">${item.title}</a></div>
+                        <div class="col">${item.loopnum}</div>
+                        <div class="col title"><a href="viewBoard?bidx=${item.bidx}">${item.title}</a></div>
                         <div class="col">${item.name}</div>
                         <div class="col"><fmt:formatDate value="${item.writedate}" pattern="YYYY-mm-dd" /></div>
                         <div class="col"><fmt:formatNumber value="${item.readcount}" /></div>
@@ -39,6 +39,16 @@
                 </c:forEach>
             </c:otherwise>
         </c:choose>
+    </div>
+
+    <div class="paging">
+        <c:if test="${paging.prev}"><a href="board?page=${paging.beginPage-1}">Prev</a></c:if>
+
+        <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+            <a href="board?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
+        </c:forEach>
+
+        <c:if test="${paging.next}"><a href="board?page=${paging.endPage+1}">Next</a></c:if>
     </div>
 
 </section>
