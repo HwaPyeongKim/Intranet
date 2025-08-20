@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class CalendarServiceImpl implements CalendarService {
     // 원본 https://greed-yb.tistory.com/274
-    // 수정사항 calendarList에 midx 추가
+    // 수정사항 calendarList()에 midx 추가
 
     @Autowired
     private ICalendarDao calendarMapper;

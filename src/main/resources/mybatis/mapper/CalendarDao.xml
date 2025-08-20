@@ -5,7 +5,9 @@
 
     <!--
         원본 https://greed-yb.tistory.com/274
+        DB 이름을 기존의 schedule로 할지 원본의 calendar로 할지 선택필요
         공통 수정사항
+        파일명 mapper.xml -> CalendarDao.xml
         패키지명 변경
         CALENDAR_NO 에 AS calendarNo 추가
         ALL_DAY 에 AS allDay 추가

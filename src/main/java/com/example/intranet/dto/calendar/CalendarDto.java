@@ -10,7 +10,7 @@ public class CalendarDto {
     // 원본 https://greed-yb.tistory.com/274
     /*
         수정사항
-        CalendarVo -> CalendarDto 로 변경
+        클래스명 CalendarVo -> CalendarDto 로 변경
         패키지명 변경
         로그인 전용 기능으로 만들기 위해 midx 추가
      */

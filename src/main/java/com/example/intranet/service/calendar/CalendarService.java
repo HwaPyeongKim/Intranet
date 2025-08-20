@@ -6,7 +6,7 @@ import java.util.List;
 public interface CalendarService {
 
     // 원본 https://greed-yb.tistory.com/274
-    // 수정사항 calendarList에 midx 추가
+    // 수정사항 calendarList()에 midx 추가
 
     /**
      * 캘린더 일정 조회하기

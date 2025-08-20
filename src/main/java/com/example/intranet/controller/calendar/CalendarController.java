@@ -24,8 +24,8 @@ public class CalendarController {
     /*
         수정사항
         패키지명 변경
-        RestController -> Controller 로 바꿈
-        그에 따라 각 메소드에 ResponseBody 어노테이션 붙임
+        @RestController -> @Controller 로 바꿈
+        그에 따라 각 메소드에 @ResponseBody 어노테이션 붙임
         일정조회, 일정추가 기능에 midx 추가, 이제 로그인 유저 전용 기능
     */
 
@@ -34,7 +34,7 @@ public class CalendarController {
     @Autowired
     private CalendarService calendarService;
 
-    @GetMapping("/calendar")
+    @GetMapping("/schedule") // 임시적 링크
     public String calendar(HttpSession session, Model model){
         // String url = "member/login";
         if (session.getAttribute("loginUser") != null) {

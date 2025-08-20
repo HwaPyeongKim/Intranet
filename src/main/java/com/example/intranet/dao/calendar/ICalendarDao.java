@@ -10,9 +10,9 @@ public interface ICalendarDao {
     // 원본 https://greed-yb.tistory.com/274
     /*
         수정사항
-        CalendarMapper -> ICalendarDao
+        인터페이스명 CalendarMapper -> ICalendarDao
         패키지명 변경
-        calendarList에 midx 추가
+        calendarList()에 midx 추가
     */
 
     /**

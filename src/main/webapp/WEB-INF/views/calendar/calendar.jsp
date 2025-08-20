@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ include file="../header.jsp"%>
+<%-- 달력 출력을 위해 밑 두개 스크립트 실행 필요 --%>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <script>
     // 원본 https://greed-yb.tistory.com/274
@@ -160,7 +161,7 @@
 </script>
 
 <div class="form-group">
-    <div id='calendar-container' style="width: 500px">
+    <div id='calendar-container'><%--  여기에 스타일 적용       --%>
         <div id="calendar"></div>
     </div>
 </div>
