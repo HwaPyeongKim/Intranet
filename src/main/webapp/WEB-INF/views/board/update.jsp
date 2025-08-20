@@ -11,6 +11,9 @@
         <h2>게시글 수정</h2>
 
         <c:choose>
+            <c:when test="${item.category == 'download'}">
+            <input type="hidden" name="category" value="download" />
+            </c:when>
             <c:when test="${loginUser.level == 3}">
             <div class="field">
                 <label>분류</label>

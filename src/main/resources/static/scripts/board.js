@@ -46,8 +46,8 @@ $(function (){
         var commentBtns = li.find(".commentBtns div");
         var content = li.find("textarea").val();
 
-        var btn_html = '<button type="button" data-bidx="'+bidx+'" data-bcidx="'+bcidx+'" class="updateBoardComment">댓글수정</button>';
-        btn_html += '<button type="button" data-bidx="'+bidx+'" data-bcidx="'+bcidx+'" class="deleteBoardComment">댓글삭제</button>';
+        var btn_html = '<button type="button" data-bidx="'+bidx+'" data-bcidx="'+bcidx+'" class="deleteBoardComment">댓글삭제</button>';
+        btn_html += '<button type="button" data-bidx="'+bidx+'" data-bcidx="'+bcidx+'" class="updateBoardComment">댓글수정</button>';
 
         commentBtns.html(btn_html);
         li.find("textarea").remove();

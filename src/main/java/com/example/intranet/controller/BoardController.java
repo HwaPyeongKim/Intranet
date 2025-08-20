@@ -26,7 +26,7 @@ public class BoardController {
         MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
         HashMap<String, Object> result = null;
         if (mdto != null) {
-            result = bs.select(request);
+            result = bs.select(request,"main");
             model.addAttribute("notice", result.get("notice"));
             model.addAttribute("list", result.get("list"));
             model.addAttribute("paging", result.get("paging"));
@@ -40,12 +40,13 @@ public class BoardController {
     }
 
     @GetMapping("/writeBoardForm")
-    public String writeBoard(HttpSession session, Model model) {
+    public String writeBoard(@RequestParam("category") String category, Model model) {
+        model.addAttribute("category", category);
         return "board/write";
     }
 
     @PostMapping("/writeBoard")
-    public String writeBoard(@ModelAttribute("dto") BoardDto boarddto, HttpSession session, Model model) {
+    public String writeBoard(@ModelAttribute("dto") BoardDto boarddto, Model model) {
         String url = "board/write";
 
         if (boarddto.getTitle() == null || boarddto.getTitle().equals("")) {
@@ -156,4 +157,21 @@ public class BoardController {
         return "redirect:/viewBoard?bidx="+bidx;
     }
 
+    @GetMapping("/download")
+    public String download(HttpServletRequest request, HttpSession session, Model model) {
+        String url = "member/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (mdto != null) {
+            result = bs.select(request,"download");
+            model.addAttribute("list", result.get("list"));
+            model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
+            model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
+            url = "board/download";
+        }
+
+        return url;
+    }
 }

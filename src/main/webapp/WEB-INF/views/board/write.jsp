@@ -10,6 +10,9 @@
         <h2>게시글 작성</h2>
 
         <c:choose>
+            <c:when test="${category == 'download'}">
+            <input type="hidden" name="category" value="download" />
+            </c:when>
             <c:when test="${loginUser.level == 3}">
             <div class="field">
                 <label>분류</label>

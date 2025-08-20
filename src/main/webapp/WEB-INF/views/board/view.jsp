@@ -42,7 +42,14 @@
             <button type="button" onclick="editBoard('${item.bidx}','update')">수정</button>
             <button type="button" onclick="editBoard('${item.bidx}','delete')">삭제</button>
         </c:if>
-        <button type="button" onclick="location.href='board'">목록으로</button>
+        <c:choose>
+            <c:when test="${item.category == 'download'}">
+            <button type="button" onclick="location.href='download'">목록으로</button>
+            </c:when>
+            <c:otherwise>
+            <button type="button" onclick="location.href='board'">목록으로</button>
+            </c:otherwise>
+        </c:choose>
     </div>
 
     <ul class="comments">
@@ -61,8 +68,8 @@
                                 <small>(<fmt:formatDate value="${comment.writedate}" pattern="yyyy-MM-dd HH:mm:ss" />)</small>
                                 <c:if test="${comment.midx == loginUser.midx}">
                                     <div>
-                                        <button type="button" data-bidx="${comment.bidx}" data-bcidx="${comment.bcidx}" class="updateBoardComment">댓글수정</button>
                                         <button type="button" data-bidx="${comment.bidx}" data-bcidx="${comment.bcidx}" class="deleteBoardComment">댓글삭제</button>
+                                        <button type="button" data-bidx="${comment.bidx}" data-bcidx="${comment.bcidx}" class="updateBoardComment">댓글수정</button>
                                     </div>
                                 </c:if>
                             </div>
@@ -76,8 +83,8 @@
             <input type="hidden" name="bidx" value="${item.bidx}" />
             <input type="hidden" name="midx" value="${loginUser.midx}" />
 
-            <li>
-                <div class="clearfix">
+            <li class="commentList">
+                <div class="commentBtns clearfix">
                     <div>
                         <button>등록</button>
                     </div>

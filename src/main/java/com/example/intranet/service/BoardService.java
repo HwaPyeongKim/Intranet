@@ -18,7 +18,7 @@ public class BoardService {
     @Autowired
     IBoardDao bdao;
 
-    public HashMap<String, Object> select(HttpServletRequest request) {
+    public HashMap<String, Object> select(HttpServletRequest request,String category) {
         HttpSession session = request.getSession();
 
         if (request.getParameter("first") != null) {
@@ -53,7 +53,7 @@ public class BoardService {
 
         HashMap<String, Object> result = new HashMap<>();
         ArrayList<BoardDto> notice = bdao.selectNotice();
-        ArrayList<BoardDto> lists = bdao.select(type, key, sort);
+        ArrayList<BoardDto> lists = bdao.select(category, type, key, sort);
         ArrayList<BoardDto> list = new ArrayList<>();
 
         Paging paging = new Paging();

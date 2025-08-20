@@ -74,6 +74,6 @@ div.table > div.row.empty {line-height: 200px;}
 .comments li .commentBtns {margin-bottom: 10px;}
 .comments li .commentBtns small {color: #ccc;}
 .comments li .commentBtns div {float: right;}
-.comments li .commentBtns button {margin-left: 10px;}
+.comments li .commentBtns button {float: right; margin-left: 10px;}
 .comments li textarea {width: 100%; height: 100px; resize: none;}
 .comments li.empty{text-align: center; padding: 50px 0;}

@@ -6,10 +6,19 @@
 <mapper namespace="com.example.intranet.dao.IBoardDao">
 
     <select id="select" resultType="com.example.intranet.dto.BoardDto">
-        select b.*, m.name from board b
+        select b.*, m.name
+        , (select count(*) from board_comment bc where bc.bidx = b.bidx and bc.deleteyn = 'N') as comment_count
+        from board b
         left join member m on m.midx = b.midx
         <where>
             b.deleteyn = 'N'
+            <if test="category == 'main'">
+                and b.category = 'main'
+            </if>
+            <if test="category == 'download'">
+                and b.category = 'download'
+            </if>
+
             <if test="type == 'title'">
                 and b.title like concat('%', #{key}, '%')
             </if>
@@ -56,7 +65,9 @@
     </update>
 
     <select id="selectNotice" resultType="com.example.intranet.dto.BoardDto">
-        select b.*, m.name from board b
+        select b.*, m.name
+        , (select count(*) from board_comment bc where bc.bidx = b.bidx and bc.deleteyn = 'N') as comment_count
+        from board b
         left join member m on m.midx = b.midx
         where b.deleteyn = 'N' and b.noticeyn = 'Y' and b.showyn = 'Y'
         order by b.writedate desc
@@ -68,7 +79,7 @@
 
     <select id="selectComments" resultType="com.example.intranet.dto.BoardCommentDto">
         select bc.*, m.name from board_comment bc
-                                     left join member m on m.midx = bc.midx
+        left join member m on m.midx = bc.midx
         where bc.bidx = #{bidx} and bc.deleteyn = 'N'
         order by bc.writedate desc;
     </select>
