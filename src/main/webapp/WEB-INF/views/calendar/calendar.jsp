@@ -9,6 +9,7 @@
         수정사항
         로그인 유저만 일정을 볼수있고 추가할수 있음
     */
+
     $(document).ready(function () {
         let calendarTag = $('#calendar')[0];                    // full-calendar 생성하기
         let calendar = new FullCalendar.Calendar(calendarTag, {
@@ -21,17 +22,50 @@
                 allSchedule: {
                     text: "전체일정",
                     click: function (){
-                        location.href="calendarList";
+                        var events = calendar.getEvents();
+                        for(var i=0; i<events.length; i++){
+                            events[i].setProp('display', 'auto');
+                        }
                     }
                 },
                 mySchedule: {
-                    text: "나의일정"
+                    text: "나의일정",
+                    click: function (){
+                        var events = calendar.getEvents();
+                        for(var i=0; i<events.length; i++){
+                            if(events[i].extendedProps.category==1){
+                                events[i].setProp('display', 'auto');
+                            }else{
+                                events[i].setProp('display', 'none');
+                            }
+                        }
+                    }
                 },
                 teamSchedule: {
-                    text: "부서일정"
+                    text: "부서일정",
+                    click: function (){
+                        var events = calendar.getEvents();
+                        for(var i=0; i<events.length; i++){
+                            if(events[i].extendedProps.category==2){
+                                events[i].setProp('display', 'auto');
+                            }else{
+                                events[i].setProp('display', 'none');
+                            }
+                        }
+                    }
                 },
                 comSchedule: {
-                    text: "회사일정"
+                    text: "회사일정",
+                    click: function (){
+                        var events = calendar.getEvents();
+                        for(var i=0; i<events.length; i++){
+                            if(events[i].extendedProps.category==3){
+                                events[i].setProp('display', 'auto');
+                            }else{
+                                events[i].setProp('display', 'none');
+                            }
+                        }
+                    }
                 }
             },
             // 해더에 표시할 툴바
@@ -61,7 +95,8 @@
             eventRemove: function (obj) {     // 이벤트 삭제 시 발생
                 console.log("eventRemove : " + obj);
             },
-            select: function (arg) {          // 일자를 드래그하면 실행됨
+            select: function (arg) {
+                // 일자를 드래그하면 실행됨
                 // 비로그인시 일정추가 기능 사용 불가능
                 if(${empty loginUser}){
                     alert('로그인이 필요합니다');
@@ -108,6 +143,7 @@
                                     end: data.end,
                                     allDay: data.allDay,
                                     editable: data.editable,
+                                    category: data.category,
                                     backgroundColor: data.eventColor,
                                     borderColor: data.eventColor
                                 });
@@ -120,6 +156,7 @@
                 calendar.unselect()
             },
             eventClick: function (arg) {
+                console.log(arg.event);
                 // 일정 클릭 시
                 if(!arg.event.startEditable){
                     return; // 수정 불가능한 일정이면 동작하지 않음
@@ -186,6 +223,7 @@
                                     end: data[i].end,
                                     allDay: data[i].allDay,
                                     editable: data[i].editable,
+                                    category: data[i].category,
                                     backgroundColor: data[i].eventColor,
                                     borderColor: data[i].eventColor
                                 })
@@ -197,7 +235,6 @@
         });
         // 캘린더 랜더링
         calendar.render();
-
     });
 </script>
 <div class="form-group">
