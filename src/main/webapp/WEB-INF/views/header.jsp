@@ -17,6 +17,7 @@
     <script src="/scripts/member.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/board.css">
     <script src="/scripts/board.js"></script>
+    <script src="/scripts/work.js"></script>
 </head>
 <body>
 

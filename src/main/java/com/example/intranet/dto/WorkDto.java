@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class WorkDto2 {
+public class WorkDto {
     private int widx;
     private int midx;
     private int worker;
@@ -16,5 +16,8 @@ public class WorkDto2 {
     private Timestamp writedate;
     private Timestamp completedate;
     private String deleteyn;
-    private int loopnum; // 번호를 위한 변수
+    private int loopnum;// 번호를 위한 변수
+
+    private String name;
+    private String workername;
 }
