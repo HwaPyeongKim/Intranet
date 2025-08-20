@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.intranet.dao.calendar.ICalendarDao">
+
+    <!--
+        원본 https://greed-yb.tistory.com/274
+        공통 수정사항
+        패키지명 변경
+        CALENDAR_NO 에 AS calendarNo 추가
+        ALL_DAY 에 AS allDay 추가
+    -->
+
+
+    <!-- 일정 조회하기-->
+    <!--
+        수정사항
+        TO_CHAR()를 DATE_FORMAT()로 변경
+    -->
+    <select id="calendarList" resultType="com.example.intranet.dto.calendar.CalendarDto">
+        SELECT
+            CALENDAR_NO AS calendarNo,
+            CALENDAR_TITLE AS TITLE,
+            DATE_FORMAT(CALENDAR_START, '%Y-%m-%d %H:%i:%s') AS START1,
+            DATE_FORMAT(CALENDAR_END, '%Y-%m-%d %H:%i:%s') AS END,
+            ALL_DAY AS allDay
+        FROM CALENDAR
+    </select>
+
+    <!-- 일정 저장하기 -->
+    <!-- 저장하고 생성된 no(key) 값을 return 시킨다 -->
+    <!--
+        수정사항
+        TO_DATE()를 DATE_FORMAT()로 변경
+        Auto Increment 추가로 CALENDAR_NO를 인서트 하는 부분을 지움
+    -->
+    <insert id="calendarSave" parameterType="com.example.intranet.dto.calendar.CalendarDto" useGeneratedKeys="true" keyColumn="CALENDAR_NO" keyProperty="calendarNo" >
+        INSERT INTO CALENDAR(
+            CALENDAR_TITLE,
+            CALENDAR_START,
+            CALENDAR_END,
+            ALL_DAY
+        ) values (
+                         #{title},
+                         DATE_FORMAT(#{start1}, '%Y-%m-%d %H:%i:%s'),
+                         DATE_FORMAT(#{end}, '%Y-%m-%d %H:%i:%s'),
+                         #{allDay}
+                 )
+    </insert>
+
+    <!-- 일정 삭제하기 -->
+    <delete id="calendarDelete">
+        DELETE FROM CALENDAR WHERE CALENDAR_NO = #{no}
+    </delete>
+
+
+    <!-- 일정 수정하기 -->
+    <!--
+        수정사항
+        TO_DATE()를 DATE_FORMAT()로 변경
+    -->
+    <update id="eventUpdate" parameterType="com.example.intranet.dto.calendar.CalendarDto">
+        UPDATE CALENDAR SET
+                            CALENDAR_TITLE = #{title} ,
+                            CALENDAR_START = DATE_FORMAT(#{start1}, '%Y-%m-%d %H:%i:%s') ,
+                            CALENDAR_END = DATE_FORMAT(#{end}, '%Y-%m-%d %H:%i:%s') ,
+                            ALL_DAY = #{allDay}
+        WHERE CALENDAR_NO = #{calendarNo}
+    </update>
+</mapper>

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class WorkDto {
+public class WorkDto2 {
     private int widx;
     private int midx;
     private int worker;

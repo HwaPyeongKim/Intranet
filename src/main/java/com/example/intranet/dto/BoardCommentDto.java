@@ -13,4 +13,6 @@ public class BoardCommentDto {
     private Timestamp writedate;
     private String deleteyn;
     private int loopnum; // 번호를 위한 변수
+
+    private String name; // member 테이블 조인
 }
