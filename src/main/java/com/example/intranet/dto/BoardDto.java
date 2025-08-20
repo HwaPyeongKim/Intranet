@@ -25,4 +25,5 @@ public class BoardDto {
     private String name; // member 테이블 조인
     private String originalname; // file 테이블 조인
     private String path; // file 테이블 조인
+    private int comment_count; // board_comment 조인
 }

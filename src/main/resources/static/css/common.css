@@ -1,6 +1,6 @@
 .clearfix::after {content: ""; display: table; clear: both;}
 
-input[type=button], input[type=submit], button {padding: 25px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold; cursor: pointer;}
+input[type=button], input[type=submit], button {padding: 5px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold; cursor: pointer;}
 
 input[type=text], input[type=password], input[type=email] {padding: 5px; border: 0; border-bottom: 1px solid #000; outline: 0;}
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {border-bottom: 2px solid #50bde2;}
@@ -8,6 +8,7 @@ textarea:focus {outline: 2px solid #50bde2;}
 
 #wrap {width: 100%; max-width:1200px; margin: 0 auto;}
 h2 {margin: 10px 0 30px; font-size: 2em;}
+textarea {padding: 10px;}
 
 .main_color {color: #50bde2;}
 .sub_color {color: #fff;}
@@ -20,7 +21,7 @@ header .nav {display: flex;}
 header .nav li {margin-left: 20px;}
 header .nav li.profile img {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}
 header .nav li.profile span {display: inline-block;}
-header .nav li.profile button {padding: 5px;}
+header .nav li.profile button {}
 
 .submenu {display: flex; justify-content: space-between;}
 .submenu li {width: 50%; line-height: 50px; text-align: center; border: 1px solid #000;}
@@ -33,12 +34,14 @@ header .nav li.profile button {padding: 5px;}
 .field label {flex: 1; padding: 10px 0;}
 .field div {flex: 5; padding: 10px 0;}
 .field div input[type=text], .field div input[type=password], .field div input[type=email] {width: 100%; height: 40px;}
-.field div textarea {width: 100%; height: 400px; resize: none;}
+.field div textarea {width: 100%; height: 400px; resize: none; padding: 10px;}
+.field div.prevFile {}
+.field div.prevFile a {display: block; margin-bottom: 10px;}
 .field div #imgPrev {display: none; margin-bottom: 10px;}
 .field div #imgPrev img {max-width: 500px;}
 
 .btns {display: flex; margin-top: 30px;}
-.btns input, .btns button, .btns a {flex: 1; margin-right: 10px;}
+.btns input, .btns button, .btns a {flex: 1; margin-right: 10px; padding: 25px;}
 .btns input:last-child, .btns button:last-child, .btns a:last-child {margin-right: 0;}
 
 div.table {border: 1px solid #000; margin: 30px 0;}
@@ -51,9 +54,26 @@ div.table > div.row > div.col:last-child {border-right: 0;}
 div.table > div.row.empty {line-height: 200px;}
 
 .boxBtns {margin: 20px 0;}
-.boxBtns button {float: right; padding: 5px;}
+.boxBtns button {float: right;}
 
 .paging {text-align: center;}
 .paging a {margin:0 5px; font-size: 1.1em; font-weight: bold;}
 .paging a.on {color: #f00;}
 .paging a:hover {color: #000;}
+
+.searchBox {}
+.searchBox select {padding: 5px;}
+.searchBox > div.input {display: inline-block; width: 70%; vertical-align: middle;}
+.searchBox > div.input input[type=text] {width: 50%;}
+.searchBox > select {display: inline-block; float: right;}
+
+.comments {margin: 30px 0;}
+.comments h3 {margin-bottom: 10px;}
+.comments li {border: 1px solid #50bde2; border-bottom: 0; padding: 15px 15px 25px;}
+.comments li:last-child {border: 1px solid #50bde2;}
+.comments li .commentBtns {margin-bottom: 10px;}
+.comments li .commentBtns small {color: #ccc;}
+.comments li .commentBtns div {float: right;}
+.comments li .commentBtns button {float: right; margin-left: 10px;}
+.comments li textarea {width: 100%; height: 100px; resize: none;}
+.comments li.empty{text-align: center; padding: 50px 0;}

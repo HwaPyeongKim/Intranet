@@ -15,7 +15,7 @@ public class FileService {
         fdao.insert(fdto);
     }
 
-    public FileDto getFile(int image) {
-        return fdao.getFile(image);
+    public FileDto getFile(int fidx) {
+        return fdao.getFile(fidx);
     }
 }

@@ -31,9 +31,7 @@ public class MemberController {
         String url = "member/login";
         if (session.getAttribute("loginUser") != null) {
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-            FileDto fdto = fs.getFile(mdto.getImage());
             model.addAttribute("loginUser", mdto);
-            model.addAttribute("profileImg", fdto.getPath());
 
             url = "main";
         }
@@ -70,7 +68,7 @@ public class MemberController {
             } else {
                 FileDto fdto = fs.getFile(mdto.getImage());
                 session.setAttribute("loginUser", mdto);
-                session.setAttribute("profileimg", fs.getFile(mdto.getImage()));
+                session.setAttribute("profileImg", fs.getFile(mdto.getImage()).getPath());
                 String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 MemberAttendanceDto madto = ms.selectAttendance(mdto.getMidx(),date);
                 if (madto == null) {
@@ -152,7 +150,7 @@ public class MemberController {
     @GetMapping("/logout")
     public String logout(HttpSession session, Model model) {
         session.removeAttribute("loginUser");
-        session.removeAttribute("profileimg");
+        session.removeAttribute("profileImg");
         return "redirect:/";
     }
 
