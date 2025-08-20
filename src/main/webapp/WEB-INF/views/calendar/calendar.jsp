@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ include file="../header.jsp"%>
+<link rel="stylesheet" href="/css/calendar.css">
 <%-- 달력 출력을 위해 밑 두개 스크립트 실행 필요 --%>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <script>
