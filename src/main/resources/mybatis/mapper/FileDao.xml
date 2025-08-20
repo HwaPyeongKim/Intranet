@@ -10,7 +10,7 @@
     </insert>
 
     <select id="getFile" resultType="com.example.intranet.dto.FileDto">
-        select * from file where fidx = #{image}
+        select * from file where fidx = #{fidx}
     </select>
 
 </mapper>

@@ -8,8 +8,27 @@
     <select id="select" resultType="com.example.intranet.dto.BoardDto">
         select b.*, m.name from board b
         left join member m on m.midx = b.midx
-        where b.deleteyn = 'N'
-        order by b.writedate desc
+        <where>
+            b.deleteyn = 'N'
+            <if test="type == 'title'">
+                and b.title like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'titleContent'">
+                and (b.title like concat('%', #{key}, '%') OR b.content like concat('%', #{key}, '%'))
+            </if>
+            <if test="type == 'name'">
+                and m.name like concat('%', #{key}, '%')
+            </if>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by b.writedate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by b.writedate asc
+            </when>
+        </choose>
     </select>
 
     <select id="selectOne" resultType="com.example.intranet.dto.BoardDto">
@@ -24,10 +43,6 @@
         insert into board (category, title, content, pwd, midx, fidx) values (#{category}, #{title}, #{content}, #{pwd}, #{midx}, #{fidx})
     </insert>
 
-    <select id="getAllCount" resultType="_int">
-        select count(*) from board where deleteyn = 'N'
-    </select>
-
     <update id="addRead">
         update board set readcount = readcount + 1, reader = #{reader} where bidx = #{bidx} and (find_in_set(#{midx},reader) = 0 or find_in_set(#{midx},reader) is null)
     </update>
@@ -36,8 +51,38 @@
         select * from board where bidx = #{bidx} and pwd = #{pwd}
     </select>
 
-    <delete id="delete">
-        delete from board where bidx = #{bidx}
-    </delete>
+    <update id="delete">
+        update board set deleteyn = 'Y' where bidx = #{bidx}
+    </update>
+
+    <select id="selectNotice" resultType="com.example.intranet.dto.BoardDto">
+        select b.*, m.name from board b
+        left join member m on m.midx = b.midx
+        where b.deleteyn = 'N' and b.noticeyn = 'Y' and b.showyn = 'Y'
+        order by b.writedate desc
+    </select>
+
+    <update id="update" parameterType="com.example.intranet.dto.BoardDto">
+        update board set category = #{category}, title = #{title}, content = #{content}, midx = #{midx}, fidx = #{fidx}, updatedate = now() where bidx = #{bidx}
+    </update>
+
+    <select id="selectComments" resultType="com.example.intranet.dto.BoardCommentDto">
+        select bc.*, m.name from board_comment bc
+                                     left join member m on m.midx = bc.midx
+        where bc.bidx = #{bidx} and bc.deleteyn = 'N'
+        order by bc.writedate desc;
+    </select>
+
+    <insert id="insertComment">
+        insert * from board_comment (bidx, midx, content) values (#{bidx}, #{midx}, #{content})
+    </insert>
+
+    <update id="updateComment">
+        update board_comment set content = #{content} where bcidx = #{bcidx}
+    </update>
+
+    <update id="deleteComment">
+        update board_comment set deleteyn = 'Y' where bcidx = #{bcidx}
+    </update>
 
 </mapper>
