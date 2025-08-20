@@ -6,14 +6,19 @@ import java.sql.Timestamp;
 
 @Data
 public class MessageDto {
-    private int msidx;
-    private int frommidx;
-    private int tomidx;
-    private String title;
-    private String content;
-    private String readyn;
-    private Timestamp readdate;
-    private Timestamp writedate;
-    private String deleteyn;
-    private int loopnum; // 번호를 위한 변수
+    private int msidx;       // 메시지 고유번호
+    private int frommidx;    // 보낸 사람 회원번호
+    private int tomidx;      // 받는 사람 회원번호
+    private String title;    // 제목
+    private String content;  // 내용
+    private String readyn;   // 읽음 여부
+    private Timestamp readdate;  // 읽은 날짜
+    private Timestamp writedate; // 작성일
+    private String deleteyn;     // 삭제 여부
+    private int loopnum; // 번호 매기기용
+
+    private String toname;
+    private String fromname;
 }
+
+
