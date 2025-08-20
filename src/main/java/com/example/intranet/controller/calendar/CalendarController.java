@@ -76,10 +76,29 @@ public class CalendarController {
     public CalendarDto calendarSave(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
 
         CalendarDto vo = null;
-        // 로그인시만 일정추가 기능을 사용가능
+        // 비로그인시 null이 리턴, if문에서 분기가 갈리게 됨
         if(session.getAttribute("loginUser") != null){
             vo = new CalendarDto();
             vo.setTitle((String) map.get("title"));
+
+            // 카테고리 1:개인, 2:부서, 3:회사
+            int category = Integer.parseInt((String) map.get("category"));
+            vo.setCategory(category);
+
+            switch (category) {
+                case 1: // 개인: 수정가능, 색상 파란색
+                    vo.setEditable(true);
+                    vo.setEventColor("#3788d8");
+                    break;
+                case 2: // 부서: 수정불가, 색상 주황색
+                    vo.setEditable(false);
+                    vo.setEventColor("#ED7D31");
+                    break;
+                case 3: // 회사: 수정불가, 색상 초록색
+                    vo.setEditable(false);
+                    vo.setEventColor("#008000");
+                    break;
+            }
 
             // 일정 DB에 로그인 유저의 midx를 같이 insert
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");

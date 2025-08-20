@@ -19,6 +19,8 @@
         수정사항
         TO_CHAR()를 DATE_FORMAT()로 변경
         where에 midx 추가
+        카테고리기능 추가, 카테고리별 수정가능여부, 색상 추가
+        부서일정의 경우 해당 부서 직원만 부서일정이 보이게?
     -->
     <select id="calendarList" resultType="com.example.intranet.dto.calendar.CalendarDto">
         SELECT
@@ -26,9 +28,12 @@
             CALENDAR_TITLE AS TITLE,
             DATE_FORMAT(CALENDAR_START, '%Y-%m-%d %H:%i:%s') AS START1,
             DATE_FORMAT(CALENDAR_END, '%Y-%m-%d %H:%i:%s') AS END,
-            ALL_DAY AS allDay
+            ALL_DAY AS allDay,
+            category,
+            editable,
+            eventColor
         FROM CALENDAR
-        WHERE midx = #{midx}
+        WHERE midx = #{midx} OR category=3 OR category=2
     </select>
 
     <!-- 일정 저장하기 -->
@@ -45,13 +50,19 @@
             CALENDAR_START,
             CALENDAR_END,
             ALL_DAY,
-            MIDX
+            MIDX,
+            category,
+            editable,
+            eventColor
         ) values (
                          #{title},
                          DATE_FORMAT(#{start1}, '%Y-%m-%d %H:%i:%s'),
                          DATE_FORMAT(#{end}, '%Y-%m-%d %H:%i:%s'),
                          #{allDay},
-                         #{midx}
+                         #{midx},
+                         #{category},
+                         #{editable},
+                         #{eventColor}
                  )
     </insert>
 

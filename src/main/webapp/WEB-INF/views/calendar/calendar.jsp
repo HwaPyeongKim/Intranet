@@ -18,8 +18,20 @@
             slotMaxTime: '23:59',                   // Day 캘린더에서 종료 시간
 
             customButtons: {                        // 사용자가 만드는 버튼
-                testButton: {
-                    text: "테스트버튼"
+                allSchedule: {
+                    text: "전체일정",
+                    click: function (){
+                        location.href="calendarList";
+                    }
+                },
+                mySchedule: {
+                    text: "나의일정"
+                },
+                teamSchedule: {
+                    text: "부서일정"
+                },
+                comSchedule: {
+                    text: "회사일정"
                 }
             },
             // 해더에 표시할 툴바
@@ -27,6 +39,9 @@
                 left: 'prevYear,prev,next,nextYear today',  // today는 , 와 띄어쓰기에 따라서 위치가 바뀐다
                 // left: 'prev,next,today',
                 center: 'title',
+                right: 'allSchedule,mySchedule,teamSchedule,comSchedule'
+            },
+            footerToolbar: {                                // customButton 은 left 또는 right 안에 넣으면 적용 된다
                 right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
             },
             initialView: 'dayGridMonth',    // 로드 될때 캘린더 화면 기본 설정
@@ -47,17 +62,35 @@
                 console.log("eventRemove : " + obj);
             },
             select: function (arg) {          // 일자를 드래그하면 실행됨
+                // 비로그인시 일정추가 기능 사용 불가능
                 if(${empty loginUser}){
                     alert('로그인이 필요합니다');
                     return;
                 }
-                let title = prompt('일정 입력');
+                // 일정 제목 외에 일정의 분류가 추가되야함
+                // 프롬프트가 아니라 팝업창이 떠야함
+                // 임시로 그냥 프롬프트 두개로 분류를 입력받음
+
+                let title = prompt('일정과 분류를 입력하세요.\n\n일정 입력');
+                if(!title){
+                    return; // 일정 제목을 입력하지 않으면 취소
+                }
+                let category = prompt('일정과 분류를 입력하세요.\n\n분류 입력, 1:개인, 2:부서, 3:회사');
+
+                // 일정은 1, 2, 3중에 입력, 권한기능이 필요할것 같음
+                // 부서일정, 전체일정은 개인이 수정할수 없음 (editable 속성)
+
+                if(!(category==1||category==2||category==3)){
+                    alert('일정의 분류가 잘못 입력되었습니다.');
+                    return;
+                }
                 if (title) {
                     let newData = {
                         title: title,
                         start: arg.start,
                         end: arg.end,
-                        allDay: arg.allDay
+                        allDay: arg.allDay,
+                        category: category
                     }
 
                     $.ajax({
@@ -74,7 +107,9 @@
                                     start: data.start1,
                                     end: data.end,
                                     allDay: data.allDay,
-                                    editable: true                 // default : false 이벤트 드래그 등의 편집여부를 설정함
+                                    editable: data.editable,
+                                    backgroundColor: data.eventColor,
+                                    borderColor: data.eventColor
                                 });
                             }else{
                                 alert('로그인이 필요합니다');
@@ -86,6 +121,9 @@
             },
             eventClick: function (arg) {
                 // 일정 클릭 시
+                if(!arg.event.startEditable){
+                    return; // 수정 불가능한 일정이면 동작하지 않음
+                }
                 if (confirm("선택한 일정을 삭제하시겠습니까?")) {
                     $.ajax({
                         type: "DELETE",
@@ -138,6 +176,7 @@
                     type: "get",
                     url: "/calendarList",
                     success: function (data) {
+                        // 부서 분류별로 수정가능여부, 색상 추가
                         if (data != null) {
                             for (let i = 0; i < data.length; i++) {
                                 calendar.addEvent({
@@ -146,7 +185,9 @@
                                     start: data[i].start1,
                                     end: data[i].end,
                                     allDay: data[i].allDay,
-                                    editable: true                 // default : false 이벤트 드래그 등의 편집여부를 설정함
+                                    editable: data[i].editable,
+                                    backgroundColor: data[i].eventColor,
+                                    borderColor: data[i].eventColor
                                 })
                             }
                         }
@@ -159,7 +200,6 @@
 
     });
 </script>
-
 <div class="form-group">
     <div id='calendar-container'><%--  여기에 스타일 적용       --%>
         <div id="calendar"></div>
