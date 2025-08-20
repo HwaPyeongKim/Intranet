@@ -2,16 +2,18 @@
 <%@ include file="../header.jsp" %>
 
 <section>
-    <h2>게시판</h2>
+    <h2>자료실</h2>
 
     <ul class="submenu">
-        <li class="on"><a href="board">메인게시판</a></li>
-        <li><a href="download">자료실</a></li>
+        <li><a href="board">메인게시판</a></li>
+        <li class="on"><a href="download">자료실</a></li>
     </ul>
 
-    <div class="boxBtns clearfix">
-        <button type="button" onclick="location.href='writeBoardForm?category=main'">글쓰기</button>
-    </div>
+    <c:if test="${loginUser.level >= 3}">
+        <div class="boxBtns clearfix">
+            <button type="button" onclick="location.href='writeBoardForm?category=download'">글쓰기</button>
+        </div>
+    </c:if>
 
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
