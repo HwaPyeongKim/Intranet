@@ -27,6 +27,9 @@
                         for(var i=0; i<events.length; i++){
                             events[i].setProp('display', 'auto');
                         }
+                        $(".fc-mySchedule-button").removeAttr("style");
+                        $(".fc-teamSchedule-button").removeAttr("style");
+                        $(".fc-comSchedule-button").removeAttr("style");
                     }
                 },
                 mySchedule: {
@@ -40,6 +43,15 @@
                                 events[i].setProp('display', 'none');
                             }
                         }
+                        $(".fc-allSchedule-button").removeAttr("style");
+                        $(".fc-teamSchedule-button").removeAttr("style");
+                        $(".fc-comSchedule-button").removeAttr("style")
+                        $(".fc-mySchedule-button").css({
+                            "background-color":"#378fff",
+                            "border-color": "#aaaaaa",
+                            "z-index": "3333",
+                            "box-shadow": "0px 0px 5px #000000"
+                        });
                     }
                 },
                 teamSchedule: {
@@ -53,6 +65,15 @@
                                 events[i].setProp('display', 'none');
                             }
                         }
+                        $(".fc-allSchedule-button").removeAttr("style");
+                        $(".fc-mySchedule-button").removeAttr("style");
+                        $(".fc-comSchedule-button").removeAttr("style");
+                        $(".fc-teamSchedule-button").css({
+                            "background-color":"#ff7D31",
+                            "border-color": "#aaaaaa",
+                            "z-index": "3333",
+                            "box-shadow": "0px 0px 5px #000000"
+                        });
                     }
                 },
                 comSchedule: {
@@ -66,6 +87,15 @@
                                 events[i].setProp('display', 'none');
                             }
                         }
+                        $(".fc-allSchedule-button").removeAttr("style");
+                        $(".fc-mySchedule-button").removeAttr("style");
+                        $(".fc-teamSchedule-button").removeAttr("style");
+                        $(".fc-comSchedule-button").css({
+                            "background-color":"#00bb00",
+                            "border-color": "#aaaaaa",
+                            "z-index": "3333",
+                            "box-shadow": "0px 0px 5px #000000"
+                        });
                     }
                 }
             },
