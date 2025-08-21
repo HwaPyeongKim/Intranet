@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../header.jsp" %>
-<%@ include file="sub_menu.jsp" %>
 <style>
   #work {}
   #work .row{
@@ -23,15 +22,24 @@
 </style>
 
 <section id="work">
+
+    <h2>업무관리</h2>
+
+    <ul class="submenu">
+        <li><a href="work?first=y">요청받은 업무</a></li>
+        <li class="on"><a href="yourwork?first=y">요청한 업무</a></li>
+    </ul>
+
+
     <form method="get" name="work" class="form shadow">
     <div class="tb">
       <div class="tb_top" style="display: flex">
         <div class="col" style="display: flex; align-items: center; justify-content: start">
-          업무명&nbsp; <input type="text" name="key" value="${key}"/>&nbsp;&nbsp;
+          &nbsp;업무명&nbsp; <input type="text" name="key" value="${key}"/>&nbsp;&nbsp;
           <input type="button"  name="btn_search" value="검색" onclick="go_search('yourwork')"/>
         </div>
-        <div class="col" style="display: flex; align-items: center; justify-content: end">
-          <input type="button" name="btn_search" value="업무요청" onclick="location.href='insertWorkForm'" />
+        <div class="boxBtns clearfix" style="display: flex; align-items: center; justify-content: end">
+          <input type="button" name="btn_search" value="업무요청" onclick="location.href='insertWorkForm'" />&nbsp;
         </div>
       </div>
 

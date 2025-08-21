@@ -28,4 +28,8 @@
     <select id="checkWorkout" resultType="com.example.intranet.dto.MemberAttendanceDto">
         select midx, starttime, date_format(endtime, '%Y-%m-%d %H:%i:%s') AS endtime from member_attendance where midx = #{midx} and date = #{date} and endtime is not null
     </select>
+
+    <select id="getAllMembers" resultType="com.example.intranet.dto.MemberDto">
+        select * from member
+    </select>
 </mapper>
