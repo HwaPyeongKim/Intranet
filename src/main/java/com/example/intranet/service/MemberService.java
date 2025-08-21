@@ -6,6 +6,8 @@ import com.example.intranet.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class MemberService {
 
@@ -29,5 +31,9 @@ public class MemberService {
     }
     public MemberAttendanceDto checkWorkout(int midx, String date) {
         return mdao.checkWorkout(midx,date);
+    }
+
+    public ArrayList<MemberDto> getAllMembers() {
+        return mdao.getAllMembers();
     }
 }
