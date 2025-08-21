@@ -1,9 +1,14 @@
 package com.example.intranet.controller.calendar;
 
+import com.example.intranet.dto.FileDto;
+import com.example.intranet.dto.MemberDto;
+import com.example.intranet.service.FileService;
 import com.example.intranet.service.calendar.CalendarService;
 import com.example.intranet.dto.calendar.CalendarDto;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZoneId;
@@ -19,18 +24,29 @@ public class CalendarController {
     /*
         수정사항
         패키지명 변경
-        RestController -> Controller 로 바꿈
-        그에 따라 각 메소드에 ResponseBody 어노테이션 붙임
+        @RestController -> @Controller 로 바꿈
+        그에 따라 각 메소드에 @ResponseBody 어노테이션 붙임
+        일정조회, 일정추가 기능에 midx 추가, 이제 로그인 유저 전용 기능
     */
 
-    @GetMapping("/calendar")
-    public String calendar(){
-        return "calendar/calendar";
-    }
-
-
+    @Autowired
+    FileService fs;
     @Autowired
     private CalendarService calendarService;
+
+    @GetMapping("/schedule") // 임시적 링크
+    public String calendar(HttpSession session, Model model){
+        // String url = "member/login";
+        if (session.getAttribute("loginUser") != null) {
+            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+            FileDto fdto = fs.getFile(mdto.getImage());
+            model.addAttribute("loginUser", mdto);
+            model.addAttribute("profileImg", fdto.getPath());
+            // url = "calendar/calendar";
+
+        }
+        return "calendar/calendar";
+    }
 
     /**
      * 캘린더 일정 조회하기
@@ -39,9 +55,13 @@ public class CalendarController {
      */
     @ResponseBody
     @RequestMapping("/calendarList")
-    public List<CalendarDto> calendarList() throws Exception{
-        List<CalendarDto> vo = calendarService.calendarList();
-
+    public List<CalendarDto> calendarList(HttpSession session) throws Exception{
+        // 로그인 유저의 midx로 select
+        List<CalendarDto> vo = null;
+        if(session.getAttribute("loginUser") != null){
+            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+            vo = calendarService.calendarList(mdto.getMidx());
+        }
         return vo;
     }
 
@@ -53,24 +73,52 @@ public class CalendarController {
      */
     @ResponseBody
     @PostMapping("/calendarSave")
-    public CalendarDto calendarSave(@RequestBody Map<String, Object> map) throws Exception {
+    public CalendarDto calendarSave(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
 
-        CalendarDto vo = new CalendarDto();
-        vo.setTitle((String) map.get("title"));
+        CalendarDto vo = null;
+        // 비로그인시 null이 리턴, if문에서 분기가 갈리게 됨
+        if(session.getAttribute("loginUser") != null){
+            vo = new CalendarDto();
+            vo.setTitle((String) map.get("title"));
 
-        // UTC 시간을 LocalDateTime으로 변환
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        ZonedDateTime startUTC = ZonedDateTime.parse((String) map.get("start"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul"));
-        ZonedDateTime endUTC = map.get("end") != null ? ZonedDateTime.parse((String) map.get("end"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul")) : null;
+            // 카테고리 1:개인, 2:부서, 3:회사
+            int category = Integer.parseInt((String) map.get("category"));
+            vo.setCategory(category);
 
-        // 한국 시간으로 변환하여 저장
-        vo.setStart1(startUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        vo.setEnd(endUTC != null ? endUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : null);
-        vo.setAllDay((Boolean) map.get("allDay"));
+            switch (category) {
+                case 1: // 개인: 수정가능, 색상 파란색
+                    vo.setEditable(true);
+                    vo.setEventColor("#3788d8");
+                    break;
+                case 2: // 부서: 수정불가, 색상 주황색
+                    vo.setEditable(false);
+                    vo.setEventColor("#ED7D31");
+                    break;
+                case 3: // 회사: 수정불가, 색상 초록색
+                    vo.setEditable(false);
+                    vo.setEventColor("#008000");
+                    break;
+            }
+
+            // 일정 DB에 로그인 유저의 midx를 같이 insert
+            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+            vo.setMidx(mdto.getMidx());
+
+            // UTC 시간을 LocalDateTime으로 변환
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+            ZonedDateTime startUTC = ZonedDateTime.parse((String) map.get("start"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul"));
+            ZonedDateTime endUTC = map.get("end") != null ? ZonedDateTime.parse((String) map.get("end"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul")) : null;
+
+            // 한국 시간으로 변환하여 저장
+            vo.setStart1(startUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            vo.setEnd(endUTC != null ? endUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : null);
+            vo.setAllDay((Boolean) map.get("allDay"));
+
+
+            calendarService.calendarSave(vo);
+        }
 
         // 저장한 일정의 key 값을 포함한 데이터를 다시 반환
-        calendarService.calendarSave(vo);
-
         return vo;
     }
 

@@ -5,7 +5,9 @@
 
     <!--
         원본 https://greed-yb.tistory.com/274
+        DB 이름을 기존의 schedule로 할지 원본의 calendar로 할지 선택필요
         공통 수정사항
+        파일명 mapper.xml -> CalendarDao.xml
         패키지명 변경
         CALENDAR_NO 에 AS calendarNo 추가
         ALL_DAY 에 AS allDay 추가
@@ -16,6 +18,9 @@
     <!--
         수정사항
         TO_CHAR()를 DATE_FORMAT()로 변경
+        where에 midx 추가
+        카테고리기능 추가, 카테고리별 수정가능여부, 색상 추가
+        부서일정의 경우 해당 부서 직원만 부서일정이 보이게?
     -->
     <select id="calendarList" resultType="com.example.intranet.dto.calendar.CalendarDto">
         SELECT
@@ -23,8 +28,12 @@
             CALENDAR_TITLE AS TITLE,
             DATE_FORMAT(CALENDAR_START, '%Y-%m-%d %H:%i:%s') AS START1,
             DATE_FORMAT(CALENDAR_END, '%Y-%m-%d %H:%i:%s') AS END,
-            ALL_DAY AS allDay
+            ALL_DAY AS allDay,
+            category,
+            editable,
+            eventColor
         FROM CALENDAR
+        WHERE midx = #{midx} OR category=3 OR category=2
     </select>
 
     <!-- 일정 저장하기 -->
@@ -33,18 +42,27 @@
         수정사항
         TO_DATE()를 DATE_FORMAT()로 변경
         Auto Increment 추가로 CALENDAR_NO를 인서트 하는 부분을 지움
+        유저의 midx를 같이 insert
     -->
     <insert id="calendarSave" parameterType="com.example.intranet.dto.calendar.CalendarDto" useGeneratedKeys="true" keyColumn="CALENDAR_NO" keyProperty="calendarNo" >
         INSERT INTO CALENDAR(
             CALENDAR_TITLE,
             CALENDAR_START,
             CALENDAR_END,
-            ALL_DAY
+            ALL_DAY,
+            MIDX,
+            category,
+            editable,
+            eventColor
         ) values (
                          #{title},
                          DATE_FORMAT(#{start1}, '%Y-%m-%d %H:%i:%s'),
                          DATE_FORMAT(#{end}, '%Y-%m-%d %H:%i:%s'),
-                         #{allDay}
+                         #{allDay},
+                         #{midx},
+                         #{category},
+                         #{editable},
+                         #{eventColor}
                  )
     </insert>
 

@@ -10,8 +10,9 @@ public interface ICalendarDao {
     // 원본 https://greed-yb.tistory.com/274
     /*
         수정사항
-        CalendarMapper -> ICalendarDao
+        인터페이스명 CalendarMapper -> ICalendarDao
         패키지명 변경
+        calendarList()에 midx 추가
     */
 
     /**
@@ -19,7 +20,7 @@ public interface ICalendarDao {
      * @return
      * @throws Exception
      */
-    List<CalendarDto> calendarList() throws Exception;
+    List<CalendarDto> calendarList(int midx) throws Exception;
 
     /**
      * 캘린더 일정 저장하기

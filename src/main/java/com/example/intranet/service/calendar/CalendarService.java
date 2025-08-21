@@ -6,17 +6,18 @@ import java.util.List;
 public interface CalendarService {
 
     // 원본 https://greed-yb.tistory.com/274
-    // 패키지명 변경 외 수정사항 없음
+    // 수정사항 calendarList()에 midx 추가
 
     /**
      * 캘린더 일정 조회하기
      * @return
      * @throws Exception
      */
-    List<CalendarDto> calendarList() throws Exception;
+    List<CalendarDto> calendarList(int midx) throws Exception;
 
     /**
      * 캘린더 일정 저장하기
+     *
      * @param vo
      * @throws Exception
      */
