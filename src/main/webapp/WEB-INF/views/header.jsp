@@ -29,7 +29,7 @@
 
         <ul class="nav">
             <c:if test="${loginUser.level > 1}">
-            <li><a href="admin">관리자</a></li>
+            <li><a href="adminLoginForm">관리자</a></li>
             </c:if>
             <li><a href="board">게시판</a></li>
             <li><a href="schedule">일정관리</a></li>

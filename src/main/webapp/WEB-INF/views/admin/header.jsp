@@ -17,11 +17,11 @@
 </head>
 <body>
 
-<div id="wrap"> <!--wrap 시작-->
-
-    <header>
+<c:if test="${loginUser != null && loginUser.level > 1}">
+<header>
+    <div class="nav">
         <a href="#" id="logo">로고</a>
-        <ul class="nav gnb">
+        <ul class="gnb">
             <li>
                 <span>직원 관리</span>
                 <ul class="lnb">
@@ -37,4 +37,15 @@
                 </ul>
             </li>
         </ul>
-    </header>
+    </div>
+    <div class="loginProfile">
+        <img src="${profileImg}" />
+        <span>${loginUser.name}</span>
+        <a href="main">사용자 페이지로 이동</a>
+        <button type="button" onclick="location.href='logout'">로그아웃</button>
+        <button type="button" data-midx="${loginUser.midx}" id="workoutBtn">퇴근</button>
+    </div>
+</header>
+</c:if>
+
+<div id="wrap"> <!--wrap 시작-->

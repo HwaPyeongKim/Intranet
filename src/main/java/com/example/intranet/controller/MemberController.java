@@ -66,7 +66,6 @@ public class MemberController {
             } else if (!mdto.getPwd().equals(pwd)) {
                 model.addAttribute("msg", "아이디와 패스워드를 확인해주세요.");
             } else {
-                FileDto fdto = fs.getFile(mdto.getImage());
                 session.setAttribute("loginUser", mdto);
                 session.setAttribute("profileImg", fs.getFile(mdto.getImage()).getPath());
                 String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));

@@ -6,7 +6,7 @@ input[type=text], input[type=password], input[type=email] {padding: 5px; border:
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {border-bottom: 2px solid #50bde2;}
 textarea:focus {outline: 2px solid #50bde2;}
 
-#wrap {width: 100%; max-width:1200px; margin: 0 auto;}
+#wrap {width: 100%; max-width:1400px; margin: 0 auto; padding-top: 80px;}
 h2 {margin: 10px 0 30px; font-size: 2em;}
 textarea {padding: 10px;}
 
@@ -15,14 +15,18 @@ textarea {padding: 10px;}
 p.notice {color: #f00;}
 .shadow {box-shadow: 3px 3px 10px #999;}
 
-header {position: fixed; top: 0; left: 0; width: 200px; height: 100vh; background: #67c3e1; color: #fff;}
-header #logo {display: block; width: 100%; height: 100px; line-height: 100px; text-align: center; background: #50bde2;}
-header .gnb {}
-header .gnb > li {border-top: 2px solid #3788d8; padding-top: 15px; text-indent: 15px;}
-header .gnb > li:last-child {border-bottom: 2px solid #3788d8;}
-header .gnb > li > span {display: block; margin-bottom: 10px; cursor: pointer;}
-header .lnb {display: none; background: #32a2c6;}
-header .lnb li {border-top: 1px solid #3788d8; padding: 15px 0; text-indent: 25px;}
+header .nav {position: fixed; top: 0; left: 0; width: 200px; height: 100vh; background: #67c3e1; color: #fff;}
+header .nav #logo {display: block; width: 100%; height: 80px; line-height: 80px; text-align: center; background: #50bde2;}
+header .nav .gnb {}
+header .nav .gnb > li {border-top: 2px solid #3788d8; padding-top: 15px; text-indent: 15px;}
+header .nav .gnb > li:last-child {border-bottom: 2px solid #3788d8;}
+header .nav .gnb > li > span {display: block; margin-bottom: 10px; cursor: pointer;}
+header .nav .lnb {display: none; background: #32a2c6;}
+header .nav .lnb li {border-top: 1px solid #3788d8; padding: 15px 0; text-indent: 25px;}
+header .loginProfile {float: right; margin-right: 15px; margin-top: 15px;}
+header .loginProfile img {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}
+header .loginProfile span {display: inline-block;}
+header .loginProfile a {padding: 5px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold;}
 
 .submenu {display: flex; justify-content: space-between;}
 .submenu li {width: 50%; line-height: 50px; text-align: center; border: 1px solid #000;}
@@ -78,3 +82,6 @@ div.table > div.row.empty {line-height: 200px;}
 .comments li .commentBtns button {float: right; margin-left: 10px;}
 .comments li textarea {width: 100%; height: 100px; resize: none;}
 .comments li.empty{text-align: center; padding: 50px 0;}
+
+section#login {display: flex; align-items: center; justify-content: center; height: 100vh;}
+section#login form {width: 100%; max-width: 400px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
