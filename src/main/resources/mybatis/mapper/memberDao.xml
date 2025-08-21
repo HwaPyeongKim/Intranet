@@ -32,4 +32,12 @@
     <select id="getAllMembers" resultType="com.example.intranet.dto.MemberDto">
         select * from member
     </select>
+
+    <select id="checkPwd" resultType="com.example.intranet.dto.MemberDto">
+        select * from member where userid = #{userid} and pwd = #{pwd}
+    </select>
+
+    <update id="update" parameterType="com.example.intranet.dto.MemberDto">
+        update member set pwd = #{pwd}, name = #{name}, email = #{email}, phone = #{phone}, postcode = #{postcode}, address1 = #{address1}, address2 = #{address2}, image = #{image} where midx = #{midx}
+    </update>
 </mapper>

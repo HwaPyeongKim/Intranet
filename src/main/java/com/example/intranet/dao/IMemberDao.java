@@ -14,6 +14,7 @@ public interface IMemberDao {
     void workout(int midx, String date);
     MemberAttendanceDto selectAttendance(int midx, String date);
     MemberAttendanceDto checkWorkout(int midx, String date);
-
     ArrayList<MemberDto> getAllMembers();
+    MemberDto checkPwd(String userid, String pwd);
+    void update(MemberDto memberdto);
 }
