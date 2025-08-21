@@ -1,0 +1,4 @@
+section#mypage {}
+section#mypage .container {display: flex; justify-content: center;}
+section#mypage #profileForm {width: 100%; max-width: 700px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
+

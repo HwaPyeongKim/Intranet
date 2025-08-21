@@ -23,7 +23,7 @@ header .nav li.profile img {display: inline-block; width: 40px; height: 40px; bo
 header .nav li.profile span {display: inline-block;}
 header .nav li.profile button {}
 
-.submenu {display: flex; justify-content: space-between;}
+.submenu {display: flex; justify-content: space-between; margin: 20px 0;}
 .submenu li {width: 50%; line-height: 50px; text-align: center; border: 1px solid #000;}
 .submenu li a {display: block; width: 100%;}
 .submenu li:first-child {border-radius: 5px 0 0 5px;}
@@ -61,7 +61,7 @@ div.table > div.row.empty {line-height: 200px;}
 .paging a.on {color: #f00;}
 .paging a:hover {color: #000;}
 
-.searchBox {}
+.searchBox {margin-top: 20px;}
 .searchBox select {padding: 5px;}
 .searchBox > div.input {display: inline-block; width: 70%; vertical-align: middle;}
 .searchBox > div.input input[type=text] {width: 50%;}
