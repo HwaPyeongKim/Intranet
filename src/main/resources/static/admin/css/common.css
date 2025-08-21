@@ -15,13 +15,14 @@ textarea {padding: 10px;}
 p.notice {color: #f00;}
 .shadow {box-shadow: 3px 3px 10px #999;}
 
-header {display: flex; justify-content: space-between; line-height: 60px;}
-header #logo {}
-header .nav {display: flex;}
-header .nav li {margin-left: 20px;}
-header .nav li.profile img {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}
-header .nav li.profile span {display: inline-block;}
-header .nav li.profile button {}
+header {position: fixed; top: 0; left: 0; width: 200px; height: 100vh; background: #67c3e1; color: #fff;}
+header #logo {display: block; width: 100%; height: 100px; line-height: 100px; text-align: center; background: #50bde2;}
+header .gnb {}
+header .gnb > li {border-top: 2px solid #3788d8; padding-top: 15px; text-indent: 15px;}
+header .gnb > li:last-child {border-bottom: 2px solid #3788d8;}
+header .gnb > li > span {display: block; margin-bottom: 10px; cursor: pointer;}
+header .lnb {display: none; background: #32a2c6;}
+header .lnb li {border-top: 1px solid #3788d8; padding: 15px 0; text-indent: 25px;}
 
 .submenu {display: flex; justify-content: space-between;}
 .submenu li {width: 50%; line-height: 50px; text-align: center; border: 1px solid #000;}

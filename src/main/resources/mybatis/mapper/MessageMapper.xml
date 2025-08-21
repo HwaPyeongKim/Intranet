@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.intranet.dao.IMessageDao">
+
+    <insert id="insertMessage" parameterType="com.example.intranet.dto.MessageDto">
+        INSERT INTO messages (frommidx, tomidx, title, content, readyn, deleteyn, writedate)
+        VALUES (#{frommidx}, #{tomidx}, #{title}, #{content}, 'N', 'N', NOW())
+    </insert>
+
+    <select id="getMessagesByUser" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
+        SELECT *, ROW_NUMBER() OVER (ORDER BY writedate DESC) AS loopnum
+        FROM msg_view
+        WHERE (frommidx = #{userId} OR tomidx = #{userId}) AND deleteyn = 'N'
+        ORDER BY writedate DESC
+    </select>
+
+    <select id="getMessageById" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
+        SELECT * FROM msg_view WHERE msidx = #{msidx}
+    </select>
+
+    <update id="updateReadStatus" parameterType="int">
+        UPDATE messages SET readyn = 'Y', readdate = NOW() WHERE msidx = #{msidx}
+    </update>
+
+    <update id="deleteMessage" parameterType="int">
+        UPDATE messages SET deleteyn = 'Y' WHERE msidx = #{msidx}
+    </update>
+
+
+<!--    <select id="getAllMembers" resultType="com.example.intranet.dto.MemberDto">-->
+<!--        SELECT midx, name, email, dept, position-->
+<!--        FROM member-->
+<!--        WHERE deleteyn = 'N'-->
+<!--        ORDER BY name ASC-->
+<!--    </select>-->
+
+
+</mapper>

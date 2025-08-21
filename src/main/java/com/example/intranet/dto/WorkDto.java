@@ -16,5 +16,8 @@ public class WorkDto {
     private Timestamp writedate;
     private Timestamp completedate;
     private String deleteyn;
-    private int loopnum; // 번호를 위한 변수
+    private int loopnum;// 번호를 위한 변수
+
+    private String name;
+    private String workername;
 }
