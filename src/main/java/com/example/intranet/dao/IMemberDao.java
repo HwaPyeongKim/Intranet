@@ -4,6 +4,8 @@ import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
+
 @Mapper
 public interface IMemberDao {
     void insert(MemberDto memberdto);
@@ -12,4 +14,7 @@ public interface IMemberDao {
     void workout(int midx, String date);
     MemberAttendanceDto selectAttendance(int midx, String date);
     MemberAttendanceDto checkWorkout(int midx, String date);
+    ArrayList<MemberDto> getAllMembers();
+    MemberDto checkPwd(String userid, String pwd);
+    void update(MemberDto memberdto);
 }
