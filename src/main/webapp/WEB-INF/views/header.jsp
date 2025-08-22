@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/css/board.css">
     <script src="/scripts/board.js"></script>
     <script src="/scripts/work.js"></script>
+    <script src="/scripts/request.js"></script>
 </head>
 <body>
 
