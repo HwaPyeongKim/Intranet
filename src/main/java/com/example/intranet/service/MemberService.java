@@ -32,8 +32,13 @@ public class MemberService {
     public MemberAttendanceDto checkWorkout(int midx, String date) {
         return mdao.checkWorkout(midx,date);
     }
-
     public ArrayList<MemberDto> getAllMembers() {
         return mdao.getAllMembers();
+    }
+    public MemberDto checkPwd(String userid, String pwd) {
+        return mdao.checkPwd(userid, pwd);
+    }
+    public void update(MemberDto memberdto) {
+        mdao.update(memberdto);
     }
 }

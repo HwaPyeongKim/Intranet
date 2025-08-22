@@ -14,10 +14,12 @@
 
     <%--개별 링크--%>
     <link rel="stylesheet" type="text/css" href="/css/member.css">
-    <script src="/scripts/member.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/board.css">
+    <link rel="stylesheet" type="text/css" href="/css/mypage.css">
+    <script src="/scripts/member.js"></script>
     <script src="/scripts/board.js"></script>
     <script src="/scripts/work.js"></script>
+    <script src="/scripts/request.js"></script>
 </head>
 <body>
 
@@ -29,14 +31,14 @@
 
         <ul class="nav">
             <c:if test="${loginUser.level > 1}">
-            <li><a href="admin">관리자</a></li>
+            <li><a href="adminLoginForm">관리자</a></li>
             </c:if>
             <li><a href="board">게시판</a></li>
             <li><a href="schedule">일정관리</a></li>
             <li><a href="work">업무관리</a></li>
             <li><a href="requests">전자결제</a></li>
-            <li><a href="mypage">마이페이지</a></li>
             <li><a href="message">메세지</a></li>
+            <li><a href="workList">마이페이지</a></li>
             <li class="profile">
                 <img src="${profileImg}" />
                 <span>${loginUser.name}</span>

@@ -1,0 +1,82 @@
+package com.example.intranet.controller;
+
+import com.example.intranet.dto.FileDto;
+import com.example.intranet.dto.MemberAttendanceDto;
+import com.example.intranet.dto.MemberDto;
+import com.example.intranet.service.AdminService;
+import com.example.intranet.service.FileService;
+import com.example.intranet.service.MemberService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+@Controller
+public class AdminController {
+
+    @Autowired
+    AdminService as;
+
+    @Autowired
+    MemberService ms;
+
+    @Autowired
+    FileService fs;
+
+    @GetMapping("/adminLoginForm")
+    public String adminLogin(HttpSession session, Model model){
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        if (mdto != null) {
+            if (mdto.getLevel() > 1) {
+                url = "redirect:/admin";
+            }
+        }
+        return url;
+    }
+
+    @PostMapping("/adminLogin")
+    public String adminLogin(@RequestParam("userid") String userid, @RequestParam("pwd") String pwd, HttpSession session, Model model){
+        String url = "admin/login";
+
+        if (userid.equals("")) {
+            model.addAttribute("msg", "아이디를 입력해주세요.");
+        } else if (pwd.equals("")) {
+            model.addAttribute("msg", "비밀번호를 입력해주세요.");
+        } else {
+            MemberDto mdto = ms.getMember(userid);
+            if (mdto == null) {
+                model.addAttribute("msg", "아이디와 패스워드를 확인해주세요.");
+            } else if (!mdto.getPwd().equals(pwd)) {
+                model.addAttribute("msg", "아이디와 패스워드를 확인해주세요.");
+            } else if (mdto.getLevel() == 1) {
+                model.addAttribute("msg", "관리자 접근권한이 없는 아이디입니다.");
+            } else {
+                session.setAttribute("loginUser", mdto);
+                session.setAttribute("profileImg", fs.getFile(mdto.getImage()).getPath());
+                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                MemberAttendanceDto madto = ms.selectAttendance(mdto.getMidx(),date);
+                if (madto == null) {
+                    ms.insertAttendance(mdto.getMidx());
+                }
+                url = "redirect:/admin";
+            }
+        }
+
+        return url;
+    }
+
+    @GetMapping("/admin")
+    public String admin(){
+
+
+        return "admin/adminMain";
+    }
+
+}
