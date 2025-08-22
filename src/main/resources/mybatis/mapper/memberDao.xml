@@ -38,6 +38,10 @@
     </select>
 
     <update id="update" parameterType="com.example.intranet.dto.MemberDto">
-        update member set pwd = #{pwd}, name = #{name}, email = #{email}, phone = #{phone}, postcode = #{postcode}, address1 = #{address1}, address2 = #{address2}, image = #{image} where midx = #{midx}
+        update member set name = #{name}, email = #{email}, phone = #{phone}, postcode = #{postcode}, address1 = #{address1}, address2 = #{address2}, image = #{image} where midx = #{midx}
+    </update>
+
+    <update id="changePwd">
+        update member set pwd = #{pwd} where midx = #{midx}
     </update>
 </mapper>

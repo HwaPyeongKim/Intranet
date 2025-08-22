@@ -38,9 +38,65 @@ public class MypageController {
         return "mypage/vacationList";
     }
 
+    @GetMapping("/profile")
+    public String profile(HttpSession session, Model model){
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            String filePath = fs.getFile(loginUser.getImage()).getPath();
+            model.addAttribute("filePath", filePath);
+            url = "mypage/profile";
+        }
+        return url;
+    }
+
     @GetMapping("/editProfile")
     public String editProfile(){
         return "mypage/editProfile";
+    }
+
+    @GetMapping("/changePwdForm")
+    public String changePwd(HttpSession session, Model model){
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            url = "mypage/chagePwd";
+        }
+        return url;
+    }
+
+    @PostMapping("/changePwd")
+    public String changePwd(@RequestParam(value="pwd", required=false, defaultValue="") String pwd, @RequestParam(value="newPwd", required=false, defaultValue="") String newPwd, @RequestParam(value="newPwdChk", required=false, defaultValue="") String newPwdChk, HttpSession session, Model model){
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            url = "mypage/chagePwd";
+            if (pwd.equals("")) {
+                model.addAttribute("msg", "비밀번호를 입력해주세요.");
+            } else if (newPwd.equals("")) {
+                model.addAttribute("msg", "새 비밀번호를 입력해주세요.");
+            } else if (newPwdChk.equals("")) {
+                model.addAttribute("msg", "새 비밀번호 확인을 입력해주세요.");
+            } else if (!newPwd.equals(newPwdChk)) {
+                model.addAttribute("msg", "새 비밀번호가 일치하지 않습니다.");
+            } else {
+                MemberDto mdto = mes.checkPwd(loginUser.getUserid(), pwd);
+                if (mdto == null) {
+                    model.addAttribute("msg", "비밀번호를 확인해주세요.");
+                } else {
+                    mes.changePwd(loginUser.getMidx(), newPwd);
+                    model.addAttribute("msg", "비밀번호가 수정되었습니다.");
+                    session.removeAttribute("loginUser");
+                    session.removeAttribute("profileImg");
+                    url = "member/login";
+                }
+            }
+        }
+
+        return url;
     }
 
     @PostMapping("/checkPwd")
@@ -67,14 +123,10 @@ public class MypageController {
     }
 
     @PostMapping("/updateProfile")
-    public String updateProfile(@ModelAttribute("dto") MemberDto memberdto, @RequestParam(value="pwdChk",required=false,defaultValue="") String pwdChk, @RequestParam(value="number1",required=false,defaultValue="") String number1, @RequestParam(value="number2",required=false,defaultValue="") String number2, @RequestParam(value="phone1",required=false,defaultValue="") String phone1, @RequestParam(value="phone2",required=false,defaultValue="") String phone2, @RequestParam(value="phone3",required=false,defaultValue="") String phone3, BindingResult result, HttpSession session, Model model){
+    public String updateProfile(@ModelAttribute("dto") MemberDto memberdto, @RequestParam(value="number1",required=false,defaultValue="") String number1, @RequestParam(value="number2",required=false,defaultValue="") String number2, @RequestParam(value="phone1",required=false,defaultValue="") String phone1, @RequestParam(value="phone2",required=false,defaultValue="") String phone2, @RequestParam(value="phone3",required=false,defaultValue="") String phone3, BindingResult result, HttpSession session, Model model){
         String url = "mypage/editProfileForm";
 
-        if (memberdto.getPwd().equals("")) {
-            model.addAttribute("msg", "패스워드를 입력해주세요.");
-        } else if (!memberdto.getPwd().equals(pwdChk)) {
-            model.addAttribute("msg", "패스워드가 일치하지 않습니다.");
-        } else if (memberdto.getName().equals("")) {
+        if (memberdto.getName().equals("")) {
             model.addAttribute("msg", "이름을 입력해주세요.");
         } else if (memberdto.getEmail().equals("")) {
             model.addAttribute("msg", "이메일을 입력해주세요.");

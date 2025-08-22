@@ -54,7 +54,7 @@ div.table > div.row > div.col:last-child {border-right: 0;}
 div.table > div.row.empty {line-height: 200px;}
 
 .boxBtns {margin: 20px 0;}
-.boxBtns button {float: right;}
+.boxBtns button {float: right; margin-left: 10px;}
 
 .paging {text-align: center;}
 .paging a {margin:0 5px; font-size: 1.1em; font-weight: bold;}

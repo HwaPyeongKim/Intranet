@@ -6,7 +6,7 @@
     <ul class="submenu">
         <li><a href="workList">나의업무</a></li>
         <li class="on"><a href="vacationList">연차/반차 신청</a></li>
-        <li><a href="editProfile">프로필 수정</a></li>
+        <li><a href="profile">프로필</a></li>
     </ul>
 
     <h2>연차/반차</h2>

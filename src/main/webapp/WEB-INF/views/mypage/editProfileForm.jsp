@@ -6,7 +6,7 @@
     <ul class="submenu">
         <li><a href="workList">나의업무</a></li>
         <li><a href="vacationList">연차/반차 신청</a></li>
-        <li class="on"><a href="editProfile">프로필 수정</a></li>
+        <li class="on"><a href="profile">프로필 수정</a></li>
     </ul>
 
     <h2>프로필 수정</h2>
@@ -21,16 +21,6 @@
                 <div class="field">
                     <div class="userid">
                         <input type="text" name="userid" id="userid" value="${dto.userid}" placeholder="아이디" readonly />
-                    </div>
-                </div>
-                <div class="field">
-                    <div>
-                        <input type="password" name="pwd" placeholder="패스워드" />
-                    </div>
-                </div>
-                <div class="field">
-                    <div>
-                        <input type="password" name="pwdChk" placeholder="패스워드 확인" />
                     </div>
                 </div>
                 <div class="field">

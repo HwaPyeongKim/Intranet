@@ -41,4 +41,7 @@ public class MemberService {
     public void update(MemberDto memberdto) {
         mdao.update(memberdto);
     }
+    public void changePwd(int midx, String pwd) {
+        mdao.changePwd(midx,pwd);
+    }
 }

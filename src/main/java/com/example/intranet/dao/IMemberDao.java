@@ -17,4 +17,5 @@ public interface IMemberDao {
     ArrayList<MemberDto> getAllMembers();
     MemberDto checkPwd(String userid, String pwd);
     void update(MemberDto memberdto);
+    void changePwd(int midx, String pwd);
 }
