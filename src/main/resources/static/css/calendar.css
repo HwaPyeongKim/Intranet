@@ -1,9 +1,30 @@
-.fc-header-toolbar .fc-toolbar-chunk:last-child .fc-button-group button:nth-child(2){
+
+.fc .fc-mySchedule-button{
     background: #3788d8;
 }
-.fc-header-toolbar .fc-toolbar-chunk:last-child .fc-button-group button:nth-child(3){
+.fc .fc-teamSchedule-button{
     background: #ED7D31;
 }
-.fc-header-toolbar .fc-toolbar-chunk:last-child .fc-button-group button:nth-child(4){
+.fc .fc-comSchedule-button{
     background: #008000;
+}
+
+.fc .fc-mySchedule-button:hover{
+    background: #378fff;
+}
+.fc .fc-teamSchedule-button:hover{
+    background: #ff7D31;
+}
+.fc .fc-comSchedule-button:hover{
+    background: #00bb00;
+}
+
+.fc .fc-mySchedule-button:active{
+    background-color: #3766d8;
+}
+.fc .fc-teamSchedule-button:active{
+    background-color: #cc7D31;
+}
+.fc .fc-comSchedule-button:active{
+    background-color: #007a00;
 }
