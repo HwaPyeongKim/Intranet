@@ -19,6 +19,7 @@
     <script src="/scripts/member.js"></script>
     <script src="/scripts/board.js"></script>
     <script src="/scripts/work.js"></script>
+    <script src="/scripts/mypage.js"></script>
 </head>
 <body>
 

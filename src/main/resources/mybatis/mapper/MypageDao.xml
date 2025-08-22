@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.intranet.dao.IMypageDao">
+
+    <select id="selectWork" resultType="com.example.intranet.dto.WorkDto">
+        select w.*
+        , mt.name as workername
+        , mf.name
+        from work w
+        left join member mf on mf.midx = w.midx
+        left join member mt on mt.midx = w.worker
+        <where>
+            w.deleteyn = 'N'
+            and worker = #{midx}
+            <choose>
+                <when test="type == 'title'">
+                    and w.title like concat('%', #{key}, '%')
+                </when>
+                <when test="type == 'titleContent'">
+                    and (w.title like concat('%', #{key}, '%') OR w.content like concat('%', #{key}, '%'))
+                </when>
+                <when test="type == 'name'">
+                    and mf.name like concat('%', #{key}, '%')
+                </when>
+            </choose>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by w.writedate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by w.writedate asc
+            </when>
+        </choose>
+    </select>
+
+    <select id="selectRequests" resultType="com.example.intranet.dto.MemberRequestsDto">
+        select *, m.name, cm.name as cname
+        from member_requests mr
+        left join member m on m.midx = mr.midx
+        left join member cm on cm.midx = mr.confirm_midx
+        <where>
+            mr.deleteyn = 'N'
+            and mr.midx = #{midx}
+            <choose>
+                <when test="type == 'title'">
+                    and mr.title like concat('%', #{key}, '%')
+                </when>
+                <when test="type == 'titleContent'">
+                    and (mr.title like concat('%', #{key}, '%') OR mr.content like concat('%', #{key}, '%'))
+                </when>
+                <when test="type == 'cname'">
+                    and cm.name like concat('%', #{key}, '%')
+                </when>
+            </choose>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by mr.writedate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by mr.writedate asc
+            </when>
+        </choose>
+    </select>
+
+    <insert id="insertRequests" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        insert into member_requests (category, midx, title, content, startdate, enddate) values (#{category} , #{midx} , #{title} , #{content} , #{startdate} , #{enddate})
+    </insert>
+
+</mapper>

@@ -9,7 +9,7 @@
         <li class="on"><a href="profile">프로필</a></li>
     </ul>
 
-    <h2>연차/반차</h2>
+    <h2>프로필</h2>
 
     <div class="boxBtns clearfix">
         <button type="button" onclick="location.href='changePwdForm'">비밀번호 수정</button>

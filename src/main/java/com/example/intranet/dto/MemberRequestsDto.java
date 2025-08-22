@@ -7,17 +7,21 @@ import java.sql.Timestamp;
 
 @Data
 public class MemberRequestsDto {
+    private int ridx;
+    private int category;
     private int midx;
-    private String type;
-    private String time;
+    private String title;
+    private String content;
     private Date startdate;
     private Date enddate;
-    private String reason;
     private int status;
-    private String confirmyn;
+    private int fidx;
     private String confirm_midx;
     private Timestamp confirmdate;
     private Timestamp writedate;
     private String deleteyn;
     private int loopnum; // 번호를 위한 변수
+
+    private String name;
+    private String cname;
 }

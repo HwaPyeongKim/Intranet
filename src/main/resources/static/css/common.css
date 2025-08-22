@@ -2,8 +2,8 @@
 
 input[type=button], input[type=submit], button {padding: 5px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold; cursor: pointer;}
 
-input[type=text], input[type=password], input[type=email] {padding: 5px; border: 0; border-bottom: 1px solid #000; outline: 0;}
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {border-bottom: 2px solid #50bde2;}
+input[type=text], input[type=password], input[type=email], input[type=date] {padding: 5px; border: 0; border-bottom: 1px solid #000; outline: 0;}
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus {border-bottom: 2px solid #50bde2;}
 textarea:focus {outline: 2px solid #50bde2;}
 
 #wrap {width: 100%; max-width:1200px; margin: 0 auto;}
