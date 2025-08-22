@@ -42,6 +42,19 @@
             nowIndicator: true,             // 현재 시간 마크
             dayMaxEvents: true,             // 이벤트가 많아지면 + 로 이벤트 표시
             locale: 'ko',                   // 한국어 설정
+            dayCellContent: function(info){
+                var number = document.createElement("a");
+                number.classList.add("fc-daygrid-day-number");
+                number.innerHTML=info.dayNumberText.replace("일",'');// 한국어 설정시 날짜 뒤에 붙는 '일' 제거
+                if(info.view.type === "dayGridMonth"){
+                    return{
+                        html: number.outerHTML
+                    };
+                }
+                return{
+                    domNodes:[]
+                };
+            },
             eventAdd: function (obj) {      // 이벤트 추가 시 발생
                 console.log("eventAdd : " + obj);
             },
