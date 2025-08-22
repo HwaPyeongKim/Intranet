@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.intranet.dao.IRequestsDao">
+
+    <select id="selectRequestsList" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        select
+        mr.*
+        , m.name as mname, m.position as mposition
+        , m2.name as cname, m2.position as cposition
+        from member_requests mr
+        left join member m on m.midx = mr.midx
+        left join member m2 on m2.midx = mr.confirm_midx
+        where mr.midx=#{midx}
+          AND (title LIKE CONCAT('%', #{key}, '%') OR content LIKE CONCAT('%', #{key}, '%'))
+        order by ridx desc
+
+
+    </select>
+
+    <insert id="insertRquests" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        insert into member_requests ( midx, title, confirm_midx, content, fidx)
+        values ( #{midx}, #{title}, #{confirm_midx}, #{content}, #{fidx})
+    </insert>
+
+    <select id="selectRequestsDetail" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        select
+        mr.*,
+        f.path AS path,
+        f.originalname AS originalname
+        from member_requests mr
+        left join file f on f.fidx = mr.fidx
+        where ridx=#{ridx}
+    </select>
+
+    <select id="getAllMembers" resultType="com.example.intranet.dto.MemberDto">
+        select * from member
+    </select>
+
+    <select id="getUser4" resultType="com.example.intranet.dto.MemberDto">
+        select * from member where midx=#{confirm_midx}
+    </select>
+
+    <select id="selectGetList" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        SELECT
+        mr.*,
+        m.name AS mname,
+        m.position AS mposition,
+        m2.name AS cname,
+        m2.position AS cposition
+        FROM member_requests mr
+        LEFT JOIN member m ON m.midx = mr.midx
+        LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
+        WHERE mr.confirm_midx = #{loginUser.midx}  <!-- 로그인한 사용자의 midx를 사용 -->
+        AND (mr.title LIKE CONCAT('%', #{key}, '%') OR mr.content LIKE CONCAT('%', #{key}, '%'))
+        ORDER BY mr.ridx DESC
+
+
+    </select>
+
+    <select id="selectGetDetail" resultType="com.example.intranet.dto.MemberRequestsDto">
+        SELECT
+            mr.*,
+            m.name AS mname, m.position AS mposition,
+            m2.name AS cname, m2.position AS cposition,
+            f.path AS path,
+            f.originalname AS originalname
+        FROM member_requests mr
+                 LEFT JOIN member m ON m.midx = mr.midx
+                 LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
+                 LEFT JOIN file f ON f.fidx = mr.fidx
+        WHERE mr.ridx = #{ridx}
+    </select>
+
+    <update id="updateChangeStatus" parameterType="map">
+        update member_requests
+        set status=#{status}
+        where ridx=#{ridx}
+    </update>
+
+</mapper>
