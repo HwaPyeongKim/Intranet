@@ -36,7 +36,7 @@
     <div class="table">
         <div class="row head">
             <div class="col">번호</div>
-            <div class="col">구분</div>
+            <div class="col">종류</div>
             <div class="col title">제목</div>
             <div class="col">결재자</div>
             <div class="col">시작/종료일</div>

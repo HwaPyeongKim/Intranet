@@ -5,4 +5,8 @@
 
 <mapper namespace="com.example.intranet.dao.IAdminDao">
 
+    <update id="confirmJoin">
+        update member set confirmyn = 'Y' where midx = #{midx}
+    </update>
+
 </mapper>

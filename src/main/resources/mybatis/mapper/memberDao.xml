@@ -44,4 +44,24 @@
     <update id="changePwd">
         update member set pwd = #{pwd} where midx = #{midx}
     </update>
+
+    <select id="selectMembers" resultType="com.example.intranet.dto.MemberDto">
+        select *
+        from member m
+        <where>
+            m.deleteyn = 'N'
+            <if test="level == 2">
+                and m.team = (select team from member where midx = #{midx})
+            </if>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by m.joindate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by m.joindate asc
+            </when>
+        </choose>
+    </select>
 </mapper>

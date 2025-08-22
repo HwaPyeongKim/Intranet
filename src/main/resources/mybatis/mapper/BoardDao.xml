@@ -85,7 +85,7 @@
     </select>
 
     <insert id="insertComment">
-        insert * from board_comment (bidx, midx, content) values (#{bidx}, #{midx}, #{content})
+        insert into board_comment (bidx, midx, content) values (#{bidx}, #{midx}, #{content})
     </insert>
 
     <update id="updateComment">

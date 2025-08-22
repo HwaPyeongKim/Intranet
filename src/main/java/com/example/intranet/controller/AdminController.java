@@ -6,6 +6,7 @@ import com.example.intranet.dto.MemberDto;
 import com.example.intranet.service.AdminService;
 import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 @Controller
 public class AdminController {
@@ -73,10 +75,41 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String admin(){
-
-
-        return "admin/adminMain";
+    public String admin(HttpSession session, Model model){
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        if (mdto != null) {
+            if (mdto.getLevel() > 1) {
+                url = "admin/adminMain";
+            }
+        }
+        return url;
     }
+
+    @GetMapping("/adminMemberList")
+    public String memberList(HttpServletRequest request, HttpSession session, Model model){
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (mdto != null) {
+            if (mdto.getLevel() > 1) {
+                result = ms.selectMembers(request, mdto.getMidx(), mdto.getLevel());
+                model.addAttribute("list", result.get("list"));
+                model.addAttribute("paging", result.get("paging"));
+                model.addAttribute("type", result.get("type"));
+                model.addAttribute("key", result.get("key"));
+                model.addAttribute("sort", result.get("sort"));
+                url = "admin/memberList";
+            }
+        }
+        return url;
+    }
+
+    @PostMapping("/confirmJoin")
+    public String confirmJoin(@RequestParam("midx") String [] midxes, HttpSession session, Model model){
+        as.confirmJoin(midxes);
+        return "redirect:/adminMemberList";
+    }
+
 
 }
