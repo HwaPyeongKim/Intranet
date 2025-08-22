@@ -1,9 +1,7 @@
 package com.example.intranet.service;
 
 import com.example.intranet.dao.IWorkDao;
-import com.example.intranet.dto.MemberDto;
-import com.example.intranet.dto.Paging;
-import com.example.intranet.dto.WorkDto;
+import com.example.intranet.dto.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -110,4 +108,20 @@ public class WorkService {
     public void insert(WorkDto workdto) {
         wdao.insert(workdto);
     }
+
+
+    public WorkDto selectOne(int widx) { return wdao.selectOne(widx); }
+
+    public ArrayList<WorkCommentDto> selectComments(int widx) { return wdao.selectComments(widx); }
+
+    public void delete(int widx) { wdao.delete(widx); }
+
+    public void update(WorkDto workdto) { wdao.update(workdto); }
+
+    public void insertComment(int widx, int midx, String content) {wdao.insertComment(widx, midx, content);}
+
+    public void updateComment(int wcidx, String content) {wdao.updateComment(wcidx, content);}
+
+    public void deleteComment(int wcidx) {wdao.deleteComment(wcidx);}
+
 }

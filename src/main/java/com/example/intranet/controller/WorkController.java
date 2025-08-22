@@ -1,7 +1,7 @@
 package com.example.intranet.controller;
 
-import com.example.intranet.dto.MemberDto;
-import com.example.intranet.dto.WorkDto;
+import com.example.intranet.dto.*;
+import com.example.intranet.service.MemberService;
 import com.example.intranet.service.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +30,9 @@ public class WorkController {
 
     @Autowired
     WorkService ws;
+
+    @Autowired
+    MemberService ms;
 
     @GetMapping("work")
     public String work( HttpServletRequest request, Model model ){
@@ -68,7 +71,10 @@ public class WorkController {
     }
 
     @GetMapping("/insertWorkForm")
-    public String insertWorkForm() {
+    public String insertWorkForm(Model model) {
+        ArrayList<MemberDto> members = ms.getAllMembers();
+        model.addAttribute("members", members);
+
         return "work/insertWork";
     }
 
@@ -83,11 +89,10 @@ public class WorkController {
         else if(result.hasFieldErrors("content"))
             model.addAttribute("msg", result.getFieldError("content").getDefaultMessage() );
         else {
-            url = "redirect:/main";
+            url = "redirect:/yourwork";
             System.out.println(completedate);
             // String now = "2009-03-20 10:20:30.0"; // 형식을 지켜야 함
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-            System.out.println("Ss");
 
             try {
                 Date date = df.parse(completedate);
@@ -100,7 +105,95 @@ public class WorkController {
         return url;
     }
 
+    @GetMapping("/workView")
+    public String workView(@RequestParam("widx") int widx, HttpSession session, Model model) {
+        MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+        String url = "redirect:/work";
+        if (loginUser != null) {
+            WorkDto wdto = ws.selectOne(widx);
+            ArrayList<WorkCommentDto> comments = ws.selectComments(widx);
+           
+            model.addAttribute("workitem", wdto);
+            model.addAttribute("comments", comments);
+            url = "work/workView";
+        }
+        return url;
 
+    }
+
+    @GetMapping("/editWork")
+    public String editWork(@RequestParam("widx") int widx, @RequestParam("action") String action, HttpSession session, Model model) {
+        String url = "redirect:/workView?widx="+widx;
+
+        if (action.equals("update")) {
+            url = "redirect:/updateWorkForm?widx="+widx;
+        } else if (action.equals("delete")) {
+            ws.delete(widx);
+            url = "redirect:/work";
+        }
+
+        return url;
+    }
+
+    @GetMapping("/updateWorkForm")
+    public String updateWorkForm(@RequestParam("widx") int widx, HttpSession session, Model model) {
+        WorkDto wdto = ws.selectOne(widx);
+        model.addAttribute("workitem", wdto);
+        return "work/updateWork";
+    }
+
+    @PostMapping("/updateWork")
+    public String updateWork(@ModelAttribute("dto") @Valid WorkDto workdto, BindingResult result, Model model,
+                             @RequestParam String completedate) {
+        String url = "redirect:/updateWorkForm?bidx="+workdto.getWidx();
+        System.out.println("ss");
+
+        if (workdto.getTitle() == null || workdto.getTitle().equals("")) {
+            model.addAttribute("msg", "업무명을 입력하세요");
+        } else if (workdto.getContent() == null || workdto.getContent().equals("")) {
+            model.addAttribute("msg", "내용을 입력하세요");
+        } else {
+            System.out.println(completedate);
+            // String now = "2009-03-20 10:20:30.0"; // 형식을 지켜야 함
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+
+            try {
+                Date date = df.parse(completedate);
+                workdto.setCompletedate(new Timestamp(date.getTime()));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            ws.update(workdto);
+            url = "redirect:/workView?widx="+workdto.getWidx();
+        }
+        return url;
+    }
+
+    @PostMapping("/insertComment")
+    public String insertComment(@RequestParam("widx") int widx, @RequestParam("midx") int midx, @RequestParam("content") String content, Model model) {
+        if (content == null || content.equals("")) {
+            model.addAttribute("msg", "댓글을 입력하세요");
+        } else {
+            ws.insertComment(widx, midx, content);
+        }
+        return "redirect:/workView?widx="+widx;
+    }
+
+    @PostMapping("/updateComment")
+    public String updateComment(@RequestParam("widx") int widx, @RequestParam("wcidx") int wcidx, @RequestParam("content") String content, Model model) {
+        if (content == null || content.equals("")) {
+            model.addAttribute("msg", "댓글을 입력하세요");
+        } else {
+            ws.updateComment(wcidx, content);
+        }
+        return "redirect:/workView?widx="+widx;
+    }
+
+    @GetMapping("/deleteComment")
+    public String deleteComment(@RequestParam("widx") int widx, @RequestParam("wcidx") int wcidx) {
+        ws.deleteComment(wcidx);
+        return "redirect:/workView?widx="+widx;
+    }
 
 
 }

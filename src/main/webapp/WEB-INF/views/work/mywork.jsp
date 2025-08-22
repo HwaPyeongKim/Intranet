@@ -22,30 +22,39 @@
 
 </style>
 
-<section id="work">
+
     <form method="get" name="work" class="form shadow">
-    <div class="tb">
-      <div class="tb_top">
+    <div class="tb" >
+      <div class="tb_top" style="display: flex">
         <div class="col" style="display: flex; align-items: center; justify-content: start">
-          업무명&nbsp; <input type="text" name="key" value="${key}"/>&nbsp;&nbsp;
+          &nbsp;업무명&nbsp; <input type="text" name="key" value="${key}"/>&nbsp;&nbsp;
           <input type="button" name="btn_search" value="검색" onclick="go_search('work')"/>
+        </div>
+        <div class="boxBtns clearfix" style="display: flex; align-items: center; justify-content: end">
+          <input type="button" name="btn_search" value="업무요청" onclick="location.href='insertWorkForm'" />&nbsp;
         </div>
       </div>
 
       <div class="row row_title">
         <div class="coltitle">번호</div>
-        <div class="coltitle"><a href="workView?widx=${work.widx}">업무명</a></div>
+        <div class="coltitle">업무명</div>
         <div class="coltitle">요청자</div>
         <div class="coltitle">등록일</div>
         <div class="coltitle">마감일</div>
         <div class="coltitle">진행상태</div>
       </div>
 
-      <c:forEach items="${workList}" var="work">
+      <c:forEach items="${workList}" var="work" varStatus="status">
         <div class="row">
-          <div class="col">${work.widx}</div>
-          <div class="col" style="cursor:pointer" onClick="">${work.title}</div>
-          <div class="col">${work.name}</div>
+          <div class="col">
+          ${(paging.page-1)*(paging.displayRow)+status.count}
+          </div>
+          <div class="col" style="cursor:pointer">
+          <a href="workView?widx=${work.widx}" style="text-decoration:none">
+          ${work.title}
+          </a>
+          </div>
+          <div class="col">${work.empname}</div>
           <div class="col"><fmt:formatDate value="${work.writedate}" pattern="yyyy-MM-dd" /></div>
           <div class="col"><fmt:formatDate value="${work.completedate}" pattern="yyyy-MM-dd" /></div>
           <div class="col">
@@ -61,27 +70,20 @@
         </div>
       </c:forEach>
 
-      <div class="row"> <!-- 페이지의 시작 -->
-        <div class="col" style="font-size: 120%; font-weight: bold;">
-          <c:if test="${paging.prev}">
-            <a href="work?page=${paging.beginPage-1}&key=${key}">PREV</a>&nbsp;
-          </c:if>
-          <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-            <c:if test="${index!=paging.page}">
-              <a href="work?page=${index}&key=${key}">${index}</a>&nbsp;
-            </c:if>
-            <c:if test="${index==paging.page}">
-              <span style="color:red">${index}&nbsp;</span>
-            </c:if>
-          </c:forEach>
-          <c:if test="${paging.next}">
-            <a href="work?page=${paging.endPage+1}&key=${key}">NEXT</a>&nbsp;
-          </c:if>
-        </div>
-      </div> <!-- 페이지의 끝 -->
+          <c:if test="${not empty workList}">
+            <div class="paging" style="height: 50px; line-height: 50px">
+            <c:if test="${paging.prev}"><a href="mywork?page=${paging.beginPage-1}">Prev</a></c:if>
 
+            <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+                <a href="mywork?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
+            </c:forEach>
+
+            <c:if test="${paging.next}"><a href="mywork?page=${paging.endPage+1}">Next</a></c:if>
+            </div>
+            </c:if>
 
     </div>
+
   </form>
 </section>
 
