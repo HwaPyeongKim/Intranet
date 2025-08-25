@@ -9,4 +9,8 @@
         update member set confirmyn = 'Y' where midx = #{midx}
     </update>
 
+    <update id="updateMember" parameterType="com.example.intranet.dto.MemberDto">
+        update member set userid = #{userid}, pwd = #{pwd}, position = #{position}, name = #{name}, email = #{email}, phone = #{phone}, postcode = #{postcode}, address1 = #{address1}, address2 = #{address2}, image = #{image} where midx = #{midx}
+    </update>
+
 </mapper>

@@ -70,14 +70,19 @@ public class MemberController {
             } else if (!mdto.getPwd().equals(pwd)) {
                 model.addAttribute("msg", "아이디와 패스워드를 확인해주세요.");
             } else {
-                session.setAttribute("loginUser", mdto);
-                session.setAttribute("profileImg", fs.getFile(mdto.getImage()).getPath());
-                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                MemberAttendanceDto madto = ms.selectAttendance(mdto.getMidx(),date);
-                if (madto == null) {
-                    ms.insertAttendance(mdto.getMidx());
+                if (mdto.getConfirmyn().equals("N")) {
+                    model.addAttribute("msg", "가입승인 대기상태입니다. 관리자에게 문의해주세요.");
+                } else {
+                    session.setAttribute("loginUser", mdto);
+                    session.setAttribute("profileImg", fs.getFile(mdto.getImage()).getPath());
+                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    MemberAttendanceDto madto = ms.selectAttendance(mdto.getMidx(),date);
+                    if (madto == null) {
+                        ms.insertAttendance(mdto.getMidx());
+                    }
+                    url = "redirect:/";
                 }
-                url = "redirect:/";
+
             }
         }
         return url;

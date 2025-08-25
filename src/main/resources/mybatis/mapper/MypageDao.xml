@@ -8,7 +8,7 @@
     <select id="selectWork" resultType="com.example.intranet.dto.WorkDto">
         select w.*
         , mt.name as workername
-        , mf.name
+        , mf.name as empname
         from work w
         left join member mf on mf.midx = w.midx
         left join member mt on mt.midx = w.worker

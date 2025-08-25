@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public interface IMemberDao {
     void insert(MemberDto memberdto);
     MemberDto getMember(String userid);
+    MemberDto selectMember(int midx);
     void insertAttendance(int midx);
     void workout(int midx, String date);
     MemberAttendanceDto selectAttendance(int midx, String date);
@@ -20,4 +21,5 @@ public interface IMemberDao {
     void changePwd(int midx, String pwd);
     ArrayList<MemberDto> selectMembers(String type, String key, String sort, int midx, int level);
     int checkNewMessage(int midx);
+    ArrayList<MemberAttendanceDto> selectMemberAttendances(String type, String key, String sort, int midx, int level, String startdate, String enddate);
 }

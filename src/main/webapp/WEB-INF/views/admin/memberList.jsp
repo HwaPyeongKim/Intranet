@@ -2,7 +2,26 @@
 <%@ include file="header.jsp" %>
 
 <section id="adminMemberList">
-    <h2>회원 목록</h2>
+    <h2>직원 목록</h2>
+
+    <form method="get" name="search" id="searchForm">
+        <div class="searchBox">
+            <div class="input">
+                <select name="type">
+                    <option value="userid"<c:if test="${type == 'userid'}"> selected</c:if>>아이디</option>
+                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>이름</option>
+                    <option value="email"<c:if test="${type == 'email'}"> selected</c:if>>이메일</option>
+                </select>
+                <input type="text" name="key" value="${key}" />
+                <button>검색</button>
+            </div>
+            <select name="sort" id="sort">
+                <option value="joindesc" <c:if test="${sort == 'joindesc'}"> selected</c:if>>입사일 최근순</option>
+                <option value="joinasc" <c:if test="${sort == 'joinasc'}"> selected</c:if>>입사일 오래된순</option>
+                <option value="nameasc" <c:if test="${sort == 'nameasc'}"> selected</c:if>>이름 가나다순</option>
+            </select>
+        </div>
+    </form>
 
     <form method="post" name="adminMemberInfo" id="adminMemberInfo">
         <div class="boxBtns clearfix">
@@ -20,12 +39,12 @@
                     <th>주민등록번호</th>
                     <th>이메일</th>
                     <th>휴대전화번호</th>
-                    <th>우편번호</th>
                     <th>주소</th>
                     <th>입사일</th>
                     <th>퇴사일</th>
                     <c:if test="${loginUser.level > 2}">
                     <th>가입승인여부</th>
+                    <th>정보수정</th>
                     </c:if>
                 </tr>
             </thead>
@@ -39,7 +58,7 @@
                                     <td colspan="13">게시물이 존재하지 않습니다.</td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td colspan="12">게시물이 존재하지 않습니다.</td>
+                                    <td colspan="11">게시물이 존재하지 않습니다.</td>
                                 </c:otherwise>
                             </c:choose>
 
@@ -56,8 +75,7 @@
                                 <td>${item.number}</td>
                                 <td>${item.email}</td>
                                 <td>${item.phone}</td>
-                                <td>${item.postcode}</td>
-                                <td>${item.address1} ${item.address2}</td>
+                                <td class="address">(${item.postcode}) ${item.address1} ${item.address2}</td>
                                 <td><fmt:formatDate value="${item.joindate}" pattern="yyyy-MM-dd" /></td>
                                 <td><fmt:formatDate value="${item.leavedate}" pattern="yyyy-MM-dd" /></td>
                                 <c:if test="${loginUser.level > 2}">
@@ -66,6 +84,9 @@
                                         <c:when test="${item.confirmyn == 'Y'}">승인</c:when>
                                         <c:otherwise>대기</c:otherwise>
                                     </c:choose>
+                                </td>
+                                <td>
+                                    <a href="adminMemberUpdateForm?midx=${item.midx}" class="updateMemberBtn">정보수정</a>
                                 </td>
                                 </c:if>
                             </tr>
@@ -79,13 +100,13 @@
 
     <c:if test="${not empty list}">
         <div class="paging">
-            <c:if test="${paging.prev}"><a href="board?page=${paging.beginPage-1}">Prev</a></c:if>
+            <c:if test="${paging.prev}"><a href="adminMemberList?page=${paging.beginPage-1}">Prev</a></c:if>
 
             <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-                <a href="board?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
+                <a href="adminMemberList?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
             </c:forEach>
 
-            <c:if test="${paging.next}"><a href="board?page=${paging.endPage+1}">Next</a></c:if>
+            <c:if test="${paging.next}"><a href="adminMemberList?page=${paging.endPage+1}">Next</a></c:if>
         </div>
     </c:if>
 </section>

@@ -1,0 +1,69 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="header.jsp" %>
+
+<section id="adminMemberAttendanceList">
+    <h2>근태 현황</h2>
+
+    <form method="get" name="search" id="searchForm">
+        <div class="searchBox">
+            <div class="input">
+                <input type="date" name="startdate" value="${startdate}">
+                <input type="date" name="enddate" value="${enddate}">
+                <select name="type">
+                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>이름</option>
+                </select>
+                <input type="text" name="key" value="${key}" />
+                <button>검색</button>
+            </div>
+        </div>
+    </form>
+
+    <form method="post" name="adminMemberAttendanceInfo" id="adminMemberAttendanceInfo">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>날짜</th>
+                    <th>이름</th>
+                    <th>출근시간</th>
+                    <th>퇴근시간</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <c:choose>
+                    <c:when test="${empty list}">
+                        <tr>
+                            <td colspan="4">출/퇴근 이력이 존재하지 않습니다.</td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach items="${list}" var="item">
+                            <tr>
+                                <td><fmt:formatDate value="${item.date}" pattern="yyyy-MM-dd" /></td>
+                                <td>${item.name}</td>
+                                <td><fmt:formatDate value="${item.starttime}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
+                                <td><fmt:formatDate value="${item.endtime}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+            </tbody>
+
+        </table>
+    </form>
+
+    <c:if test="${not empty list}">
+        <div class="paging">
+            <c:if test="${paging.prev}"><a href="adminMemberAttendanceList?page=${paging.beginPage-1}">Prev</a></c:if>
+
+            <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+                <a href="adminMemberAttendanceList?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
+            </c:forEach>
+
+            <c:if test="${paging.next}"><a href="adminMemberAttendanceList?page=${paging.endPage+1}">Next</a></c:if>
+        </div>
+    </c:if>
+</section>
+
+<%@ include file="footer.jsp" %>
