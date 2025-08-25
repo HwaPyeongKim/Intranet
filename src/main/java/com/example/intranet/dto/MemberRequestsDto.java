@@ -1,5 +1,6 @@
 package com.example.intranet.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.sql.Date;
@@ -10,12 +11,15 @@ public class MemberRequestsDto {
     private int ridx;
     private int category;
     private int midx;
+    @NotNull
     private String title;
+    @NotNull
     private String content;
     private Date startdate;
     private Date enddate;
-    private int status;
+    private int status; //처리상태(1.대기중 2.처리중...)
     private int fidx;
+    @NotNull
     private String confirm_midx;
     private Timestamp confirmdate;
     private Timestamp writedate;
@@ -23,5 +27,12 @@ public class MemberRequestsDto {
     private int loopnum; // 번호를 위한 변수
 
     private String name;
+
+    //조인
+    private String mname;
+    private String mposition;
     private String cname;
+    private String cposition;
+    private String path;
+    private String originalname;
 }

@@ -20,6 +20,8 @@
     <script src="/scripts/board.js"></script>
     <script src="/scripts/work.js"></script>
     <script src="/scripts/mypage.js"></script>
+    <script src="/scripts/request.js"></script>
+
 </head>
 <body>
 
