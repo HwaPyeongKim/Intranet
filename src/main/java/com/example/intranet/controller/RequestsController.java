@@ -52,7 +52,6 @@ public class RequestsController {
         String url = "member/login";
         MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
         if(loginUser != null){
-            System.out.println(1556);
             // 1. 현재 날짜와 시간을 가져와서 SimpleDateFormat으로 포맷팅
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String todayDate = sdf.format(new Date(System.currentTimeMillis()));
@@ -126,9 +125,6 @@ public class RequestsController {
         if (loginUser != null) {
             MemberRequestsDto rdto = rs.selectGetDetail(ridx);
             model.addAttribute("rdto",rdto);
-
-//            진행상태가 대기중일때만 진행중으로 바꾸기
-
         }
         return "requests/getListDetail";
 
@@ -147,6 +143,16 @@ public class RequestsController {
             rs.updateChangeStatus(status, ridx);  // 상태 업데이트 서비스 메서드 호출
         }
 
+        return url;
+    }
+
+    @GetMapping("/deleteRequests")
+    public  String deleteRequests(@RequestParam("ridx") int ridx, HttpSession session) {
+        String url = "redirect:/requests?ridx=" + ridx;
+        MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+        if (loginUser != null) {
+            rs.deleteRequests(ridx);
+        }
         return url;
     }
 

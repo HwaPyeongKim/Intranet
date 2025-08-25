@@ -5,33 +5,79 @@
 
 <mapper namespace="com.example.intranet.dao.IRequestsDao">
 
+    <!--발신목록-->
     <select id="selectRequestsList" parameterType="com.example.intranet.dto.MemberRequestsDto">
         select
-        mr.*
-        , m.name as mname, m.position as mposition
-        , m2.name as cname, m2.position as cposition
+            mr.*
+             , m.name as mname, m.position as mposition
+             , m2.name as cname, m2.position as cposition
         from member_requests mr
-        left join member m on m.midx = mr.midx
-        left join member m2 on m2.midx = mr.confirm_midx
+                 left join member m on m.midx = mr.midx
+                 left join member m2 on m2.midx = mr.confirm_midx
         where mr.midx=#{midx}
-          AND (title LIKE CONCAT('%', #{key}, '%') OR content LIKE CONCAT('%', #{key}, '%'))
         order by ridx desc
-
-
     </select>
 
+    <!--발신목록 제목검색-->
+    <select id="selectRequestsListTitle" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        select
+            mr.*
+             , m.name as mname, m.position as mposition
+             , m2.name as cname, m2.position as cposition
+        from member_requests mr
+                 left join member m on m.midx = mr.midx
+                 left join member m2 on m2.midx = mr.confirm_midx
+        where mr.midx=#{midx}
+          AND title LIKE CONCAT('%', #{key}, '%')
+        order by ridx desc
+    </select>
+
+    <!--발신목록 제목내용검색-->
+    <select id="selectRequestsListTitleContent" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        SELECT
+        mr.*,
+        m.name AS mname,
+        m.position AS mposition,
+        m2.name AS cname,
+        m2.position AS cposition
+        FROM member_requests mr
+        LEFT JOIN member m ON m.midx = mr.midx
+        LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
+        where mr.midx=#{midx}
+        AND (mr.title LIKE CONCAT('%', #{key}, '%') OR mr.content LIKE CONCAT('%', #{key}, '%'))
+        ORDER BY mr.ridx DESC
+    </select>
+
+    <!--발신목록 결재자이름검색-->
+    <select id="selectRequestsListName" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        SELECT
+        mr.*,
+        m.name AS mname,
+        m.position AS mposition,
+        m2.name AS cname,
+        m2.position AS cposition
+        FROM member_requests mr
+        LEFT JOIN member m ON m.midx = mr.midx
+        LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
+        where mr.midx=#{midx}
+        AND m2.name LIKE CONCAT('%', #{key}, '%')
+        ORDER BY mr.ridx DESC
+    </select>
+
+    <!--기안서작성폼-->
     <insert id="insertRquests" parameterType="com.example.intranet.dto.MemberRequestsDto">
-        insert into member_requests ( midx, title, confirm_midx, content, fidx)
-        values ( #{midx}, #{title}, #{confirm_midx}, #{content}, #{fidx})
+        insert into member_requests ( category, midx, title, confirm_midx, content, fidx)
+        values (#{category}, #{midx}, #{title}, #{confirm_midx}, #{content}, #{fidx})
     </insert>
 
+    <!--발신목록 상세보기-->
     <select id="selectRequestsDetail" parameterType="com.example.intranet.dto.MemberRequestsDto">
         select
-        mr.*,
-        f.path AS path,
-        f.originalname AS originalname
+            mr.*,
+            f.path AS path,
+            f.originalname AS originalname
         from member_requests mr
-        left join file f on f.fidx = mr.fidx
+                 left join file f on f.fidx = mr.fidx
         where ridx=#{ridx}
     </select>
 
@@ -43,6 +89,8 @@
         select * from member where midx=#{confirm_midx}
     </select>
 
+    <!--수신목록-->
+    <!--나(로그인유저)를결재자로선택한목록보기-->
     <select id="selectGetList" parameterType="com.example.intranet.dto.MemberRequestsDto">
         SELECT
         mr.*,
@@ -53,13 +101,59 @@
         FROM member_requests mr
         LEFT JOIN member m ON m.midx = mr.midx
         LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
-        WHERE mr.confirm_midx = #{loginUser.midx}  <!-- 로그인한 사용자의 midx를 사용 -->
-        AND (mr.title LIKE CONCAT('%', #{key}, '%') OR mr.content LIKE CONCAT('%', #{key}, '%'))
+        where mr.confirm_midx=#{midx}
         ORDER BY mr.ridx DESC
-
-
     </select>
 
+    <!--수신목록 제목검색-->
+    <select id="searchGetListTitle" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        SELECT
+            mr.*,
+            m.name AS mname,
+            m.position AS mposition,
+            m2.name AS cname,
+            m2.position AS cposition
+        FROM member_requests mr
+                 LEFT JOIN member m ON m.midx = mr.midx
+                 LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
+        where mr.confirm_midx=#{midx}
+          AND mr.title LIKE CONCAT('%', #{key}, '%')
+        ORDER BY mr.ridx DESC
+    </select>
+
+    <!--수신목록 제목내용검색-->
+    <select id="searchGetListTitleContent" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        SELECT
+            mr.*,
+            m.name AS mname,
+            m.position AS mposition,
+            m2.name AS cname,
+            m2.position AS cposition
+        FROM member_requests mr
+                 LEFT JOIN member m ON m.midx = mr.midx
+                 LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
+        where mr.confirm_midx=#{midx}
+          AND (mr.title LIKE CONCAT('%', #{key}, '%') OR mr.content LIKE CONCAT('%', #{key}, '%'))
+        ORDER BY mr.ridx DESC
+    </select>
+
+    <!--수신목록 작성자이름검색-->
+    <select id="searchGetListName" parameterType="com.example.intranet.dto.MemberRequestsDto">
+        SELECT
+        mr.*,
+        m.name AS mname,
+        m.position AS mposition,
+        m2.name AS cname,
+        m2.position AS cposition
+        FROM member_requests mr
+        LEFT JOIN member m ON m.midx = mr.midx
+        LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
+        where mr.confirm_midx=#{midx}
+        AND m.name LIKE CONCAT('%', #{key}, '%')
+        ORDER BY mr.ridx DESC
+    </select>
+
+    <!--수신목록 상세보기-->
     <select id="selectGetDetail" resultType="com.example.intranet.dto.MemberRequestsDto">
         SELECT
             mr.*,
@@ -74,10 +168,15 @@
         WHERE mr.ridx = #{ridx}
     </select>
 
+    <!--상태값변경-->
     <update id="updateChangeStatus" parameterType="map">
         update member_requests
-        set status=#{status}
+        set status=#{status}, confirmdate = NOW()
         where ridx=#{ridx}
     </update>
+
+    <delete id="deleteRequests">
+        delete from member_requests where ridx=#{ridx}
+    </delete>
 
 </mapper>

@@ -52,8 +52,22 @@ public class RequestsService {
             sort = request.getParameter("sort");
         }
 
+
+        System.out.println("Query String: " + request.getQueryString());
+
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<MemberRequestsDto> lists = rdao.selectRequestsList(midx);
+        ArrayList<MemberRequestsDto> lists = new ArrayList<>();
+        if ("title".equals(type)) {
+            lists = rdao.selectRequestsListTitle(midx, type, key, sort);
+        } else if ("titleContent".equals(type)) {
+            lists = rdao.selectRequestsListTitleContent(midx, type, key, sort);
+        } else if ("name".equals(type)) {
+            lists = rdao.selectRequestsListName(midx, type, key, sort);
+        } else {
+            lists = rdao.selectRequestsList(midx, type, key, sort);
+        }
+
+
         ArrayList<MemberRequestsDto> list = new ArrayList<>();
 
         Paging paging = new Paging();
@@ -136,7 +150,19 @@ public class RequestsService {
         }
 
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<MemberRequestsDto> lists = rdao.selectGetList(midx);
+        ArrayList<MemberRequestsDto> lists = new ArrayList<>();
+
+        if ("title".equals(type)) {
+            lists = rdao.searchGetListTitle(midx, type, key, sort);
+        } else if ("titleContent".equals(type)) {
+            lists = rdao.searchGetListContent(midx, type, key, sort);
+        } else if ("name".equals(type)) {
+            lists = rdao.searchGetListName(midx, type, key, sort);
+        } else {
+            lists = rdao.selectGetList(midx, type, key, sort);
+        }
+
+
         ArrayList<MemberRequestsDto> list = new ArrayList<>();
 
         Paging paging = new Paging();
@@ -177,5 +203,9 @@ public class RequestsService {
     @Transactional
     public int updateChangeStatus(int status, int ridx) {
         return rdao.updateChangeStatus(status, ridx);
+    }
+
+    public void deleteRequests(int ridx) {
+        rdao.deleteRequests(ridx);
     }
 }

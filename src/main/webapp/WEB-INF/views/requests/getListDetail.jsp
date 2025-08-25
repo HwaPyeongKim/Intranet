@@ -5,132 +5,213 @@
 
 <style>
 
-    h3{text-align: center;font-weight: bold;font-size: 30px;}
-    #requestsWriteForm {
-        font-size: 20px;
+    .request-detail-container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 40px 50px;
+        background-color: #fafafa;
+        border-radius: 8px;
+        font-family: "Noto Sans KR", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    .req_write_info {
+    .page-title {
+        text-align: center;
+        font-weight: 700;
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+
+    .request-info-box {
         border: 1px solid #ccc;
-        padding: 32px;
+        padding: 28px 30px;
+        margin-bottom: 30px;
+        background-color: #fff;
+        border-radius: 6px;
+    }
+
+    .info-row {
+        margin-bottom: 14px;
+        font-size: 18px;
+    }
+
+    .info-row .label {
+        display: inline-block;
+        width: 110px;
+        font-weight: 600;
+    }
+
+    .request-content-box {
+        border: 1px solid #ccc;
+        padding: 28px 30px;
+        background-color: #fff;
+        border-radius: 6px;
+        margin-bottom: 30px;
+        min-height: 300px;
+    }
+
+    .request-content {
+        white-space: pre-wrap;
+        font-size: 17px;
+        line-height: 1.6;
+        color: #444;
+    }
+
+    .request-file-box {
+        border: 1px solid #ccc;
+        padding: 20px 30px;
+        background-color: #fff;
+        border-radius: 6px;
         margin-bottom: 30px;
     }
 
-    .req_write_info > div {
-        padding: 10px;
+    .request-file-box label {
+        font-weight: 600;
+        margin-right: 15px;
+        color: #555;
     }
 
-    .req_write_w {
-        border: 1px solid #ccc;
-        padding: 32px;
-        margin-bottom: 30px;
+    .file-link {
+        color: #2980b9;
+        text-decoration: none;
+        font-size: 16px;
     }
 
-    .req_write_w > div {
-        padding: 10px;
+    .file-link:hover {
+        text-decoration: underline;
     }
 
-    .req_file {
-        border: 1px solid #ccc;
-        padding: 32px;
-        margin-bottom: 30px;
+    .button-group {
+        text-align: center;
+        margin-top: 15px;
     }
 
-    .req_file > div {
-        padding: 10px;
+    .btn {
+        display: inline-block;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 10px 28px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.25s ease;
+        margin: 0 10px;
     }
 
-    .req_write_w > .textbox {
-        width: 100%;
-        height: 350px;
+    .btn-delete {
+        background-color: #e74c3c;
+        color: white;
     }
 
+    .btn-delete:hover {
+        background-color: #c0392b;
+    }
+
+    .btn-list {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-list:hover {
+        background-color: #2980b9;
+    }
+
+    /* Modal styles */
     .modal {
-        display: none; /* 숨김 */
+        display: none;
         position: fixed;
-        z-index: 1000;
-        left: 0; top: 0; width: 100%; height: 100%;
-        background-color: rgba(0,0,0,0.4); /* 반투명 검정 배경 */
+        z-index: 1500;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.45);
     }
 
     .modal-content {
-        background-color: white;
+        background: white;
+        width: 320px;
         margin: 15% auto;
-        padding: 40px;
-        width: 300px;
-        border-radius: 8px;
+        padding: 40px 25px;
+        border-radius: 10px;
         text-align: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        box-shadow: 0 3px 15px rgba(0,0,0,0.3);
+        font-size: 18px;
     }
 
-    #modalMessage {margin-bottom: 40px;}
+    .modal-content p {
+        margin-bottom: 35px;
+        color: #333;
+    }
 
-    .modal-content button {
-        margin: 10px;
-        padding: 8px 16px;
-        cursor: pointer;
+    .btn-confirm {
+        background-color: #27ae60;
+        color: white;
+        margin-right: 12px;
+    }
+
+    .btn-confirm:hover {
+        background-color: #1e8449;
+    }
+
+    .btn-cancel {
+        background-color: #bdc3c7;
+        color: #2c3e50;
+    }
+
+    .btn-cancel:hover {
+        background-color: #95a5a6;
     }
 
 </style>
-<section id="getListDetail">
-    <div class="requests_wrap">
-        <h3>
-          <c:choose>
-            <c:when test="${rdto.status == '1'}">
-              결재요청문서
-            </c:when>
-            <c:when test="${rdto.status == '2'}">
-              처리중문서
-            </c:when>
-            <c:when test="${rdto.status == '3'}">
-              반려 문서
-            </c:when>
-            <c:when test="${rdto.status == '4'}">
-              승인 문서
-            </c:when>
-          </c:choose>
-        </h3>
-        <div class="req_write_info">
-            <div>작성자 : ${rdto.mname} ${rdto.mposition}</div>
-            <div>제목 : ${rdto.title}</div>
-            <div>기안날짜 : ${rdto.writedate}</div>
-        </div>
-        <div class="req_write_w">
-            <div>${rdto.content}</div>
-        </div>
-        <div class="req_file">
-            <c:if test="${rdto.fidx > 0}">
-                <div class="field">
-                    <label>첨부파일</label>
-                    <div><a href="${rdto.path}">${rdto.originalname}</a></div>
-                </div>
-            </c:if>
-        </div>
 
+<section class="request-detail-container">
+    <h2 class="page-title">
+        <c:choose>
+            <c:when test="${rdto.status == '1'}">결재요청문서</c:when>
+            <c:when test="${rdto.status == '2'}">처리중문서</c:when>
+            <c:when test="${rdto.status == '3'}">반려 문서</c:when>
+            <c:when test="${rdto.status == '4'}">승인 문서</c:when>
+        </c:choose>
+    </h2>
+
+    <section class="request-info-box">
+        <div class="info-row"><span class="label">작성자</span> ${rdto.mname} ${rdto.mposition}</div>
+        <div class="info-row"><span class="label">제목</span> ${rdto.title}</div>
+        <div class="info-row"><span class="label">작성일자</span> ${rdto.writedate}</div>
+        <c:if test="${rdto.status == '3' || rdto.status == '4'}">
+            <div class="info-row"><span class="label">처리일자</span> ${rdto.confirmdate}</div>
+        </c:if>
+    </section>
+
+    <section class="request-content-box">
+        <pre class="request-content">${rdto.content}</pre>
+    </section>
+
+    <c:if test="${rdto.fidx > 0}">
+        <section class="request-file-box">
+            <label>첨부파일:</label>
+            <a href="${rdto.path}" class="file-link">${rdto.originalname}</a>
+        </section>
+    </c:if>
+
+    <section class="button-group">
         <c:choose>
             <c:when test="${rdto.status == '1' || rdto.status == '2'}">
-                <div>
-                    <button onclick="openConfirmModal('${rdto.ridx}', 3)">반려</button>
-                    <button onclick="openConfirmModal('${rdto.ridx}', 4)">승인</button>
-                </div>
+                <button type="button" class="btn btn-reject" onclick="openConfirmModal('${rdto.ridx}', 3)">반려</button>
+                <button type="button" class="btn btn-approve" onclick="openConfirmModal('${rdto.ridx}', 4)">승인</button>
             </c:when>
             <c:otherwise>
-                <div><button onclick="location.href='/getList'">목록으로</button></div>
+                <button type="button" class="btn btn-list" onclick="location.href='/getList'">목록으로</button>
             </c:otherwise>
         </c:choose>
+    </section>
 
-
-        <!-- 확인 팝업 -->
-        <div id="confirmModal" class="modal">
-            <div class="modal-content">
-                <p id="modalMessage"></p>
-                <button id="confirmBtn">확인</button>
-                <button onclick="closeConfirmModal()">취소</button>
-            </div>
+    <!-- 확인 모달 -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage">처리하시겠습니까?</p>
+            <button id="confirmBtn" class="btn btn-confirm">확인</button>
+            <button type="button" class="btn btn-cancel" onclick="closeConfirmModal()">취소</button>
         </div>
     </div>
-
-
 </section>
 
 <%@ include file="../footer.jsp" %>
