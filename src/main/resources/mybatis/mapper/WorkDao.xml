@@ -6,21 +6,21 @@
 <mapper namespace="com.example.intranet.dao.IWorkDao">
 
     <select id="selectWork" resultType="com.example.intranet.dto.WorkDto">
-        select * from work_view where title like concat( '%', #{key} , '%' ) and worker=#{midx}
+        select * from work_view where title like concat( '%', #{key} , '%' ) and worker=#{midx} and deleteyn = 'N'
         order by widx desc  limit  #{paging.displayRow}  offset  #{paging.startNum}
     </select>
 
     <select id="getAllCountForWork" resultType="_int">
-        select count(*) from work_view where title like concat('%', #{key} , '%' ) and worker=#{midx}
+        select count(*) from work_view where title like concat('%', #{key} , '%' ) and worker=#{midx} and deleteyn = 'N'
     </select>
 
     <select id="selectYourWork" resultType="com.example.intranet.dto.WorkDto">
-        select * from work_view where title like concat( '%', #{key} , '%' ) and midx=#{midx}
+        select * from work_view where title like concat( '%', #{key} , '%' ) and midx=#{midx} and deleteyn = 'N'
         order by widx desc  limit  #{paging.displayRow}  offset  #{paging.startNum}
     </select>
 
     <select id="getAllCountForYourWork" resultType="_int">
-        select count(*) from work_view where title like concat('%', #{key} , '%' ) and midx=#{midx}
+        select count(*) from work_view where title like concat('%', #{key} , '%' ) and midx=#{midx} and deleteyn = 'N'
     </select>
 
     <insert id="insert" parameterType="com.example.intranet.dto.WorkDto" >

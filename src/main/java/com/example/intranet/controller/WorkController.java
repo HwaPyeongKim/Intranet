@@ -81,11 +81,18 @@ public class WorkController {
     @PostMapping("/insertWork")
     public String insertWork(@ModelAttribute("dto") @Valid WorkDto workdto, BindingResult result, Model model,
                              @RequestParam String completedate) {
+        ArrayList<MemberDto> members = ms.getAllMembers();
+        model.addAttribute("members", members);
+        model.addAttribute("completedate", completedate);
+
+
         String url = "work/insertWork";
         if(result.hasFieldErrors("title"))
             model.addAttribute("msg", result.getFieldError("title").getDefaultMessage() );
         else if(result.hasFieldErrors("worker"))
-            model.addAttribute("msg", result.getFieldError("worker").getDefaultMessage() );
+            model.addAttribute("msg", "수신자를 선택하세요" );
+        else if(completedate.equals(""))
+            model.addAttribute("msg", "마감기한을 선택하세요" );
         else if(result.hasFieldErrors("content"))
             model.addAttribute("msg", result.getFieldError("content").getDefaultMessage() );
         else {
@@ -139,14 +146,20 @@ public class WorkController {
     public String updateWorkForm(@RequestParam("widx") int widx, HttpSession session, Model model) {
         WorkDto wdto = ws.selectOne(widx);
         model.addAttribute("workitem", wdto);
+        model.addAttribute("completedate", wdto.getCompletedate());
         return "work/updateWork";
     }
 
     @PostMapping("/updateWork")
-    public String updateWork(@ModelAttribute("dto") @Valid WorkDto workdto, BindingResult result, Model model,
+    public String updateWork(@ModelAttribute("workitem") @Valid WorkDto workdto, BindingResult result, Model model,
                              @RequestParam String completedate) {
-        String url = "redirect:/updateWorkForm?bidx="+workdto.getWidx();
-        System.out.println("ss");
+        String url = "work/updateWork";
+
+        model.addAttribute("completedate", completedate);
+
+        System.out.println("dd"+workdto.getTitle());
+        System.out.println("ddd"+workdto.getTitle().equals(""));
+
 
         if (workdto.getTitle() == null || workdto.getTitle().equals("")) {
             model.addAttribute("msg", "업무명을 입력하세요");

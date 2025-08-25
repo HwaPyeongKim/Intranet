@@ -45,7 +45,7 @@
       </div>
 
       <c:forEach items="${workList}" var="work" varStatus="status">
-        <div class="row">
+        <div class="row" style="cursor:pointer; " onclick="location.href='workView?widx=${work.widx}'">
           <div class="col">
           ${(paging.page-1)*(paging.displayRow)+status.count}
           </div>

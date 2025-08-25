@@ -31,13 +31,18 @@
         <div class="field">
             <div>
                 <label for="worker">수신자</label>
-                <input type="text" name="worker" id="worker" value="${workitem.workername}" readonly />
+                <input type="text" name="workername" id="workername" value="${workitem.workername}" readonly />
+                <input type="hidden" name="worker" value="${workitem.worker}">
             </div>
         </div>
         <div class="field">
             <div>
                 <label for="completedate">마감기한 &nbsp;&nbsp;</label>
-                <input type="datetime-local" name="completedate" value="${workitem.completedate}" style="width: 250px"/>
+                <jsp:useBean id="now" class="java.util.Date"/>
+                <fmt:formatDate value="${now}" pattern="yyyy-MM-dd'T'HH:mm" var="now" />
+                <input type="datetime-local"
+                min="${now}"
+                name="completedate" value="${completedate}" style="width: 250px"/>
             </div>
         </div>
         <div class="field">
