@@ -19,4 +19,5 @@ public interface IMemberDao {
     void update(MemberDto memberdto);
     void changePwd(int midx, String pwd);
     ArrayList<MemberDto> selectMembers(String type, String key, String sort, int midx, int level);
+    int checkNewMessage(int midx);
 }

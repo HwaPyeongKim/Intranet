@@ -20,7 +20,7 @@ public class MemberRequestsDto {
     private int status; //처리상태(1.대기중 2.처리중...)
     private int fidx;
     @NotNull
-    private String confirm_midx;
+    private int confirm_midx;
     private Timestamp confirmdate;
     private Timestamp writedate;
     private String deleteyn;

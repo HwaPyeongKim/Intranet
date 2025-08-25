@@ -42,8 +42,12 @@
             <li><a href="message">메세지</a></li>
             <li><a href="workList">마이페이지</a></li>
             <li class="profile">
-                <img src="${profileImg}" />
+                <img src="${profileImg}" class="profileImg" />
                 <span>${loginUser.name}</span>
+                <a href="#" class="messageBox">
+                    <img src="/images/message.png" />
+                    <i>0</i>
+                </a>
                 <button type="button" onclick="location.href='logout'">로그아웃</button>
                 <button type="button" data-midx="${loginUser.midx}" id="workoutBtn">퇴근</button>
             </li>

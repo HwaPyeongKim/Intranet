@@ -64,4 +64,8 @@
             </when>
         </choose>
     </select>
+
+    <select id="checkNewMessage" resultType="_int">
+        select count(*) from message where tomidx = #{midx} and readyn = 'N' and deleteyn = 'N'
+    </select>
 </mapper>
