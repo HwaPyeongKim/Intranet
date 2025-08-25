@@ -62,7 +62,9 @@
                         <input type="hidden" name="bidx" value="${comment.bidx}" />
                         <input type="hidden" name="bcidx" value="${comment.bcidx}" />
 
+
                         <li class="commentList">
+                            <input type="hidden" name="prevText" value="${comment.content}" />
                             <div class="commentBtns clearfix">
                                 <span>${comment.name}</span>
                                 <small>(<fmt:formatDate value="${comment.writedate}" pattern="yyyy-MM-dd HH:mm:ss" />)</small>

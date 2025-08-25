@@ -35,6 +35,7 @@ $(function (){
        var btn_html = '<button>수정완료</button>';
        btn_html += '<button type="button" data-bidx="'+bidx+'" data-bcidx="'+bcidx+'" class="cancelBtn">수정취소</button>';
        commentBtns.html(btn_html);
+       li.find("input[name=prevText]").val(content);
        li.find("pre").remove();
        li.append("<textarea name='content'>"+content+"</textarea>");
    });
@@ -44,7 +45,7 @@ $(function (){
         var bcidx = $(this).attr("data-bcidx");
         var li = $(this).closest(".commentList");
         var commentBtns = li.find(".commentBtns div");
-        var content = li.find("textarea").val();
+        var content = li.find("input[name=prevText]").val();
 
         var btn_html = '<button type="button" data-bidx="'+bidx+'" data-bcidx="'+bcidx+'" class="deleteBoardComment">댓글삭제</button>';
         btn_html += '<button type="button" data-bidx="'+bidx+'" data-bcidx="'+bcidx+'" class="updateBoardComment">댓글수정</button>';
