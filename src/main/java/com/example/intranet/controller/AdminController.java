@@ -11,7 +11,9 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -109,6 +111,48 @@ public class AdminController {
     public String confirmJoin(@RequestParam("midx") String [] midxes, HttpSession session, Model model){
         as.confirmJoin(midxes);
         return "redirect:/adminMemberList";
+    }
+
+    @GetMapping("/adminMemberUpdateForm")
+    public String adminMemberUpdateForm(@RequestParam("midx") int midx, HttpSession session, Model model){
+        MemberDto mdto = ms.selectMember(midx);
+        String[] phone = mdto.getPhone().split("-");
+        String filePath = fs.getFile(mdto.getImage()).getPath();
+        model.addAttribute("dto", mdto);
+        model.addAttribute("phone", phone);
+        model.addAttribute("filePath", filePath);
+        return "admin/memberUpdate";
+    }
+
+    @PostMapping("/adminMemberUpdate")
+    public String adminMemberUpdate(@ModelAttribute("dto") MemberDto memberdto, @RequestParam(value="number1",required=false,defaultValue="") String number1, @RequestParam(value="number2",required=false,defaultValue="") String number2, @RequestParam(value="phone1",required=false,defaultValue="") String phone1, @RequestParam(value="phone2",required=false,defaultValue="") String phone2, @RequestParam(value="phone3",required=false,defaultValue="") String phone3, BindingResult result, HttpSession session, Model model){
+        String url = "admin/memberUpdate";
+
+        if (memberdto.getName().equals("")) {
+            model.addAttribute("msg", "이름을 입력해주세요.");
+        } else if (memberdto.getEmail().equals("")) {
+            model.addAttribute("msg", "이메일을 입력해주세요.");
+        } else if (phone1.equals("")) {
+            model.addAttribute("msg", "휴대전화번호를 입력해주세요.");
+        } else if (phone2.equals("")) {
+            model.addAttribute("msg", "휴대전화번호를 입력해주세요.");
+        } else if (phone3.equals("")) {
+            model.addAttribute("msg", "휴대전화번호를 입력해주세요.");
+        } else if (memberdto.getPostcode().equals("")) {
+            model.addAttribute("msg", "우편번호를 입력해주세요.");
+        } else if (memberdto.getAddress1().equals("")) {
+            model.addAttribute("msg", "주소를 입력해주세요.");
+        } else if (memberdto.getImage() == 0) {
+            model.addAttribute("msg", "프로필 이미지를 입력해주세요.");
+        } else {
+            memberdto.setNumber(number1+"-"+number2);
+            memberdto.setPhone(phone1+"-"+phone2+"-"+phone3);
+            as.updateMember(memberdto);
+            model.addAttribute("msg", "회원정보수정이 완료되었습니다.");
+
+            url = "redirect:/adminMemberList";
+        }
+        return url;
     }
 
 

@@ -13,6 +13,10 @@
         select * from member where userid = #{userid}
     </select>
 
+    <select id="selectMember" resultType="com.example.intranet.dto.MemberDto">
+        select * from member where midx = #{midx}
+    </select>
+
     <insert id="insertAttendance">
         insert into member_attendance (midx) values (#{midx})
     </insert>

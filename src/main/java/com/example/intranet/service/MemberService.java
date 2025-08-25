@@ -24,6 +24,9 @@ public class MemberService {
     public MemberDto getMember(String userid) {
         return mdao.getMember(userid);
     }
+    public MemberDto selectMember(int midx) {
+        return mdao.selectMember(midx);
+    }
     public void insertAttendance(int midx) {
         mdao.insertAttendance(midx);
     }
@@ -118,8 +121,8 @@ public class MemberService {
 
         return result;
     }
-
     public int checkNewMessage(int midx) {
         return mdao.checkNewMessage(midx);
     }
+
 }

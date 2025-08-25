@@ -1,4 +1,14 @@
+table tbody td.address {text-align: left;}
+table tbody td .updateMemberBtn {padding: 5px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold; cursor: pointer;}
+
 section#login {display: flex; align-items: center; justify-content: center; height: 100vh;}
 section#login form {width: 100%; max-width: 400px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
 
-table thead td.address {text-align: left;}
+section#adminMemberUpdate {margin-bottom: 50px;}
+section#adminMemberUpdate > form {padding: 20px; border-radius: 10px;}
+section#adminMemberUpdate .field div.phone {display: flex; justify-content: space-between;}
+section#adminMemberUpdate .field div.phone select {height: 40px; text-align: center;}
+section#adminMemberUpdate .field div.phone select, .field div.phone input {width: 30%;}
+section#adminMemberUpdate .field div.address {display: flex; justify-content: space-between;}
+section#adminMemberUpdate .field div.address input[type=text] {width: 85%;}
+section#adminMemberUpdate .field div.address button {width: 10%; padding: 5px;}

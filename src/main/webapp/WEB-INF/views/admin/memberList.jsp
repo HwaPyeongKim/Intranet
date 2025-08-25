@@ -20,12 +20,12 @@
                     <th>주민등록번호</th>
                     <th>이메일</th>
                     <th>휴대전화번호</th>
-                    <th>우편번호</th>
                     <th>주소</th>
                     <th>입사일</th>
                     <th>퇴사일</th>
                     <c:if test="${loginUser.level > 2}">
                     <th>가입승인여부</th>
+                    <th>정보수정</th>
                     </c:if>
                 </tr>
             </thead>
@@ -39,7 +39,7 @@
                                     <td colspan="13">게시물이 존재하지 않습니다.</td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td colspan="12">게시물이 존재하지 않습니다.</td>
+                                    <td colspan="11">게시물이 존재하지 않습니다.</td>
                                 </c:otherwise>
                             </c:choose>
 
@@ -56,8 +56,7 @@
                                 <td>${item.number}</td>
                                 <td>${item.email}</td>
                                 <td>${item.phone}</td>
-                                <td>${item.postcode}</td>
-                                <td>${item.address1} ${item.address2}</td>
+                                <td class="address">(${item.postcode}) ${item.address1} ${item.address2}</td>
                                 <td><fmt:formatDate value="${item.joindate}" pattern="yyyy-MM-dd" /></td>
                                 <td><fmt:formatDate value="${item.leavedate}" pattern="yyyy-MM-dd" /></td>
                                 <c:if test="${loginUser.level > 2}">
@@ -66,6 +65,9 @@
                                         <c:when test="${item.confirmyn == 'Y'}">승인</c:when>
                                         <c:otherwise>대기</c:otherwise>
                                     </c:choose>
+                                </td>
+                                <td>
+                                    <a href="adminMemberUpdateForm?midx=${item.midx}" class="updateMemberBtn">정보수정</a>
                                 </td>
                                 </c:if>
                             </tr>

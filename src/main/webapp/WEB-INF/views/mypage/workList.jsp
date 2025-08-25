@@ -51,7 +51,7 @@
                         <div class="col title">
                             <a href="workView?widx=${item.widx}" target="_blank">${item.title}</a>
                         </div>
-                        <div class="col">${item.name}</div>
+                        <div class="col">${item.empname}</div>
                         <div class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col"><fmt:formatDate value="${item.completedate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col">
