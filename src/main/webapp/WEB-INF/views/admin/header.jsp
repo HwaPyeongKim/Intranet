@@ -27,15 +27,15 @@
             <li>
                 <span>직원 관리</span>
                 <ul class="lnb">
-                    <li><a href="adminMemberList">직원 목록</a></li>
-                    <li><a href="adminMemberAttendanceList">직원 근태현황</a></li>
+                    <li><a href="adminMemberList?first=Y">직원 목록</a></li>
+                    <li><a href="adminMemberAttendanceList?first=Y">직원 근태현황</a></li>
                 </ul>
             </li>
             <li>
                 <span>게시판 관리</span>
                 <ul class="lnb">
-                    <li><a href="adminBoardList">게시판 목록 수정/삭제</a></li>
-                    <li><a href="adminDownloadList">자료실 목록 수정/삭제</a></li>
+                    <li><a href="adminBoardList?first=Y">게시판 목록 수정/삭제</a></li>
+                    <li><a href="adminDownloadList?first=Y">자료실 목록 수정/삭제</a></li>
                 </ul>
             </li>
         </ul>

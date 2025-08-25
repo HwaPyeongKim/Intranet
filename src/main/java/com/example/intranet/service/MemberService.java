@@ -133,6 +133,8 @@ public class MemberService {
         if (request.getParameter("first") != null) {
             session.removeAttribute("page");
             session.removeAttribute("key");
+            session.removeAttribute("startdate");
+            session.removeAttribute("enddate");
         }
 
         int page = 1;
