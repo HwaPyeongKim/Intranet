@@ -10,21 +10,23 @@ import java.sql.Timestamp;
 public class MemberRequestsDto {
     private int ridx;
     private int category;
+    private int midx;
     @NotNull
-    private int midx; //회원번호
+    private String title;
     @NotNull
-    private String title; //제목
-    @NotNull
-    private String content; //사유
+    private String content;
     private Date startdate;
     private Date enddate;
     private int status; //처리상태(1.대기중 2.처리중...)
+    private int fidx;
     @NotNull
-    private int confirm_midx; //확인자 고유번호
-    private Timestamp writedate; //작성일now()
-    private String deleteyn; // 삭제여부
+    private String confirm_midx;
+    private Timestamp confirmdate;
+    private Timestamp writedate;
+    private String deleteyn;
     private int loopnum; // 번호를 위한 변수
-    private Integer fidx; //파일번호
+
+    private String name;
 
     //조인
     private String mname;

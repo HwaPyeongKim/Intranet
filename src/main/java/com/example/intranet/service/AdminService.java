@@ -10,4 +10,9 @@ public class AdminService {
     @Autowired
     IAdminDao adao;
 
+    public void confirmJoin(String[] midxes) {
+        for(String midx : midxes){
+            adao.confirmJoin(midx);
+        }
+    }
 }

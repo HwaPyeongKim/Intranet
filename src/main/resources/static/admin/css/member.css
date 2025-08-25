@@ -1,0 +1,4 @@
+section#login {display: flex; align-items: center; justify-content: center; height: 100vh;}
+section#login form {width: 100%; max-width: 400px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
+
+table thead td.address {text-align: left;}
