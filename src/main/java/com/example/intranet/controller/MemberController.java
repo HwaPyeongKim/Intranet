@@ -3,6 +3,7 @@ package com.example.intranet.controller;
 import com.example.intranet.dto.FileDto;
 import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
+import com.example.intranet.service.BoardService;
 import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +23,9 @@ public class MemberController {
 
     @Autowired
     MemberService ms;
+
+    @Autowired
+    BoardService bs;
 
     @Autowired
     FileService fs;

@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="ko">
 <head>
-    <title>Admin</title>
+    <title>Grouping - Admin</title>
     <%--초기화 및 공통 css, javascript--%>
     <link rel="stylesheet" type="text/css" href="/css/reset.css">
     <link rel="stylesheet" type="text/css" href="admin/css/common.css">
@@ -14,10 +14,12 @@
     <script src="admin/scripts/common.js"></script>
 
     <%--개별 링크--%>
+    <link rel="stylesheet" type="text/css" href="admin/css/member.css">
 </head>
 <body>
 
 <c:if test="${loginUser != null && loginUser.level > 1}">
+
 <header>
     <div class="nav">
         <a href="#" id="logo">로고</a>
@@ -25,15 +27,15 @@
             <li>
                 <span>직원 관리</span>
                 <ul class="lnb">
-                    <li><a href="#">직원 목록</a></li>
-                    <li><a href="#">직원 근태현황</a></li>
+                    <li><a href="adminMemberList">직원 목록</a></li>
+                    <li><a href="adminMemberAttendance">직원 근태현황</a></li>
                 </ul>
             </li>
             <li>
                 <span>게시판 관리</span>
                 <ul class="lnb">
-                    <li><a href="#">게시판 목록 수정/삭제</a></li>
-                    <li><a href="#">자료실 목록 수정/삭제</a></li>
+                    <li><a href="adminBoardList">게시판 목록 수정/삭제</a></li>
+                    <li><a href="adminDownloadList">자료실 목록 수정/삭제</a></li>
                 </ul>
             </li>
         </ul>

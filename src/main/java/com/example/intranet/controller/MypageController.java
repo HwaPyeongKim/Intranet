@@ -1,9 +1,13 @@
 package com.example.intranet.controller;
 
+import com.example.intranet.dto.BoardDto;
 import com.example.intranet.dto.MemberDto;
+import com.example.intranet.dto.MemberRequestsDto;
+import com.example.intranet.dto.WorkDto;
 import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
 import com.example.intranet.service.MypageService;
+import com.example.intranet.service.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -16,6 +20,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
 @Controller
 public class MypageController {
 
@@ -26,21 +37,170 @@ public class MypageController {
     MemberService mes;
 
     @Autowired
+    WorkService ws;
+
+    @Autowired
     FileService fs;
 
     @GetMapping("/workList")
-    public String workList(){
-        return "mypage/workList";
+    public String workList(HttpServletRequest request, HttpSession session, Model model) {
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (loginUser != null) {
+            result = ms.selectWork(request, loginUser.getMidx());
+
+            model.addAttribute("list", result.get("list"));
+            model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
+            model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
+
+            url = "mypage/workList";
+        }
+        return url;
     }
 
     @GetMapping("/vacationList")
-    public String vacationList(){
-        return "mypage/vacationList";
+    public String vacationList(HttpServletRequest request, HttpSession session, Model model){
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (loginUser != null) {
+            result = ms.selectRequests(request, loginUser.getMidx());
+
+            model.addAttribute("list", result.get("list"));
+            model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
+            model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
+
+            url = "mypage/vacationList";
+        }
+        return url;
+    }
+
+    @GetMapping("/writeVacationForm")
+    public String writeVacationForm(HttpSession session, Model model){
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            url = "mypage/writeVacation";
+        }
+        return url;
+    }
+
+    @PostMapping("/writeVacation")
+    public String writeVacation(@ModelAttribute("dto") MemberRequestsDto mrdto, BindingResult result, HttpSession session, Model model) {
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            url = "mypage/writeVacation";
+
+            if (mrdto.getTitle().equals("")) {
+                model.addAttribute("msg", "제목을 입력해주세요.");
+            } else if (mrdto.getContent().equals("")) {
+                model.addAttribute("msg", "사유를 입력해주세요.");
+            } else {
+                Date today = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String s_today = sdf.format(today);
+
+                if (mrdto.getCategory() == 2) {
+                    Date startdate = mrdto.getStartdate();
+                    Date enddate = mrdto.getEnddate();
+
+                    if (s_today.compareTo(String.valueOf(startdate)) > 0) {
+                        model.addAttribute("msg", "시작날짜는 오늘 날짜이거나 그 이후로 선택해주세요.");
+                    } else if (s_today.compareTo(String.valueOf(enddate)) > 0) {
+                        model.addAttribute("msg", "종료날짜는 오늘 날짜이거나 그 이후로 선택해주세요.");
+                    } else if (startdate.compareTo(enddate) > 0) {
+                        model.addAttribute("msg", "종료날짜는 시작날짜 이후로 선택해주세요.");
+                    } else {
+                        ms.insertRequests(mrdto);
+                        url = "redirect:/vacationList";
+                    }
+
+                } else if (mrdto.getCategory() == 3 || mrdto.getCategory() == 4) {
+                    mrdto.setEnddate(mrdto.getStartdate());
+                    Date startdate = mrdto.getStartdate();
+
+                    if (s_today.compareTo(String.valueOf(startdate)) > 0) {
+                        model.addAttribute("msg", "시작날짜는 오늘 날짜이거나 그 이후로 선택해주세요.");
+                    } else {
+                        ms.insertRequests(mrdto);
+                        url = "redirect:/vacationList";
+                    }
+                }
+            }
+
+        }
+        return url;
+    }
+
+    @GetMapping("/profile")
+    public String profile(HttpSession session, Model model){
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            String filePath = fs.getFile(loginUser.getImage()).getPath();
+            model.addAttribute("filePath", filePath);
+            url = "mypage/profile";
+        }
+        return url;
     }
 
     @GetMapping("/editProfile")
     public String editProfile(){
         return "mypage/editProfile";
+    }
+
+    @GetMapping("/changePwdForm")
+    public String changePwd(HttpSession session, Model model){
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            url = "mypage/chagePwd";
+        }
+        return url;
+    }
+
+    @PostMapping("/changePwd")
+    public String changePwd(@RequestParam(value="pwd", required=false, defaultValue="") String pwd, @RequestParam(value="newPwd", required=false, defaultValue="") String newPwd, @RequestParam(value="newPwdChk", required=false, defaultValue="") String newPwdChk, HttpSession session, Model model){
+        String url = "member/login";
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            url = "mypage/chagePwd";
+            if (pwd.equals("")) {
+                model.addAttribute("msg", "비밀번호를 입력해주세요.");
+            } else if (newPwd.equals("")) {
+                model.addAttribute("msg", "새 비밀번호를 입력해주세요.");
+            } else if (newPwdChk.equals("")) {
+                model.addAttribute("msg", "새 비밀번호 확인을 입력해주세요.");
+            } else if (!newPwd.equals(newPwdChk)) {
+                model.addAttribute("msg", "새 비밀번호가 일치하지 않습니다.");
+            } else {
+                MemberDto mdto = mes.checkPwd(loginUser.getUserid(), pwd);
+                if (mdto == null) {
+                    model.addAttribute("msg", "비밀번호를 확인해주세요.");
+                } else {
+                    mes.changePwd(loginUser.getMidx(), newPwd);
+                    model.addAttribute("msg", "비밀번호가 수정되었습니다.");
+                    session.removeAttribute("loginUser");
+                    session.removeAttribute("profileImg");
+                    url = "member/login";
+                }
+            }
+        }
+
+        return url;
     }
 
     @PostMapping("/checkPwd")
@@ -67,14 +227,10 @@ public class MypageController {
     }
 
     @PostMapping("/updateProfile")
-    public String updateProfile(@ModelAttribute("dto") MemberDto memberdto, @RequestParam(value="pwdChk",required=false,defaultValue="") String pwdChk, @RequestParam(value="number1",required=false,defaultValue="") String number1, @RequestParam(value="number2",required=false,defaultValue="") String number2, @RequestParam(value="phone1",required=false,defaultValue="") String phone1, @RequestParam(value="phone2",required=false,defaultValue="") String phone2, @RequestParam(value="phone3",required=false,defaultValue="") String phone3, BindingResult result, HttpSession session, Model model){
+    public String updateProfile(@ModelAttribute("dto") MemberDto memberdto, @RequestParam(value="number1",required=false,defaultValue="") String number1, @RequestParam(value="number2",required=false,defaultValue="") String number2, @RequestParam(value="phone1",required=false,defaultValue="") String phone1, @RequestParam(value="phone2",required=false,defaultValue="") String phone2, @RequestParam(value="phone3",required=false,defaultValue="") String phone3, BindingResult result, HttpSession session, Model model){
         String url = "mypage/editProfileForm";
 
-        if (memberdto.getPwd().equals("")) {
-            model.addAttribute("msg", "패스워드를 입력해주세요.");
-        } else if (!memberdto.getPwd().equals(pwdChk)) {
-            model.addAttribute("msg", "패스워드가 일치하지 않습니다.");
-        } else if (memberdto.getName().equals("")) {
+        if (memberdto.getName().equals("")) {
             model.addAttribute("msg", "이름을 입력해주세요.");
         } else if (memberdto.getEmail().equals("")) {
             model.addAttribute("msg", "이메일을 입력해주세요.");

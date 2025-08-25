@@ -38,6 +38,30 @@
     </select>
 
     <update id="update" parameterType="com.example.intranet.dto.MemberDto">
-        update member set pwd = #{pwd}, name = #{name}, email = #{email}, phone = #{phone}, postcode = #{postcode}, address1 = #{address1}, address2 = #{address2}, image = #{image} where midx = #{midx}
+        update member set name = #{name}, email = #{email}, phone = #{phone}, postcode = #{postcode}, address1 = #{address1}, address2 = #{address2}, image = #{image} where midx = #{midx}
     </update>
+
+    <update id="changePwd">
+        update member set pwd = #{pwd} where midx = #{midx}
+    </update>
+
+    <select id="selectMembers" resultType="com.example.intranet.dto.MemberDto">
+        select *
+        from member m
+        <where>
+            m.deleteyn = 'N'
+            <if test="level == 2">
+                and m.team = (select team from member where midx = #{midx})
+            </if>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by m.joindate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by m.joindate asc
+            </when>
+        </choose>
+    </select>
 </mapper>

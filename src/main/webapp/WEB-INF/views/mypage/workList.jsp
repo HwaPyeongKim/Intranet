@@ -6,18 +6,18 @@
     <ul class="submenu">
         <li class="on"><a href="workList">나의업무</a></li>
         <li><a href="vacationList">연차/반차 신청</a></li>
-        <li><a href="editProfile">프로필 수정</a></li>
+        <li><a href="profile">프로필</a></li>
     </ul>
 
-    <h2>연차/반차</h2>
+    <h2>나의 업무</h2>
 
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
             <div class="input">
                 <select name="type">
-                    <option value="title"<c:if test="${type == 'title'}"> selected</c:if>>제목</option>
-                    <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>제목+사유</option>
-                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>작성자</option>
+                    <option value="title"<c:if test="${type == 'title'}"> selected</c:if>>업무명</option>
+                    <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>업무명+내용</option>
+                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>요청자</option>
                 </select>
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
@@ -32,17 +32,16 @@
     <div class="table">
         <div class="row head">
             <div class="col">번호</div>
-            <div class="col title">제목</div>
-            <div class="col">작성자</div>
-            <div class="col">결재자</div>
-            <div class="col">시작/종료일</div>
-            <div class="col">작성일</div>
-            <div class="col">처리상태</div>
+            <div class="col title">업무명</div>
+            <div class="col">요청자</div>
+            <div class="col">등록일</div>
+            <div class="col">마감일</div>
+            <div class="col">진행상태</div>
         </div>
         <c:choose>
             <c:when test="${empty list}">
                 <div class="row empty">
-                    <div class="col">신처이 존재하지 않습니다.</div>
+                    <div class="col">나의업무가 존재하지 않습니다.</div>
                 </div>
             </c:when>
             <c:otherwise>
@@ -50,15 +49,11 @@
                     <div class="row">
                         <div class="col">${item.loopnum}</div>
                         <div class="col title">
-                            <a href="viewWork?widx=${item.widx}">
-                                ${item.title}
-                                <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
-                            </a>
+                            <a href="workView?widx=${item.widx}" target="_blank">${item.title}</a>
                         </div>
                         <div class="col">${item.name}</div>
-                        <div class="col">${item.cname}</div>
-                        <div class="col"><fmt:formatDate value="${item.startdate}" pattern="yyyy-MM-dd" />/<fmt:formatDate value="${item.enddate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></div>
+                        <div class="col"><fmt:formatDate value="${item.completedate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col">
                             <c:choose>
                                 <c:when test="${item.status == 1}">대기중</c:when>

@@ -6,7 +6,7 @@
     <ul class="submenu">
         <li><a href="workList">나의업무</a></li>
         <li class="on"><a href="vacationList">연차/반차 신청</a></li>
-        <li><a href="editProfile">프로필 수정</a></li>
+        <li><a href="profile">프로필</a></li>
     </ul>
 
     <h2>연차/반차</h2>
@@ -21,7 +21,7 @@
                 <select name="type">
                     <option value="title"<c:if test="${type == 'title'}"> selected</c:if>>제목</option>
                     <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>제목+사유</option>
-                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>작성자</option>
+                    <option value="cname"<c:if test="${type == 'cname'}"> selected</c:if>>결재자</option>
                 </select>
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
@@ -36,9 +36,8 @@
     <div class="table">
         <div class="row head">
             <div class="col">번호</div>
-            <div class="col">구분</div>
+            <div class="col">종류</div>
             <div class="col title">제목</div>
-            <div class="col">작성자</div>
             <div class="col">결재자</div>
             <div class="col">시작/종료일</div>
             <div class="col">작성일</div>
@@ -47,7 +46,7 @@
         <c:choose>
             <c:when test="${empty list}">
                 <div class="row empty">
-                    <div class="col">신처이 존재하지 않습니다.</div>
+                    <div class="col">연차/반차 신청이 존재하지 않습니다.</div>
                 </div>
             </c:when>
             <c:otherwise>
@@ -56,21 +55,17 @@
                         <div class="col">${item.loopnum}</div>
                         <div class="col">
                             <c:choose>
-                                <c:when test="${item.type == 1}">연차</c:when>
-                                <c:when test="${item.type == 2}">오전반차</c:when>
-                                <c:when test="${item.type == 3}">오후반차</c:when>
+                                <c:when test="${item.category == 2}">연차</c:when>
+                                <c:when test="${item.category == 3}">오전반차</c:when>
+                                <c:when test="${item.category == 4}">오후반차</c:when>
                                 <c:otherwise>기타</c:otherwise>
                             </c:choose>
                         </div>
                         <div class="col title">
-                            <a href="viewBoard?vidx=${item.vidx}">
-                                ${item.title}
-                                <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
-                            </a>
+                            <a href="viewRequests?ridx=${item.ridx}">${item.title}</a>
                         </div>
-                        <div class="col">${item.name}</div>
                         <div class="col">${item.cname}</div>
-                        <div class="col"><fmt:formatDate value="${item.startdate}" pattern="yyyy-MM-dd" />/<fmt:formatDate value="${item.enddate}" pattern="yyyy-MM-dd" /></div>
+                        <div class="col"><fmt:formatDate value="${item.startdate}" pattern="yyyy-MM-dd" /><br /><fmt:formatDate value="${item.enddate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col">
                             <c:choose>
