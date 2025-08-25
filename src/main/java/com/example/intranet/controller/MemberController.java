@@ -180,4 +180,18 @@ public class MemberController {
         }
         return result;
     }
+
+    @PostMapping("/checkNewMessage")
+    @ResponseBody
+    public HashMap<String, Object> checkNewMessage(HttpSession session, Model model) {
+        HashMap<String, Object> result = new HashMap<>();
+        if (session.getAttribute("loginUser") != null) {
+            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+            int count = ms.checkNewMessage(mdto.getMidx());
+            result.put("count", count);
+        } else {
+            result.put("count", 0);
+        }
+        return result;
+    }
 }

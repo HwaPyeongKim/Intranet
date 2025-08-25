@@ -19,8 +19,11 @@ header {display: flex; justify-content: space-between; line-height: 60px;}
 header #logo {}
 header .nav {display: flex;}
 header .nav li {margin-left: 20px;}
-header .nav li.profile img {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}
+header .nav li.profile img.profileImg {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}
 header .nav li.profile span {display: inline-block;}
+header .nav li.profile .messageBox {position: relative; display: inline-block; vertical-align: middle; margin-right: 10px;}
+header .nav li.profile .messageBox img {display: inline-block; width: 25px;}
+header .nav li.profile .messageBox i {position: absolute; top: -10px; right: -10px; width: 20px; height: 20px; background: #f00; border-radius: 50%; color: #fff; font-size: .9em; text-align: center; line-height: 20px;}
 header .nav li.profile button {}
 
 .submenu {display: flex; justify-content: space-between; margin: 20px 0;}

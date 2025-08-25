@@ -118,4 +118,8 @@ public class MemberService {
 
         return result;
     }
+
+    public int checkNewMessage(int midx) {
+        return mdao.checkNewMessage(midx);
+    }
 }
