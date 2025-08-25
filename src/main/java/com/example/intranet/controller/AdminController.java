@@ -4,6 +4,7 @@ import com.example.intranet.dto.FileDto;
 import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
 import com.example.intranet.service.AdminService;
+import com.example.intranet.service.BoardService;
 import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +30,9 @@ public class AdminController {
 
     @Autowired
     MemberService ms;
+
+    @Autowired
+    BoardService bs;
 
     @Autowired
     FileService fs;
@@ -185,4 +189,41 @@ public class AdminController {
         }
         return url;
     }
+
+    @GetMapping("/adminBoardList")
+    public String adminBoardList(HttpServletRequest request, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (mdto != null) {
+            result = bs.select(request, "main");
+            model.addAttribute("notice", result.get("notice"));
+            model.addAttribute("list", result.get("list"));
+            model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
+            model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
+            url = "admin/boardList";
+        }
+        return url;
+    }
+
+    @GetMapping("/adminDownloadList")
+    public String adminDownloadList(HttpServletRequest request, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (mdto != null) {
+            result = bs.select(request,"download");
+            model.addAttribute("list", result.get("list"));
+            model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
+            model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
+            url = "admin/boardDownloadList";
+        }
+        return url;
+    }
+
+
 }

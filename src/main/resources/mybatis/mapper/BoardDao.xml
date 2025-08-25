@@ -11,7 +11,7 @@
         from board b
         left join member m on m.midx = b.midx
         <where>
-            b.deleteyn = 'N'
+            b.deleteyn = 'N' and b.showyn = 'Y'
             <if test="category == 'main'">
                 and b.category = 'main'
             </if>
@@ -31,10 +31,10 @@
         </where>
 
         <choose>
-            <when test="sort == 'joindesc'">
+            <when test="sort == 'desc'">
                 order by b.writedate desc
             </when>
-            <when test="sort == 'joinasc'">
+            <when test="sort == 'asc'">
                 order by b.writedate asc
             </when>
         </choose>
