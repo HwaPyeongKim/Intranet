@@ -4,106 +4,137 @@
 <%@ include file="../header.jsp" %>
 <%@ include file="sub_menu.jsp" %>
 <style>
-    #getList {
-        border: 1px solid #ccc;
-    }
 
-    #getList .row {
-        border: 1px solid #ccc;
-        display: flex;
-        justify-content: space-around;
-        padding: 13px 0;
+    table.tb {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
     }
-
-    #getList .coltitle {
+    table.tb thead tr.row_title {
+        background-color: #f2f2f2;
+    }
+    table.tb th, table.tb td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+        vertical-align: middle;
+    }
+    table.tb tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+    table.tb tfoot td {
         font-weight: bold;
+        font-size: 120%;
+        text-align: center;
+    }
+    table.tb a {
+        text-decoration: none;
+        color: inherit;
+    }
+    table.tb a:hover {
+        color: #007BFF;
+        text-decoration: underline;
+    }
+    .empty td {
+        text-align: center;
+        padding: 12px;
+        font-style: italic;
+        color: #888;
     }
 
 </style>
 
 <section id="getList">
-    <h3>받은 결재 목록</h3><%--    나를 승인자로 선택한 글 목록만 조회.--%>
+    <h3>수신 결재 목록</h3><%--    나를 결재자로 선택한 글 목록만 조회.--%>
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
             <div class="input">
                 <select name="type">
                     <option value="title"<c:if test="${type == 'title'}"> selected</c:if>>제목</option>
                     <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>제목+내용</option>
-                    <option value="name"<c:if test="${type == 'comfirm_midx'}"> selected</c:if>>승인자</option>
+                    <option value="name"<c:if test="${type == 'comfirm_midx'}"> selected</c:if>>작성자</option>
                 </select>
                 <input type="text" name="key" value="${key}"/>
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>
-            </select>
+<%--            <select name="sort" id="sort">--%>
+<%--                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>--%>
+<%--                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>--%>
+<%--            </select>--%>
         </div>
     </form>
 
 
     <form method="get" name="getList" class="">
-        <div class="tb">
-
-            <div class="row row_title">
-                <div class="coltitle">번호</div>
-                <div class="coltitle">제목</div>
-                <div class="coltitle">보낸날짜</div>
-                <div class="coltitle">상신자</div>
-                <div class="coltitle">진행상태</div>
-            </div>
-
-
+    <table class="tb">
+        <thead>
+            <tr class="row_title">
+                <th>번호</th>
+                <th>구분</th>
+                <th>제목</th>
+                <th>작성일자</th>
+                <th>작성자</th>
+                <th>진행상태</th>
+            </tr>
+        </thead>
+        <tbody>
             <c:choose>
                 <c:when test="${empty getList}">
-                    <div class="row empty">
-                        <div class="col">게시물이 존재하지 않습니다.</div>
-                    </div>
+                    <tr class="empty">
+                        <td colspan="6">게시물이 존재하지 않습니다.</td>
+                    </tr>
                 </c:when>
                 <c:otherwise>
                     <c:forEach items="${getList}" var="getList">
-                        <div class="row">
-                            <div class="col">${getList.loopnum}</div>
-                            <div class="col" style="cursor:pointer" onClick="">
+                        <tr>
+                            <td>${getList.loopnum}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test='${getList.category=="1"}'>업무</c:when>
+                                    <c:otherwise>연차/반차</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td style="cursor:pointer">
                                 <a href="getListDetail?ridx=${getList.ridx}">
-                                        ${getList.title}</a></div>
-
-                            <div class="col"><fmt:formatDate value="${getList.writedate}" pattern="yyyy-MM-dd"/></div>
-                            <div class="col">${getList.mname}&nbsp;${getList.mposition}</div>
-                            <div class="col">
+                                    ${getList.title}
+                                </a>
+                            </td>
+                            <td><fmt:formatDate value="${getList.writedate}" pattern="yyyy-MM-dd"/></td>
+                            <td>${getList.mname}&nbsp;${getList.mposition}</td>
+                            <td>
                                 <c:choose>
                                     <c:when test='${getList.status=="1"}'>대기중</c:when>
                                     <c:when test='${getList.status=="2"}'>처리중</c:when>
                                     <c:when test='${getList.status=="3"}'>반려</c:when>
                                     <c:otherwise>승인</c:otherwise>
                                 </c:choose>
-                            </div>
-                        </div>
+                            </td>
+                        </tr>
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
+        </tbody>
 
-            <div class="row"> <!-- 페이지의 시작 -->
-                <div class="col" style="font-size: 120%; font-weight: bold;">
-                    <c:if test="${paging.prev}">
-                        <a href="getList?page=${paging.beginPage-1}&key=${key}">PREV</a>&nbsp;
-                    </c:if>
-                    <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-                        <c:if test="${index!=paging.page}">
-                            <a href="getList?page=${index}&key=${key}">${index}</a>&nbsp;
-                        </c:if>
-                        <c:if test="${index==paging.page}">
-                            <span style="color:red">${index}&nbsp;</span>
-                        </c:if>
-                    </c:forEach>
-                    <c:if test="${paging.next}">
-                        <a href="getList?page=${paging.endPage+1}&key=${key}">NEXT</a>&nbsp;
-                    </c:if>
-                </div>
-            </div> <!-- 페이지의 끝 -->
-
-        </div>
-    </form>
+    </table>
+        <div class="paging"> <!-- 페이지의 시작 -->
+            <div class="col" style="font-size: 120%; font-weight: bold;">
+              <c:if test="${paging.prev}">
+                <a href="requests?page=${paging.beginPage-1}&key=${key}">PREV</a>&nbsp;
+              </c:if>
+              <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+                <c:if test="${index!=paging.page}">
+                  <a href="requests?page=${index}&key=${key}">${index}</a>&nbsp;
+                </c:if>
+                <c:if test="${index==paging.page}">
+                  <span style="color:red">${index}&nbsp;</span>
+                </c:if>
+              </c:forEach>
+              <c:if test="${paging.next}">
+                <a href="requests?page=${paging.endPage+1}&key=${key}">NEXT</a>&nbsp;
+              </c:if>
+            </div>
+        </div> <!-- 페이지의 끝 -->
+</form>
 </section>
 
 <%@ include file="../footer.jsp" %>

@@ -1,7 +1,3 @@
-// function go_search(url){
-//     document.requests.action = url;
-//     document.requests.submit();
-// }
 
 let currentRidx = null;
 let currentStatus = null;
@@ -26,6 +22,24 @@ function openConfirmModal(ridx, status) {
         location.href = `/changeStatus?ridx=${currentRidx}&status=${currentStatus}`; //여기 주소만 바꿔서 사용하면됨.
     };
 }
+
+
+function openDeleteModal(ridx) {
+    currentRidx = ridx;
+    console.log(ridx);
+    let message = "정말 삭제하시겠습니까?";
+
+    document.getElementById("modalMessage").innerText = message;
+    document.getElementById("confirmModal").style.display = "block";
+
+    // 확인 버튼 클릭 이벤트 세팅 (한번만)
+    const confirmBtn = document.getElementById("confirmBtn");
+    confirmBtn.onclick = function () {
+        location.href = `/deleteRequests?ridx=${currentRidx}`;
+    };
+}
+
+
 
 function closeConfirmModal() {
     document.getElementById("confirmModal").style.display = "none";

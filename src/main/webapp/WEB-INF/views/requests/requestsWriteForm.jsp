@@ -27,58 +27,153 @@
 </script>
 
 <style>
-    #requestsWriteForm { font-size: 20px; }
-    .req_write_info, .req_write_w, .req_file {
-        border: 1px solid #ccc;
-        padding: 32px;
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 50px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
         margin-bottom: 30px;
     }
-    .req_write_info > div, .req_write_w > div, .req_file > div {
-        padding: 10px;
+
+    .form-box {
+        background: #fff;
+        border: 1px solid #ddd;
+        padding: 24px;
+        margin-bottom: 25px;
+        border-radius: 5px;
     }
-    .req_write_w > .textbox { width: 100%; height: 350px; }
+
+    .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+    }
+
+    .form-row label {
+        flex: 0 0 120px;
+        font-weight: 600;
+    }
+
+    .form-row input[type="text"],
+    .form-row select {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .textbox {
+        width: 100%;
+        min-height: 400px;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    .form-message {
+        color: #e74c3c;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-buttons {
+        text-align: center;
+    }
+
+    .form-buttons button {
+        padding: 10px 20px;
+        margin: 0 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #3498db;
+        color: #fff;
+        transition: background-color 0.3s;
+    }
+
+    .form-buttons button:hover {
+        background-color: #2980b9;
+    }
+
+    .delete-btn {
+        margin-left: 10px;
+        background-color: #b7b7b7;
+        font-size: 16px;
+        padding: 6px 10px;
+        border: none;
+    }
 </style>
 
-<section id="requestsWriteForm">
-  <form method="post" action="requestsWrite" name="requestsWrite" class="fileForm" enctype="multipart/form-data">
-      <input type="hidden" name="fidx" id="fidx">
-      <input type="hidden" name="midx" value="${loginUser.midx}">
+<section class="form-container">
+    <form method="post" action="requestsWrite" name="requestsWrite" class="fileForm" enctype="multipart/form-data">
+        <input type="hidden" name="fidx" id="fidx">
+        <input type="hidden" name="midx" value="${loginUser.midx}">
+        <input type="hidden" name="category" value="1">
 
-      <div class="requests_wrap">
-        <h3>기안 작성 폼</h3>
-        <div class="req_write_info">
-            <div>작성자 : ${loginUser.name}</div>
-            <div>제목 : <input type="text" name="title" placeholder="제목을 입력하세요" required/></div>
-            <div>승인자 :
-              <select name="confirm_midx" required>
-                <option value="">선택하세요</option>
-                <c:forEach var="member" items="${memberList}">
-                    <c:if test="${member.level > loginUser.level}">
-                        <option value="${member.midx}">${member.name}&nbsp;${member.position}</option>
-                    </c:if>
-                </c:forEach>
-              </select>
+        <h2 class="form-title">기안 작성</h2>
+
+        <div class="form-box">
+            <div class="form-row">
+                <label>작성자</label>
+                <div>${loginUser.name}</div>
             </div>
-            <div>날짜 : ${today}</div>
+
+            <div class="form-row">
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required />
+            </div>
+
+            <div class="form-row">
+                <label for="confirm_midx">결재자</label>
+                <select id="confirm_midx" name="confirm_midx" required>
+                    <option value="">선택하세요</option>
+                    <c:forEach var="member" items="${memberList}">
+                        <c:if test="${member.level > loginUser.level}">
+                            <option value="${member.midx}">
+                                ${member.name}&nbsp;${member.position}
+                            </option>
+                        </c:if>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label>작성일자</label>
+                <div>${today}</div>
+            </div>
         </div>
 
-        <div class="req_write_w">
-          <textarea class="textbox" name="content" placeholder="내용을 입력하세요" required></textarea>
+        <div class="form-box">
+            <textarea id="content" class="textbox" name="content" placeholder="내용을 입력하세요" required></textarea>
         </div>
 
-        <div class="req_file">
-            <label for="fileBtn">파일첨부 :</label>
-            <input type="file" name="file" id="fileBtn">
-            <button type="button" id="deleteBtn" style="display:none;">삭제</button>
+        <div class="form-box" style="display: flex;justify-content: space-between;">
+            <div>
+                <label for="fileBtn">파일 첨부</label>
+                <input type="file" name="file" id="fileBtn">
+            </div>
+            <button type="button" id="deleteBtn" class="delete-btn" style="display:none;">삭제</button>
         </div>
-        <div>${message}</div>
-      </div>
 
-    <div class="req_btn">
-        <input type="button" value="목록으로" onclick="location.href='requests'">
-        <input type="submit" value="작성완료">
-    </div>
-  </form>
+        <div class="form-message">${message}</div>
+
+        <div class="form-buttons">
+            <button type="button" onclick="location.href='requests'">목록으로</button>
+            <button type="submit">작성 완료</button>
+        </div>
+    </form>
 </section>
 
 <%@ include file="../footer.jsp" %>
