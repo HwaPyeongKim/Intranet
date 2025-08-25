@@ -31,10 +31,10 @@
         </where>
 
         <choose>
-            <when test="sort == 'desc'">
+            <when test="sort == 'joindesc'">
                 order by b.writedate desc
             </when>
-            <when test="sort == 'asc'">
+            <when test="sort == 'joinasc'">
                 order by b.writedate asc
             </when>
         </choose>

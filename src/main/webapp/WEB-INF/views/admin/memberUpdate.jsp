@@ -2,7 +2,7 @@
 <%@ include file="header.jsp" %>
 
 <section id="adminMemberUpdate">
-    <h2>회원 정보 수정</h2>
+    <h2>직원 정보 수정</h2>
 
     <form method="post" name="adminMemberUpdate" action="adminMemberUpdate" enctype="multipart/form-data" class="form imageForm shadow">
         <input type="hidden" name="image" id="image" value="${dto.image}" />

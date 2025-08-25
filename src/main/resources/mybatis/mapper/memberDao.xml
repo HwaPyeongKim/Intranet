@@ -57,19 +57,55 @@
             <if test="level == 2">
                 and m.team = (select team from member where midx = #{midx})
             </if>
+
+            <choose>
+                <when test="type == 'userid'">
+                    and m.userid like concat('%', #{key}, '%')
+                </when>
+                <when test="type == 'name'">
+                    and m.name like concat('%', #{key}, '%')
+                </when>
+                <when test="type == 'email'">
+                    and m.email like concat('%', #{key}, '%')
+                </when>
+            </choose>
         </where>
 
         <choose>
-            <when test="sort == 'desc'">
+            <when test="sort == 'joindesc'">
                 order by m.joindate desc
             </when>
-            <when test="sort == 'asc'">
+            <when test="sort == 'joinasc'">
                 order by m.joindate asc
+            </when>
+            <when test="sort == 'nameasc'">
+                order by m.name asc
             </when>
         </choose>
     </select>
 
     <select id="checkNewMessage" resultType="_int">
         select count(*) from message where tomidx = #{midx} and readyn = 'N' and deleteyn = 'N'
+    </select>
+
+    <select id="selectMemberAttendances" resultType="com.example.intranet.dto.MemberAttendanceDto">
+        select ma.*
+        , m.name
+        from member_attendance ma
+        left join member m on m.midx = ma.midx
+        <where>
+            date between #{startdate} and #{enddate}
+            <if test="level == 2">
+                and m.team = (select team from member where midx = #{midx})
+            </if>
+
+            <choose>
+                <when test="type == 'name'">
+                    and m.name like concat('%', #{key}, '%')
+                </when>
+            </choose>
+
+            order by ma.date, ma.starttime desc
+        </where>
     </select>
 </mapper>

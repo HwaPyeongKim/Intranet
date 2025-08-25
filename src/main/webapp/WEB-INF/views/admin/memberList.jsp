@@ -2,7 +2,26 @@
 <%@ include file="header.jsp" %>
 
 <section id="adminMemberList">
-    <h2>회원 목록</h2>
+    <h2>직원 목록</h2>
+
+    <form method="get" name="search" id="searchForm">
+        <div class="searchBox">
+            <div class="input">
+                <select name="type">
+                    <option value="userid"<c:if test="${type == 'userid'}"> selected</c:if>>아이디</option>
+                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>이름</option>
+                    <option value="email"<c:if test="${type == 'email'}"> selected</c:if>>이메일</option>
+                </select>
+                <input type="text" name="key" value="${key}" />
+                <button>검색</button>
+            </div>
+            <select name="sort" id="sort">
+                <option value="joindesc" <c:if test="${sort == 'joindesc'}"> selected</c:if>>입사일 최근순</option>
+                <option value="joinasc" <c:if test="${sort == 'joinasc'}"> selected</c:if>>입사일 오래된순</option>
+                <option value="nameasc" <c:if test="${sort == 'nameasc'}"> selected</c:if>>이름 가나다순</option>
+            </select>
+        </div>
+    </form>
 
     <form method="post" name="adminMemberInfo" id="adminMemberInfo">
         <div class="boxBtns clearfix">
@@ -81,13 +100,13 @@
 
     <c:if test="${not empty list}">
         <div class="paging">
-            <c:if test="${paging.prev}"><a href="board?page=${paging.beginPage-1}">Prev</a></c:if>
+            <c:if test="${paging.prev}"><a href="adminMemberList?page=${paging.beginPage-1}">Prev</a></c:if>
 
             <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-                <a href="board?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
+                <a href="adminMemberList?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
             </c:forEach>
 
-            <c:if test="${paging.next}"><a href="board?page=${paging.endPage+1}">Next</a></c:if>
+            <c:if test="${paging.next}"><a href="adminMemberList?page=${paging.endPage+1}">Next</a></c:if>
         </div>
     </c:if>
 </section>

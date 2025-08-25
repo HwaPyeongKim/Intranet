@@ -155,5 +155,34 @@ public class AdminController {
         return url;
     }
 
+    @GetMapping("/adminMemberAttendanceList")
+    public String adminMemberAttendanceList(HttpServletRequest request, HttpSession session, Model model){
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (mdto != null) {
+            if (mdto.getLevel() > 1) {
+                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                String startdate = request.getParameter("startdate");
+                if (request.getParameter("startdate") == null) {
+                    startdate = date;
+                }
+                String enddate = request.getParameter("enddate");
+                if (request.getParameter("enddate") == null) {
+                    enddate = date;
+                }
 
+                result = ms.selectMemberAttendances(request, mdto.getMidx(), mdto.getLevel());
+                model.addAttribute("list", result.get("list"));
+                model.addAttribute("paging", result.get("paging"));
+                model.addAttribute("type", result.get("type"));
+                model.addAttribute("key", result.get("key"));
+                model.addAttribute("startdate", startdate);
+                model.addAttribute("enddate", enddate);
+
+                url = "admin/memberAttendanceList";
+            }
+        }
+        return url;
+    }
 }

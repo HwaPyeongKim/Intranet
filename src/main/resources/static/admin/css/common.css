@@ -59,7 +59,8 @@ div.table > div.row.empty {line-height: 200px;}
 .paging a.on {color: #f00;}
 .paging a:hover {color: #000;}
 
-.searchBox {}
+.searchBox {margin: 20px 0;}
+.searchBox input {padding: 5px;}
 .searchBox select {padding: 5px;}
 .searchBox > div.input {display: inline-block; width: 70%; vertical-align: middle;}
 .searchBox > div.input input[type=text] {width: 50%;}

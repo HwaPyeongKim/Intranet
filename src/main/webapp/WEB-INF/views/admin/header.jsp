@@ -28,7 +28,7 @@
                 <span>직원 관리</span>
                 <ul class="lnb">
                     <li><a href="adminMemberList">직원 목록</a></li>
-                    <li><a href="adminMemberAttendance">직원 근태현황</a></li>
+                    <li><a href="adminMemberAttendanceList">직원 근태현황</a></li>
                 </ul>
             </li>
             <li>
