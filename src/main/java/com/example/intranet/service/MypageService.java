@@ -1,6 +1,7 @@
 package com.example.intranet.service;
 
 import com.example.intranet.dao.IMypageDao;
+import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.MemberRequestsDto;
 import com.example.intranet.dto.WorkDto;
 import com.example.intranet.dto.Paging;
@@ -157,9 +158,10 @@ public class MypageService {
 
         return result;
     }
-
     public void insertRequests(MemberRequestsDto mrdto) {
         mdao.insertRequests(mrdto);
     }
-
+    public ArrayList<MemberDto> selectConfirm(int midx) {
+        return mdao.selectConfirm(midx);
+    }
 }

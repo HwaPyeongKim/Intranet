@@ -70,7 +70,11 @@
     </select>
 
     <insert id="insertRequests" parameterType="com.example.intranet.dto.MemberRequestsDto">
-        insert into member_requests (category, midx, title, content, startdate, enddate) values (#{category} , #{midx} , #{title} , #{content} , #{startdate} , #{enddate})
+        insert into member_requests (category, midx, title, content, startdate, enddate, confirm_midx) values (#{category} , #{midx} , #{title} , #{content} , #{startdate} , #{enddate}, #{confirm_midx})
     </insert>
+
+    <select id="selectConfirm" resultType="com.example.intranet.dto.MemberDto">
+        select * from member where deleteyn = 'N' and leavedate is null and  team = (select team from member where midx = #{midx})
+    </select>
 
 </mapper>

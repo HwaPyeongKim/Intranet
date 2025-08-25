@@ -37,6 +37,7 @@ header .nav li.profile button {}
 .field label {flex: 1; padding: 10px 0;}
 .field div {flex: 5; padding: 10px 0;}
 .field div input[type=text], .field div input[type=password], .field div input[type=email] {width: 100%; height: 40px;}
+.field div select {height: 40px;}
 .field div textarea {width: 100%; height: 400px; resize: none; padding: 10px;}
 .field div.prevFile {}
 .field div.prevFile a {display: block; margin-bottom: 10px;}

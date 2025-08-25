@@ -21,6 +21,18 @@
             </div>
         </div>
 
+        <div class="field">
+            <label>결재자</label>
+            <div>
+                <select name="confirm_midx">
+                    <option value="">결재자를 선택해주세요.</option>
+                    <c:forEach items="${lists}" var="item">
+                    <option value="${item.midx}">${item.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+
         <div class="field inputDate">
             <label>시작/종료 날짜</label>
             <div>

@@ -86,8 +86,10 @@ public class MypageController {
     public String writeVacationForm(HttpSession session, Model model){
         String url = "member/login";
 
-        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
-        if (loginUser != null) {
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        if (mdto != null) {
+            ArrayList<MemberDto> lists = ms.selectConfirm(mdto.getMidx());
+            model.addAttribute("lists", lists);
             url = "mypage/writeVacation";
         }
         return url;
