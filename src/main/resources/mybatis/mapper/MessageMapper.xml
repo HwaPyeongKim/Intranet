@@ -6,11 +6,11 @@
 <mapper namespace="com.example.intranet.dao.IMessageDao">
 
     <insert id="insertMessage" parameterType="com.example.intranet.dto.MessageDto">
-        INSERT INTO messages (frommidx, tomidx, title, content, readyn, deleteyn, writedate)
+        INSERT INTO message (frommidx, tomidx, title, content, readyn, deleteyn, writedate)
         VALUES (#{frommidx}, #{tomidx}, #{title}, #{content}, 'N', 'N', NOW())
     </insert>
 
-    <select id="getMessagesByUser" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
+    <select id="getMessageByUser" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
         SELECT *, ROW_NUMBER() OVER (ORDER BY writedate DESC) AS loopnum
         FROM msg_view
         WHERE (frommidx = #{userId} OR tomidx = #{userId}) AND deleteyn = 'N'
@@ -22,20 +22,60 @@
     </select>
 
     <update id="updateReadStatus" parameterType="int">
-        UPDATE messages SET readyn = 'Y', readdate = NOW() WHERE msidx = #{msidx}
+        UPDATE message SET readyn = 'Y', readdate = NOW() WHERE msidx = #{msidx}
     </update>
 
     <update id="deleteMessage" parameterType="int">
-        UPDATE messages SET deleteyn = 'Y' WHERE msidx = #{msidx}
+        UPDATE message SET deleteyn = 'Y' WHERE msidx = #{msidx}
     </update>
 
+    <select id="getMessageReceive" resultType="com.example.intranet.dto.MessageDto">
+        select
+        ms.*
+        , mt.name as toname, mt.userid as touserid
+        , mf.name as fromname, mf.userid as fromuserid
+        from message ms
+        left join member mt on mt.midx = ms.tomidx
+        left join member mf on mf.midx = ms.frommidx
+        where tomidx = #{midx} and ms.deleteyn = 'n'
+        order by ms.writedate desc
 
-<!--    <select id="getAllMembers" resultType="com.example.intranet.dto.MemberDto">-->
-<!--        SELECT midx, name, email, dept, position-->
-<!--        FROM member-->
-<!--        WHERE deleteyn = 'N'-->
-<!--        ORDER BY name ASC-->
-<!--    </select>-->
+
+    </select>
+
+    <select id="getMessageSent" resultType="com.example.intranet.dto.MessageDto">
+        select
+            ms.*
+             , mt.name as toname, mt.userid as touserid
+             , mf.name as fromname, mf.userid as fromuserid
+        from message ms
+                 left join member mt on mt.midx = ms.tomidx
+                 left join member mf on mf.midx = ms.frommidx
+        where frommidx = #{midx} and ms.deleteyn = 'n'
+        order by ms.writedate desc
+    </select>
+
+
+    <select id="getMessageReceiveView" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
+        SELECT m.msidx, m.frommidx, m.tomidx, m.title, m.content, m.writedate,
+               sender.name AS fromName, receiver.name AS toName
+        FROM message m
+                 JOIN member sender ON m.frommidx = sender.midx
+                 JOIN member receiver ON m.tomidx = receiver.midx
+        WHERE m.msidx = #{msidx}
+    </select>
+
+
+    <select id="getMessageSentView" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
+        SELECT m.msidx, m.frommidx, m.tomidx, m.title, m.content, m.writedate,
+               sender.name AS fromName, receiver.name AS toName
+        FROM message m
+                 JOIN member sender ON m.frommidx = sender.midx
+                 JOIN member receiver ON m.tomidx = receiver.midx
+        WHERE m.msidx = #{msidx}
+    </select>
+
+
 
 
 </mapper>

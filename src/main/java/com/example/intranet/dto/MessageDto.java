@@ -18,7 +18,10 @@ public class MessageDto {
     private int loopnum; // 번호 매기기용
 
     private String toname;
+    private String touserid;
     private String fromname;
+    private String fromuserid;
+
 }
 
 
