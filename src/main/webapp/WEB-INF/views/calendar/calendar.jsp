@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ include file="../header.jsp"%>
+
 <link rel="stylesheet" href="/css/calendar.css">
 <%-- 달력 출력을 위해 밑 두개 스크립트 실행 필요 --%>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
@@ -30,6 +31,11 @@
                         $(".fc-mySchedule-button").removeAttr("style");
                         $(".fc-teamSchedule-button").removeAttr("style");
                         $(".fc-comSchedule-button").removeAttr("style");
+                        $(".fc-allSchedule-button").css({
+                            "border-color": "#aaaaaa",
+                            "z-index": "3333",
+                            "box-shadow": "0px 0px 5px #000000"
+                        });
                     }
                 },
                 mySchedule: {
@@ -47,7 +53,7 @@
                         $(".fc-teamSchedule-button").removeAttr("style");
                         $(".fc-comSchedule-button").removeAttr("style")
                         $(".fc-mySchedule-button").css({
-                            "background-color":"#378fff",
+                            "background-color":"#FF9E9B",
                             "border-color": "#aaaaaa",
                             "z-index": "3333",
                             "box-shadow": "0px 0px 5px #000000"
@@ -69,7 +75,7 @@
                         $(".fc-mySchedule-button").removeAttr("style");
                         $(".fc-comSchedule-button").removeAttr("style");
                         $(".fc-teamSchedule-button").css({
-                            "background-color":"#ff7D31",
+                            "background-color":"#32AAFF",
                             "border-color": "#aaaaaa",
                             "z-index": "3333",
                             "box-shadow": "0px 0px 5px #000000"
@@ -91,7 +97,7 @@
                         $(".fc-mySchedule-button").removeAttr("style");
                         $(".fc-teamSchedule-button").removeAttr("style");
                         $(".fc-comSchedule-button").css({
-                            "background-color":"#00bb00",
+                            "background-color":"#63CC63",
                             "border-color": "#aaaaaa",
                             "z-index": "3333",
                             "box-shadow": "0px 0px 5px #000000"
@@ -266,12 +272,25 @@
         });
         // 캘린더 랜더링
         calendar.render();
+        $(".fc-allSchedule-button").css({
+            "border-color": "#aaaaaa",
+            "z-index": "3333",
+            "box-shadow": "0px 0px 5px #000000"
+        });
     });
 </script>
-<div class="form-group">
-    <div id='calendar-container'><%--  여기에 스타일 적용       --%>
-        <div id="calendar"></div>
+
+<section>
+    <h2>일정 관리</h2>
+
+    <div class="form-group">
+        <div id='calendar-container'><%--  여기에 스타일 적용       --%>
+            <div id="calendar"></div>
+        </div>
     </div>
-</div>
+</section>
+
+
+
 
 <%@ include file="../footer.jsp"%>
