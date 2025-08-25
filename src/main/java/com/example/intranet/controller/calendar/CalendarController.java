@@ -39,9 +39,9 @@ public class CalendarController {
         // String url = "member/login";
         if (session.getAttribute("loginUser") != null) {
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-            FileDto fdto = fs.getFile(mdto.getImage());
+            // FileDto fdto = fs.getFile(mdto.getImage());
             model.addAttribute("loginUser", mdto);
-            model.addAttribute("profileImg", fdto.getPath());
+            // model.addAttribute("profileImg", fdto.getPath());
             // url = "calendar/calendar";
 
         }
@@ -86,17 +86,17 @@ public class CalendarController {
             vo.setCategory(category);
 
             switch (category) {
-                case 1: // 개인: 수정가능, 색상 파란색
+                case 1: // 개인: 수정가능, 색상 분홍색
                     vo.setEditable(true);
-                    vo.setEventColor("#3788d8");
+                    vo.setEventColor("#FF9E9B");
                     break;
-                case 2: // 부서: 수정불가, 색상 주황색
+                case 2: // 부서: 수정불가, 색상 파란색
                     vo.setEditable(false);
-                    vo.setEventColor("#ED7D31");
+                    vo.setEventColor("#32AAFF");
                     break;
                 case 3: // 회사: 수정불가, 색상 초록색
                     vo.setEditable(false);
-                    vo.setEventColor("#008000");
+                    vo.setEventColor("#54BD54");
                     break;
             }
 

@@ -1,22 +1,27 @@
 
 .fc .fc-mySchedule-button{
-    background: #3788d8;
+    background: #FF9E9B;
+    border-color: #FF9E9B;
 }
 .fc .fc-teamSchedule-button{
-    background: #ED7D31;
+    background: #32AAFF;
+    border-color: #32AAFF;
 }
 .fc .fc-comSchedule-button{
-    background: #008000;
+    background: #54BD54;
+    border-color: #54BD54;
 }
-
 .fc .fc-mySchedule-button:hover{
-    background: #378fff;
+    background: #FFB4B9;
+    border-color: #FF9E9B;
 }
 .fc .fc-teamSchedule-button:hover{
-    background: #ff7D31;
+    background: #46BEFF;
+    border-color: #32AAFF;
 }
 .fc .fc-comSchedule-button:hover{
-    background: #00bb00;
+    background: #63CC63;
+    border-color: #54BD54;
 }
 
 .fc .fc-mySchedule-button:active{
