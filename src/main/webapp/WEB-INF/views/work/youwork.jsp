@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../header.jsp" %>
+<%@ include file="sub_menu.jsp" %>
 <style>
   #work {}
   #work .row{
@@ -21,15 +22,6 @@
 
 </style>
 
-<section id="work">
-
-    <h2>업무관리</h2>
-
-    <ul class="submenu">
-        <li><a href="work?first=y">요청받은 업무</a></li>
-        <li class="on"><a href="yourwork?first=y">요청한 업무</a></li>
-    </ul>
-
 
     <form method="get" name="work" class="form shadow">
     <div class="tb">
@@ -45,17 +37,23 @@
 
       <div class="row row_title">
         <div class="coltitle" >번호</div>
-        <div class="coltitle" ><a>업무명</a></div>
+        <div class="coltitle" >업무명</div>
         <div class="coltitle" >수신자</div>
         <div class="coltitle" >등록일</div>
         <div class="coltitle" >마감일</div>
         <div class="coltitle" >진행상태</div>
       </div>
 
-      <c:forEach items="${workList}" var="work">
+      <c:forEach items="${workList}" var="work" varStatus="status">
         <div class="row">
-          <div class="col" >${work.widx}</div>
-          <div class="col" style="cursor:pointer; " onClick="">${work.title}</div>
+          <div class="col" >
+           ${(paging.page-1)*(paging.displayRow)+status.count}
+          </div>
+          <div class="col" style="cursor:pointer; ">
+         <a href="workView?widx=${work.widx}" style="text-decoration:none">
+          ${work.title}
+          </a>
+          </div>
           <div class="col" >${work.workername}</div>
           <div class="col" ><fmt:formatDate value="${work.writedate}" pattern="yyyy-MM-dd" /></div>
           <div class="col" ><fmt:formatDate value="${work.completedate}" pattern="yyyy-MM-dd" /></div>
@@ -72,24 +70,17 @@
         </div>
       </c:forEach>
 
-      <div class="row"> <!-- 페이지의 시작 -->
-        <div class="col" style="font-size: 120%; font-weight: bold;">
-          <c:if test="${paging.prev}">
-            <a href="yourwork?page=${paging.beginPage-1}&key=${key}">PREV</a>&nbsp;
-          </c:if>
-          <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-            <c:if test="${index!=paging.page}">
-              <a href="yourwork?page=${index}&key=${key}">${index}</a>&nbsp;
-            </c:if>
-            <c:if test="${index==paging.page}">
-              <span style="color:red">${index}&nbsp;</span>
-            </c:if>
-          </c:forEach>
-          <c:if test="${paging.next}">
-            <a href="yourwork?page=${paging.endPage+1}&key=${key}">NEXT</a>&nbsp;
-          </c:if>
+      <c:if test="${not empty workList}">
+            <div class="paging" style="height: 50px; line-height: 50px">
+            <c:if test="${paging.prev}"><a href="yourwork?page=${paging.beginPage-1}">Prev</a></c:if>
+
+            <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+                <a href="yourwork?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
+            </c:forEach>
+
+            <c:if test="${paging.next}"><a href="yourwork?page=${paging.endPage+1}">Next</a></c:if>
         </div>
-      </div> <!-- 페이지의 끝 -->
+        </c:if>
 
     </div>
   </form>

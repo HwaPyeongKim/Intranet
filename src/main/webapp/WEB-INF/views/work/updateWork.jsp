@@ -9,65 +9,54 @@
 
 <section id="insertWork">
 
-    <form method="post" action="insertWork" name="insertWork" enctype="multipart/form-data" class="form fileForm shadow">
-        <input type="hidden" name="fidx" id="fidx" />
+    <form method="post" action="updateWork" name="updateWork" enctype="multipart/form-data" class="form fileForm shadow">
+        <input type="hidden" name="fidx" id="fidx" value="${workitem.fidx}" />
+        <input type="hidden" name="widx" value="${workitem.widx}" />
+        <input type="hidden" name="midx" value="${workitem.midx}" />
 
-        <h2>업무 요청</h2>
+        <h2>업무 수정</h2>
 
         <div class="field">
             <div>
                 <label for="title">업무명</label>
-                <input type="text" name="title" value="${dto.title}" />
+                <input type="text" name="title" value="${workitem.title}" />
             </div>
         </div>
         <div class="field">
             <div>
                 <label for="name">요청자</label>
                 <input type="text" name="name" id="name" value="${loginUser.name}" readonly />
-                <input type="hidden" name="midx" value="${loginUser.midx}">
-                <input type="hidden" name="status" value="1">
             </div>
         </div>
         <div class="field">
             <div>
                 <label for="worker">수신자</label>
-                    <select name="worker" id="worker">
-                        <option value="">수신자를 선택하세요</option>
-                        <!-- 모델에서 멤버 목록을 반복문으로 출력 -->
-                        <c:forEach var="member" items="${members}">
-                            <c:if test="${member.midx ne loginUser.midx}">
-                                <option value="${member.midx}">${member.name}</option>  <!-- member.id와 member.name을 사용 -->
-                            </c:if>
-                        </c:forEach>
-                    </select>
+                <input type="text" name="worker" id="worker" value="${workitem.workername}" readonly />
             </div>
         </div>
         <div class="field">
             <div>
                 <label for="completedate">마감기한 &nbsp;&nbsp;</label>
-                <jsp:useBean id="now" class="java.util.Date"/>
-                <fmt:formatDate value="${now}" pattern="yyyy-MM-dd'T'HH:mm" var="now" />
-                <input type="datetime-local"
-                min="${now}"
-                name="completedate" value="${dto.completedate}" style="width: 250px"/>
+                <input type="datetime-local" name="completedate" value="${workitem.completedate}" style="width: 250px"/>
             </div>
         </div>
         <div class="field">
             <label for="content">내용</label>
             <div>
-                <textarea name="content" id="content"></textarea>
+                <textarea name="content" id="content">${workitem.content}</textarea>
             </div>
         </div>
         <div class="field">
             <label for="fileBtn">첨부파일</label>
-            <div>
+            <div class="prevFile">
+                <c:if test="${workitem.fidx > 0}"><a href="${workitem.path}">${workitem.originalname}</a></c:if>
                 <input type="file" name="file" id="fileBtn" value="첨부파일 선택" />
             </div>
         </div>
         <p class="notice">${msg}</p>
 
         <div class="btns">
-            <input type="submit" value="요청하기" />
+            <input type="submit" value="수정하기" />
             <input type="button" value="뒤로가기" onclick="history.back()" />
         </div>
     </form>

@@ -15,18 +15,54 @@
     </select>
 
     <select id="selectYourWork" resultType="com.example.intranet.dto.WorkDto">
-        select * from yourwork_view where title like concat( '%', #{key} , '%' ) and midx=#{midx}
+        select * from work_view where title like concat( '%', #{key} , '%' ) and midx=#{midx}
         order by widx desc  limit  #{paging.displayRow}  offset  #{paging.startNum}
     </select>
 
     <select id="getAllCountForYourWork" resultType="_int">
-        select count(*) from yourwork_view where title like concat('%', #{key} , '%' ) and midx=#{midx}
+        select count(*) from work_view where title like concat('%', #{key} , '%' ) and midx=#{midx}
     </select>
 
     <insert id="insert" parameterType="com.example.intranet.dto.WorkDto" >
         insert into work( midx, worker, fidx, title, content, status, completedate )
         values( #{midx},#{worker},#{fidx},#{title},#{content}, #{status} ,#{completedate})
     </insert>
+
+    <select id="selectOne" resultType="com.example.intranet.dto.WorkDto">
+        select w.*, m.name, f.originalname, f.path
+        from work_view w
+                 left join member m on m.midx = w.midx
+                 left join file f on f.fidx = w.fidx
+        where w.widx = #{widx}
+    </select>
+
+    <select id="selectComments" resultType="com.example.intranet.dto.WorkCommentDto">
+        select wc.*, m.name from work_comment wc
+                                     left join member m on m.midx = wc.midx
+        where wc.widx = #{widx} and wc.deleteyn = 'N'
+        order by wc.writedate desc
+    </select>
+
+    <update id="delete">
+        update work set deleteyn = 'Y' where widx = #{widx}
+    </update>
+
+    <update id="update" parameterType="com.example.intranet.dto.WorkDto">
+        update work set
+        title = #{title}, content = #{content}, fidx = #{fidx}, completedate = #{completedate} where widx = #{widx}
+    </update>
+
+    <insert id="insertComment">
+        insert into work_comment (widx, midx, content) values (#{widx}, #{midx}, #{content})
+    </insert>
+
+    <update id="updateComment">
+        update work_comment set content = #{content} where wcidx = #{wcidx}
+    </update>
+
+    <update id="deleteComment">
+        update work_comment set deleteyn = 'Y' where wcidx = #{wcidx}
+    </update>
 
 
 </mapper>

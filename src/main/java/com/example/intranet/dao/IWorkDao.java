@@ -1,6 +1,7 @@
 package com.example.intranet.dao;
 
 import com.example.intranet.dto.Paging;
+import com.example.intranet.dto.WorkCommentDto;
 import com.example.intranet.dto.WorkDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,4 +18,20 @@ public interface IWorkDao {
     int getAllCountForYourWork(String key, int midx);
 
     void insert(WorkDto workdto);
+
+    Object getWork(int widx);
+
+    WorkDto selectOne(int widx);
+
+    ArrayList<WorkCommentDto> selectComments(int widx);
+
+    void delete(int widx);
+
+    void update(WorkDto workdto);
+
+    void insertComment(int widx, int midx, String content);
+
+    void updateComment(int wcidx, String content);
+
+    void deleteComment(int wcidx);
 }
