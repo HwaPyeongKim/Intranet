@@ -44,8 +44,7 @@ public class MemberController {
 
     @GetMapping("/main")
     public String main(HttpSession session, Model model) {
-
-
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
 
         return "/main";
     }
@@ -199,4 +198,8 @@ public class MemberController {
         }
         return result;
     }
+
+
+
+
 }

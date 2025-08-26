@@ -15,8 +15,9 @@ textarea {padding: 10px;}
 p.notice {color: #f00;}
 .shadow {box-shadow: 3px 3px 10px #999;}
 
-header {display: flex; justify-content: space-between; line-height: 60px;}
-header #logo {}
+header {display: flex; justify-content: space-between; line-height: 60px;margin: 20px 0 40px;}
+header #logo {height: 60px;}
+header #logo img{height: 100%;}
 header .nav {display: flex;}
 header .nav li {margin-left: 20px;}
 header .nav li.profile img.profileImg {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}

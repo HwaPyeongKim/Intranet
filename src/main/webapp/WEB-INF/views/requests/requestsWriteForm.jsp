@@ -140,7 +140,7 @@
                 <select id="confirm_midx" name="confirm_midx" required>
                     <option value="">선택하세요</option>
                     <c:forEach var="member" items="${memberList}">
-                        <c:if test="${member.level > loginUser.level}">
+                        <c:if test="${member.team == loginUser.team && member.midx != loginUser.midx}">
                             <option value="${member.midx}">
                                 ${member.name}&nbsp;${member.position}
                             </option>
