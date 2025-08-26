@@ -28,6 +28,7 @@
         <div class="boxBtns clearfix">
             <button type="button" onclick="confirmJoin()">가입승인</button>
             <button type="button" onclick="checkLeave()">퇴사처리</button>
+            <button type="button" onclick="setPosition()">직급설정</button>
         </div>
         </c:if>
 
@@ -37,8 +38,8 @@
                     <th></th>
                     <th>번호</th>
                     <th>아이디</th>
-                    <th>이름</th>
                     <th>직급</th>
+                    <th>이름</th>
                     <th>주민등록번호</th>
                     <th>이메일</th>
                     <th>휴대전화번호</th>
@@ -73,8 +74,8 @@
                                 <td><input type="checkbox" name="midx" value="${item.midx}" /></td>
                                 <td>${item.loopnum}</td>
                                 <td>${item.userid}</td>
-                                <td>${item.name}</td>
                                 <td>${item.position}</td>
+                                <td>${item.name}</td>
                                 <td>${item.number}</td>
                                 <td>${item.email}</td>
                                 <td>${item.phone}</td>

@@ -4,6 +4,7 @@ import com.example.intranet.dao.IMemberDao;
 import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.Paging;
+import com.example.intranet.dto.TeamDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -224,11 +225,5 @@ public class MemberService {
             list.add(mdto);
         }
         return list;
-    }
-
-    public void updateLeave(List<List<String>> datas) {
-        for (List<String> data : datas) {
-            mdao.updateLeave(data.get(0), data.get(1)); // midx, leavedate
-        }
     }
 }

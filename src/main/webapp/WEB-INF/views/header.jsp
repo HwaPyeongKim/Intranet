@@ -47,7 +47,7 @@
             <li class="profile">
                 <img src="${profileImg}" class="profileImg" />
                 <span>${loginUser.name}</span>
-                <a href="#" class="messageBox">
+                <a href="receiveList" class="messageBox">
                     <img src="/images/message.png" />
                     <i>0</i>
                 </a>
