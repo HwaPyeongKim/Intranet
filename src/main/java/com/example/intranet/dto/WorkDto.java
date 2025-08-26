@@ -5,7 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.sql.Timestamp;
+/*
+CalendarDto dto = new CalendarDto(workDto.title, workDto.writedate, workDto.completedate, workDto.midx)
 
+calendarService.calendarSave(dto);*/
 @Data
 public class WorkDto {
     private int widx;
