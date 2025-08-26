@@ -84,7 +84,40 @@
         </foreach>
     </delete>
 
+    <select id="select" resultType="com.example.intranet.dto.BoardDto">
+        select ms.*, m.name
+        , (select count(*) from board_comment bc where bc.bidx = ms.bidx and bc.deleteyn = 'N') as comment_count
+        from message ms
+        left join member m on m.midx = ms.midx
+        <where>
+            ms.deleteyn = 'N' and ms.showyn = 'Y'
+            <if test="category == 'main'">
+                and ms.category = 'main'
+            </if>
+            <if test="category == 'download'">
+                and ms.category = 'download'
+            </if>
 
+            <if test="type == 'title'">
+                and ms.title like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'titleContent'">
+                and (ms.title like concat('%', #{key}, '%') OR ms.content like concat('%', #{key}, '%'))
+            </if>
+            <if test="type == 'name'">
+                and m.name like concat('%', #{key}, '%')
+            </if>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by ms.writedate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by ms.writedate asc
+            </when>
+        </choose>
+    </select>
 
 
 </mapper>

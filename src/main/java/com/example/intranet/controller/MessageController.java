@@ -4,6 +4,7 @@ import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.MessageDto;
 import com.example.intranet.service.MemberService;
 import com.example.intranet.service.MessageService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -37,19 +39,26 @@ public class MessageController {
 
     // 받은 메세지
     @GetMapping("/receiveList")
-    public String receiveList(HttpSession session, Model model) {
+    public String receiveList(HttpServletRequest request, HttpSession session, Model model) {
         String url = "member/login";
 
         MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
         session.setAttribute("msgrs", "receive");
         if (mdto != null) {
-
-            int midx = mdto.getMidx();   // 로그인 사용자 midx 사용
-            ArrayList<MessageDto> message = mgs.getMessageReceive(midx);
-            System.out.println(midx);
-            model.addAttribute("message", message);
-
+            int midx = mdto.getMidx();
+            result = mgs.select(request, midx);
+            model.addAttribute("message", result.get("message"));
+            model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
+            model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
             url = "message/receiveList"; // 받은 메세지 JSP 경로
+
+//            int midx = mdto.getMidx();   // 로그인 사용자 midx 사용
+//            ArrayList<MessageDto> message = mgs.getMessageReceive(midx);
+//            System.out.println(midx);
+//            model.addAttribute("message", message);
         }
         return url;
     }

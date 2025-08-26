@@ -11,13 +11,15 @@
         <li><a href="sentList">보낸메시지</a></li>
     </ul>
 
-
+    <!-- ✅ 전체 삭제용 form -->
+        <form id="multiDeleteForm" action="deletemsgMulti" method="post">
 
         <div class="boxBtns clearfix">
             <!-- 삭제 버튼을 왼쪽, 작성 버튼은 오른쪽에 간격 주기 -->
             <button type="submit" id="deleteSelected" style="margin-right:10px;">삭제</button>
             <button type="button" onclick="location.href='writemsg'">메시지 작성</button>
         </div>
+
 
         <form method="get" name="search" id="searchForm">
         <div class="searchBox">
@@ -31,16 +33,11 @@
                 <button>검색</button>
             </div>
             <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>
+                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>최신순</option>
+                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성순</option>
             </select>
         </div>
         </form>
-
-
-    <!-- ✅ 전체 삭제용 form -->
-    <form id="multiDeleteForm" action="deletemsgMulti" method="post">
-    
 
         <div class="table">
             <div class="row head">

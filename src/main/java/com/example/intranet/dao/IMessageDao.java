@@ -38,6 +38,8 @@ public interface IMessageDao {
     List<MessageDto> getMessage(int userId);
 
     void deleteMessages(List<Integer> msidxList);
+
+    ArrayList<MessageDto> select(int midx, String type, String key, String sort);
 }
 
 

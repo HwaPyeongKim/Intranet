@@ -32,8 +32,8 @@
                 <button>검색</button>
             </div>
             <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>
+                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>최신순</option>
+                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성순</option>
             </select>
         </div>
         </form>
