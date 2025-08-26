@@ -127,4 +127,17 @@ public class AdminService {
     public void insertTeam(String name) {
         adao.insertTeam(name);
     }
+
+    public ArrayList<MemberDto> selectMemberNoTeam() {
+        return adao.selectMemberNoTeam();
+    }
+
+    public ArrayList<TeamDto> selectTeams(int tidx) {
+        ArrayList<TeamDto> list = adao.selectTeams(tidx);
+        return list;
+    }
+
+    public ArrayList<TeamDto> selectTeamList() {
+        return adao.selectTeamList();
+    }
 }

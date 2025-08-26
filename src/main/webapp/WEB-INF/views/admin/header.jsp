@@ -45,7 +45,11 @@
     <div class="loginProfile">
         <img src="${profileImg}" />
         <span>${loginUser.name}</span>
-        <a href="main">사용자 페이지로 이동</a>
+        <a href="receiveList" class="messageBox">
+            <img src="/images/message.png" />
+            <i>0</i>
+        </a>
+        <a href="main" id="tomain">사용자 페이지로 이동</a>
         <button type="button" onclick="location.href='logout'">로그아웃</button>
         <button type="button" data-midx="${loginUser.midx}" id="workoutBtn">퇴근</button>
     </div>

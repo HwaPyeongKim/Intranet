@@ -60,4 +60,21 @@
         insert into team (name) values (#{name})
     </insert>
 
+    <select id="selectMemberNoTeam" resultType="com.example.intranet.dto.MemberDto">
+        select * from member where team is null or team = 0
+    </select>
+
+    <select id="selectTeams" resultType="com.example.intranet.dto.TeamDto">
+        select t.*
+        , m.midx as midx, m.userid as muserid, m.name as mname, m.position as mposition
+        from team t
+        left join member m on m.team = t.tidx
+        where t.tidx = #{tidx} and t.deleteyn = 'N' and m.deleteyn = 'N'
+        order by m.level, m.name desc
+    </select>
+
+    <select id="selectTeamList" resultType="com.example.intranet.dto.TeamDto">
+        select * from team where deleteyn = 'N'
+    </select>
+
 </mapper>

@@ -13,6 +13,8 @@ public class TeamDto {
     private int loopnum;
     private int rowspan;
 
+    private int midx; // member 테이블 조인
     private String mname; // member 테이블 조인
     private String mposition; // member 테이블 조인
+    private String muserid; // member 테이블 조인
 }

@@ -27,7 +27,7 @@
         <c:if test="${loginUser.level > 2}">
         <div class="boxBtns clearfix">
             <button type="button" onclick="createTeamForm()">팀 생성</button>
-            <button type="button" onclick="setTeamMemberForm()">팀 편성</button>
+            <button type="button" onclick="location.href='setTeamMemberForm'">팀 편성</button>
         </div>
         </c:if>
 

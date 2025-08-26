@@ -16,3 +16,6 @@ section#adminMemberUpdate .field div.address button {width: 10%; padding: 5px;}
 #updatePositionForm tbody input[type=text] {text-align: center;}
 
 #createTeamForm .field input[type=text] {width: 100%;}
+
+#adminTeamList .separator {display: flex; justify-content: space-between;}
+#adminTeamList .separator form {width: 45%; padding: 20px; border-radius: 10px;}

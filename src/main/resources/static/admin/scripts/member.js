@@ -183,3 +183,60 @@ function createTeam() {
         }
     })
 }
+
+$(function (){
+    $("#adminYesTeam #selectTeam").change(function(){
+        var tidx = $(this).val();
+        $.ajax({
+            url: "selectTeam",
+            type: "POST",
+            data: {tidx: tidx},
+            success: function(response) {
+                if (response.result == 1) {
+                    $("#teamTableBody").empty();
+                    c_html = "";
+                    for (i=0; i<response.list.length; i++) {
+                        c_html += "<tr id='"+response.list[i].midx+"' draggable='true' ondragstart='drag()'>";
+                        c_html += "<td>"+response.list[i].muserid+"</td>";
+                        c_html += "<td>"+response.list[i].mposition+"</td>";
+                        c_html += "<td>"+response.list[i].mname+"</td>";
+                        c_html += "</tr>";
+                    }
+                    $("#teamTableBody").append(c_html);
+                } else {
+                    $("#teamTableBody").empty();
+                    c_html = "<tr><td colspan='3'>구성원이 존재하지 않습니다.</td></tr>";
+                    $("#teamTableBody").append(c_html);
+                }
+            },
+            error: function() {
+                alert("오류가 발생했습니다. 관리자에게 문의해주세요.");
+            }
+        })
+    });
+})
+
+
+// 드래그 이벤트 시작
+
+// 드래그 가능한 요소에 id 저장
+function drag(e) {
+    e.dataTransfer.setData("text/plain", e.target.id);
+}
+
+// 드롭 가능한 영역에서 기본 동작 막기
+function allowDrop(e) {
+    e.preventDefault();
+}
+
+// 드롭 이벤트 처리
+function drop(e) {
+    e.preventDefault();
+    const id = e.dataTransfer.getData("text");
+    const draggedRow = document.getElementById(id);
+    const dropTarget = e.target.closest("tbody");
+
+    if (dropTarget && draggedRow) {
+        dropTarget.appendChild(draggedRow);
+    }
+}

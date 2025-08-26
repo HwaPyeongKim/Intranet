@@ -315,4 +315,31 @@ public class AdminController {
         return result;
     }
 
+    @GetMapping("/setTeamMemberForm")
+    public String setTeamMemberForm(HttpServletRequest request, Model model) {
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<TeamDto> teamList = as.selectTeamList();
+        ArrayList<MemberDto> memberList = as.selectMemberNoTeam();
+        ArrayList<TeamDto> teamMemberList = as.selectTeams(0);
+        model.addAttribute("teamList", teamList);
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("teamMemberList", teamMemberList);
+        return "admin/teamSetList";
+    }
+
+    @PostMapping("/selectTeam")
+    @ResponseBody
+    public HashMap<String, Object> selectTeam(@RequestParam("tidx") int tidx) {
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<TeamDto> list = as.selectTeams(tidx);
+        if (list != null) {
+            result.put("result", 1);
+            result.put("list", list);
+        } else {
+            result.put("result", 0);
+        }
+        return result;
+    }
+
+
 }
