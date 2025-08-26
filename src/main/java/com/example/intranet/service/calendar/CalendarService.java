@@ -1,6 +1,7 @@
 package com.example.intranet.service.calendar;
 
 import com.example.intranet.dto.calendar.CalendarDto;
+
 import java.util.List;
 
 public interface CalendarService {
@@ -10,6 +11,7 @@ public interface CalendarService {
 
     /**
      * 캘린더 일정 조회하기
+     *
      * @return
      * @throws Exception
      */
@@ -25,6 +27,7 @@ public interface CalendarService {
 
     /**
      * 캘린더 일정 삭제하기
+     *
      * @param no
      * @throws Exception
      */
@@ -32,6 +35,7 @@ public interface CalendarService {
 
     /**
      * 캘린더 일정 수정하기
+     *
      * @param vo
      * @throws Exception
      */

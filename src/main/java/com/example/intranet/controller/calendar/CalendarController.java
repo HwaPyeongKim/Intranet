@@ -35,7 +35,7 @@ public class CalendarController {
     private CalendarService calendarService;
 
     @GetMapping("/schedule") // 임시적 링크
-    public String calendar(HttpSession session, Model model){
+    public String calendar(HttpSession session, Model model) {
         // String url = "member/login";
         if (session.getAttribute("loginUser") != null) {
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
@@ -50,15 +50,16 @@ public class CalendarController {
 
     /**
      * 캘린더 일정 조회하기
+     *
      * @return
      * @throws Exception
      */
     @ResponseBody
     @RequestMapping("/calendarList")
-    public List<CalendarDto> calendarList(HttpSession session) throws Exception{
+    public List<CalendarDto> calendarList(HttpSession session) throws Exception {
         // 로그인 유저의 midx로 select
         List<CalendarDto> vo = null;
-        if(session.getAttribute("loginUser") != null){
+        if (session.getAttribute("loginUser") != null) {
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
             vo = calendarService.calendarList(mdto.getMidx());
         }
@@ -67,6 +68,7 @@ public class CalendarController {
 
     /**
      * 캘린더 일정 추가하기
+     *
      * @param map
      * @return
      * @throws Exception
@@ -77,7 +79,7 @@ public class CalendarController {
 
         CalendarDto vo = null;
         // 비로그인시 null이 리턴, if문에서 분기가 갈리게 됨
-        if(session.getAttribute("loginUser") != null){
+        if (session.getAttribute("loginUser") != null) {
             vo = new CalendarDto();
             vo.setTitle((String) map.get("title"));
 
@@ -124,17 +126,18 @@ public class CalendarController {
 
     /**
      * 캘린더 일정 삭제하기
+     *
      * @param no
      * @return
      * @throws Exception
      */
     @ResponseBody
     @DeleteMapping("/calendarDelete")
-    public String calendarDelete(@RequestParam String no) throws Exception{
-        try{
+    public String calendarDelete(@RequestParam String no) throws Exception {
+        try {
             calendarService.calendarDelete(no);
             return "success";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "fail";
         }
@@ -143,19 +146,20 @@ public class CalendarController {
 
     /**
      * 캘린더 일정 수정하기
+     *
      * @param no
      * @param map
      * @return
      */
     @ResponseBody
     @PutMapping("/eventUpdate/{no}")
-    public String eventUpdate(@PathVariable String no, @RequestBody Map<String, Object> map){
+    public String eventUpdate(@PathVariable String no, @RequestBody Map<String, Object> map) {
 
         CalendarDto vo = new CalendarDto();
         vo.setCalendarNo(Long.valueOf(no));
         vo.setTitle((String) map.get("title"));
         vo.setStart1(map.get("start1").toString().substring(0, 19));
-        if(map.get("end") != null){
+        if (map.get("end") != null) {
             vo.setEnd(map.get("end").toString().substring(0, 19));
         }
         vo.setAllDay((Boolean) map.get("allDay"));

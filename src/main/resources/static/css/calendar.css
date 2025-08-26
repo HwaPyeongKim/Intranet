@@ -1,35 +1,42 @@
 
-.fc .fc-mySchedule-button{
+.fc .fc-mySchedule-button {
     background: #FF9E9B;
     border-color: #FF9E9B;
 }
-.fc .fc-teamSchedule-button{
+
+.fc .fc-teamSchedule-button {
     background: #32AAFF;
     border-color: #32AAFF;
 }
-.fc .fc-comSchedule-button{
+
+.fc .fc-comSchedule-button {
     background: #54BD54;
     border-color: #54BD54;
 }
-.fc .fc-mySchedule-button:hover{
+
+.fc .fc-mySchedule-button:hover {
     background: #FFB4B9;
     border-color: #FF9E9B;
 }
-.fc .fc-teamSchedule-button:hover{
+
+.fc .fc-teamSchedule-button:hover {
     background: #46BEFF;
     border-color: #32AAFF;
 }
-.fc .fc-comSchedule-button:hover{
+
+.fc .fc-comSchedule-button:hover {
     background: #63CC63;
     border-color: #54BD54;
 }
 
-.fc .fc-mySchedule-button:active{
+.fc .fc-mySchedule-button:active {
     background-color: #3766d8;
 }
-.fc .fc-teamSchedule-button:active{
+
+.fc .fc-teamSchedule-button:active {
     background-color: #cc7D31;
 }
-.fc .fc-comSchedule-button:active{
+
+.fc .fc-comSchedule-button:active {
     background-color: #007a00;
 }
