@@ -109,7 +109,4 @@
         </where>
     </select>
 
-    <update id="updateLeave">
-        update member set leavedate = #{leavedate} where midx = #{midx}
-    </update>
 </mapper>

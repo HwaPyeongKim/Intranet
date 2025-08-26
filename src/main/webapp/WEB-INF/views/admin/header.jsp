@@ -15,6 +15,7 @@
 
     <%--개별 링크--%>
     <link rel="stylesheet" type="text/css" href="admin/css/member.css">
+    <script src="admin/scripts/member.js"></script>
 </head>
 <body>
 
@@ -29,6 +30,7 @@
                 <ul class="lnb">
                     <li><a href="adminMemberList?first=Y">직원 목록</a></li>
                     <li><a href="adminMemberAttendanceList?first=Y">직원 근태현황</a></li>
+                    <li><a href="adminTeamList?first=Y">팀 목록</a></li>
                 </ul>
             </li>
             <li>

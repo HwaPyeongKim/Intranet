@@ -12,3 +12,7 @@ section#adminMemberUpdate .field div.phone select, .field div.phone input {width
 section#adminMemberUpdate .field div.address {display: flex; justify-content: space-between;}
 section#adminMemberUpdate .field div.address input[type=text] {width: 85%;}
 section#adminMemberUpdate .field div.address button {width: 10%; padding: 5px;}
+
+#updatePositionForm tbody input[type=text] {text-align: center;}
+
+#createTeamForm .field input[type=text] {width: 100%;}
