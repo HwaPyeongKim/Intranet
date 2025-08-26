@@ -29,9 +29,11 @@ public interface IWorkDao {
 
     void update(WorkDto workdto);
 
-    void insertComment(int widx, int midx, String content);
+    void insertComment(int widx, int midx, String content, String autoyn);
 
     void updateComment(int wcidx, String content);
 
     void deleteComment(int wcidx);
+
+    void changeStatus(int widx, int status, int next);
 }
