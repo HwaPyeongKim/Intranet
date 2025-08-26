@@ -22,4 +22,5 @@ public interface IMemberDao {
     ArrayList<MemberDto> selectMembers(String type, String key, String sort, int midx, int level);
     int checkNewMessage(int midx);
     ArrayList<MemberAttendanceDto> selectMemberAttendances(String type, String key, String sort, int midx, int level, String startdate, String enddate);
+    void updateLeave(String midx, String leavedate);
 }

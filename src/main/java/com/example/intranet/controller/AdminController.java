@@ -13,14 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -225,5 +224,25 @@ public class AdminController {
         return url;
     }
 
+    @GetMapping("/updateLeaveForm")
+    public String updateLeaveForm(@RequestParam("midxes") String midxes, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        ArrayList<MemberDto> list = null;
+        if (mdto != null && mdto.getLevel() > 2) {
+            list = ms.getMembers(midxes);
+            model.addAttribute("list", list);
+            url = "admin/updateLeave";
+        }
+        return url;
+    }
+
+    @PostMapping("/updateLeave")
+    @ResponseBody
+    public HashMap<String, Object> updateLeave(@RequestBody List<List<String>> datas, HttpSession session, Model model) {
+        HashMap<String, Object> result = new HashMap<>();
+        ms.updateLeave(datas);
+        return result;
+    }
 
 }

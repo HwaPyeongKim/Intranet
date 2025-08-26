@@ -22,7 +22,7 @@
         </div>
     </form>
 
-    <form method="post" name="adminBoardInfo" id="adminBoardInfo">
+    <form method="post" name="adminBoardDownloadInfo" id="adminBoardDownloadInfo">
         <table>
             <thead>
                 <tr>
@@ -40,7 +40,7 @@
 
             <tbody>
                 <c:choose>
-                    <c:when test="${empty list && empty notice}">
+                    <c:when test="${empty list}">
                         <tr>
                             <c:choose>
                                 <c:when test="${loginUser.level > 2}">
@@ -53,29 +53,6 @@
                         </tr>
                     </c:when>
                     <c:otherwise>
-                        <c:forEach items="${notice}" var="item">
-                            <tr class="row notice">
-                                <td><input type="checkbox" name="bidx" value="${item.bidx}" /></td>
-                                <td class="col">공지</td>
-                                <td class="col title">
-                                    <a href="adminViewBoard?bidx=${item.bidx}">
-                                        ${item.title}
-                                        <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
-                                    </a>
-                                </td>
-                                <td class="col">${item.name}</td>
-                                <td class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></td>
-                                <td class="col"><fmt:formatNumber value="${item.readcount}" /></td>
-                                <c:if test="${loginUser.level > 2}">
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${item.showyn == 'Y'}">노출</c:when>
-                                        <c:otherwise>노출안함</c:otherwise>
-                                    </c:choose>
-                                </td>
-                                </c:if>
-                            </tr>
-                        </c:forEach>
                         <c:forEach items="${list}" var="item">
                             <tr>
                                 <td><input type="checkbox" name="bidx" value="${item.bidx}" /></td>
@@ -93,7 +70,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${item.showyn == 'Y'}">노출</c:when>
-                                        <c:otherwise>노출안함</c:otherwise>
+                                        <c:otherwise>미노출</c:otherwise>
                                     </c:choose>
                                 </td>
                                 </c:if>

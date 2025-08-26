@@ -62,7 +62,7 @@
                             </c:choose>
                         </div>
                         <div class="col title">
-                            <a href="viewRequests?ridx=${item.ridx}">${item.title}</a>
+                            <a href="requestsDetail?ridx=${item.ridx}">${item.title}</a>
                         </div>
                         <div class="col">${item.cname}</div>
                         <div class="col"><fmt:formatDate value="${item.startdate}" pattern="yyyy-MM-dd" /><br /><fmt:formatDate value="${item.enddate}" pattern="yyyy-MM-dd" /></div>

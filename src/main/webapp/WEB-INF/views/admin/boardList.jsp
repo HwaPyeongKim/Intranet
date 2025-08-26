@@ -70,7 +70,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${item.showyn == 'Y'}">노출</c:when>
-                                        <c:otherwise>노출안함</c:otherwise>
+                                        <c:otherwise>미노출</c:otherwise>
                                     </c:choose>
                                 </td>
                                 </c:if>
@@ -93,7 +93,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${item.showyn == 'Y'}">노출</c:when>
-                                        <c:otherwise>노출안함</c:otherwise>
+                                        <c:otherwise>미노출</c:otherwise>
                                     </c:choose>
                                 </td>
                                 </c:if>

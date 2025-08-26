@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -213,5 +214,21 @@ public class MemberService {
         result.put("sort", sort);
 
         return result;
+    }
+
+    public ArrayList<MemberDto> getMembers(String midxes) {
+        ArrayList<MemberDto> list = new ArrayList<>();
+        String [] midx = midxes.split(",");
+        for (int i=0; i<midx.length; i++) {
+            MemberDto mdto = mdao.selectMember(Integer.parseInt(midx[i]));
+            list.add(mdto);
+        }
+        return list;
+    }
+
+    public void updateLeave(List<List<String>> datas) {
+        for (List<String> data : datas) {
+            mdao.updateLeave(data.get(0), data.get(1)); // midx, leavedate
+        }
     }
 }

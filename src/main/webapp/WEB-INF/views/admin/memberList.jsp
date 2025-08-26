@@ -24,9 +24,12 @@
     </form>
 
     <form method="post" name="adminMemberInfo" id="adminMemberInfo">
+        <c:if test="${loginUser.level > 2}">
         <div class="boxBtns clearfix">
             <button type="button" onclick="confirmJoin()">가입승인</button>
+            <button type="button" onclick="checkLeave()">퇴사처리</button>
         </div>
+        </c:if>
 
         <table>
             <thead>

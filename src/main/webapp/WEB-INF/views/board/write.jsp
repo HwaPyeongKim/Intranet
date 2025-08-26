@@ -18,9 +18,19 @@
                 <label>분류</label>
                 <div>
                     <label for="notice">공지사항</label>
-                    <input type="radio" name="category" id="notice" value="notice" />
+                    <input type="radio" name="category" id="notice" value="notice" <c:if test="${dto.category == 'notice'}"> checked</c:if> />
                     <label for="main">일반</label>
-                    <input type="radio" name="category" id="main" value="main" />
+                    <input type="radio" name="category" id="main" value="main" <c:if test="${dto.category == 'main' || empty dto}"> checked</c:if> />
+                </div>
+            </div>
+
+            <div class="field">
+                <label>노출여부</label>
+                <div>
+                    <label for="showyn_y">노출</label>
+                    <input type="radio" name="showyn" id="showyn_y" value="Y" <c:if test="${dto.showyn == 'Y' || empty dto}"> checked</c:if> />
+                    <label for="showyh_n">미노출</label>
+                    <input type="radio" name="showyn" id="showyh_n" value="N" <c:if test="${dto.showyn == 'N'}"> checked</c:if> />
                 </div>
             </div>
             </c:when>
@@ -28,6 +38,7 @@
             <input type="hidden" name="category" value="main" />
             </c:otherwise>
         </c:choose>
+
 
         <div class="field">
             <div>
@@ -47,7 +58,7 @@
         <div class="field">
             <label for="content">내용</label>
             <div>
-                <textarea name="content" id="content"></textarea>
+                <textarea name="content" id="content">${dto.content}</textarea>
             </div>
         </div>
         <div class="field">
