@@ -76,6 +76,15 @@
     </select>
 
 
+    <delete id="deleteMessages" parameterType="list">
+        DELETE FROM messages
+        WHERE msidx IN
+        <foreach collection="msidxList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
 
 
 </mapper>

@@ -51,7 +51,6 @@ public class MessageController {
 
             url = "message/receiveList"; // 받은 메세지 JSP 경로
         }
-
         return url;
     }
 
@@ -64,8 +63,6 @@ public class MessageController {
         return "message/view";
     }
 
-
-
     // 보낸 메세지
     @GetMapping("/sentList")
     public String sentList(HttpSession session, Model model) {
@@ -75,12 +72,11 @@ public class MessageController {
         session.setAttribute("msgrs", "sent");
         if (mdto != null) {
             int midx = mdto.getMidx();   // 로그인 사용자 midx 사용
-            ArrayList<MessageDto> sentMessages = mgs.getMessageSent(midx);
+            ArrayList<MessageDto> message = mgs.getMessageSent(midx);
             System.out.println(midx);
-            model.addAttribute("sentMessages", sentMessages);
+            model.addAttribute("message", message);
             url = "message/sentList";  // 보낸 메시지 JSP 경로
         }
-
         return url;
     }
 
@@ -92,8 +88,6 @@ public class MessageController {
         model.addAttribute("activeTab", "sent");
         return "message/view";
     }
-
-
 
     // 메시지 작성 폼
     @GetMapping("/writemsg")
@@ -153,4 +147,26 @@ public class MessageController {
 
         return url;
     }
+
+    // 메세지 여러개 삭제
+    @PostMapping("/deletemsgMulti")
+    public String deleteMessages(@RequestParam(value="msidxList", required=false) List<Integer> msidxList,
+                                 HttpSession session) {
+
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        if (mdto == null) {
+            return "member/login";
+        }
+
+        if (msidxList != null && !msidxList.isEmpty()) {
+            mgs.deleteMessages(msidxList);
+        }
+        return "redirect:/receiveList";
+    }
+
+
+
+
+
+
 }
