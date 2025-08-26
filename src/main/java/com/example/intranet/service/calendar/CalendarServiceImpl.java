@@ -21,8 +21,8 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
-    public void calendarSave(CalendarDto vo) throws Exception {
-        calendarMapper.calendarSave(vo);
+    public void calendarSave(CalendarDto dto) throws Exception {
+        calendarMapper.calendarSave(dto);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
-    public void eventUpdate(CalendarDto vo) throws Exception {
-        calendarMapper.eventUpdate(vo);
+    public void eventUpdate(CalendarDto dto) throws Exception {
+        calendarMapper.eventUpdate(dto);
     }
 }

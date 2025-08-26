@@ -45,14 +45,15 @@
     -->
     <insert id="calendarSave" parameterType="com.example.intranet.dto.calendar.CalendarDto" useGeneratedKeys="true"
             keyColumn="CALENDAR_NO" keyProperty="calendarNo">
-        INSERT INTO CALENDAR(CALENDAR_TITLE,
-                             CALENDAR_START,
-                             CALENDAR_END,
-                             ALL_DAY,
-                             MIDX,
-                             category,
-                             editable,
-                             eventColor)
+        INSERT INTO CALENDAR(CALENDAR_TITLE,    -- 제목
+                             CALENDAR_START,    -- 시작일
+                             CALENDAR_END,      -- 종료일
+                             ALL_DAY,           -- 하루종일 true or false
+                             MIDX,              -- 일정 작성자
+                             category,          -- 개인 or 부서 or 회사 일정
+                             editable,          -- 일정 수정 가능여부
+                             eventColor         -- 일정 카테고리에 따른 일정 색깔
+        )
         values (#{title},
                 DATE_FORMAT(#{start1}, '%Y-%m-%d %H:%i:%s'),
                 DATE_FORMAT(#{end}, '%Y-%m-%d %H:%i:%s'),

@@ -58,12 +58,12 @@ public class CalendarController {
     @RequestMapping("/calendarList")
     public List<CalendarDto> calendarList(HttpSession session) throws Exception {
         // 로그인 유저의 midx로 select
-        List<CalendarDto> vo = null;
+        List<CalendarDto> dto = null;
         if (session.getAttribute("loginUser") != null) {
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-            vo = calendarService.calendarList(mdto.getMidx());
+            dto = calendarService.calendarList(mdto.getMidx());
         }
-        return vo;
+        return dto;
     }
 
     /**
@@ -77,34 +77,20 @@ public class CalendarController {
     @PostMapping("/calendarSave")
     public CalendarDto calendarSave(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
 
-        CalendarDto vo = null;
+        CalendarDto dto = null;
         // 비로그인시 null이 리턴, if문에서 분기가 갈리게 됨
         if (session.getAttribute("loginUser") != null) {
-            vo = new CalendarDto();
-            vo.setTitle((String) map.get("title"));
+            dto = new CalendarDto();
+            dto.setTitle((String) map.get("title"));
 
             // 카테고리 1:개인, 2:부서, 3:회사
+            // Dto 설정으로 카테고리를 입력할때 수정가능 여부와 색깔이 자동 입력됩니다.
             int category = Integer.parseInt((String) map.get("category"));
-            vo.setCategory(category);
-
-            switch (category) {
-                case 1: // 개인: 수정가능, 색상 분홍색
-                    vo.setEditable(true);
-                    vo.setEventColor("#FF9E9B");
-                    break;
-                case 2: // 부서: 수정불가, 색상 파란색
-                    vo.setEditable(false);
-                    vo.setEventColor("#32AAFF");
-                    break;
-                case 3: // 회사: 수정불가, 색상 초록색
-                    vo.setEditable(false);
-                    vo.setEventColor("#54BD54");
-                    break;
-            }
+            dto.setCategory(category);
 
             // 일정 DB에 로그인 유저의 midx를 같이 insert
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-            vo.setMidx(mdto.getMidx());
+            dto.setMidx(mdto.getMidx());
 
             // UTC 시간을 LocalDateTime으로 변환
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
@@ -112,16 +98,16 @@ public class CalendarController {
             ZonedDateTime endUTC = map.get("end") != null ? ZonedDateTime.parse((String) map.get("end"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul")) : null;
 
             // 한국 시간으로 변환하여 저장
-            vo.setStart1(startUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            vo.setEnd(endUTC != null ? endUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : null);
-            vo.setAllDay((Boolean) map.get("allDay"));
+            dto.setStart1(startUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            dto.setEnd(endUTC != null ? endUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : null);
+            dto.setAllDay((Boolean) map.get("allDay"));
 
 
-            calendarService.calendarSave(vo);
+            calendarService.calendarSave(dto);
         }
 
         // 저장한 일정의 key 값을 포함한 데이터를 다시 반환
-        return vo;
+        return dto;
     }
 
     /**
@@ -155,17 +141,17 @@ public class CalendarController {
     @PutMapping("/eventUpdate/{no}")
     public String eventUpdate(@PathVariable String no, @RequestBody Map<String, Object> map) {
 
-        CalendarDto vo = new CalendarDto();
-        vo.setCalendarNo(Long.valueOf(no));
-        vo.setTitle((String) map.get("title"));
-        vo.setStart1(map.get("start1").toString().substring(0, 19));
+        CalendarDto dto = new CalendarDto();
+        dto.setCalendarNo(Long.valueOf(no));
+        dto.setTitle((String) map.get("title"));
+        dto.setStart1(map.get("start1").toString().substring(0, 19));
         if (map.get("end") != null) {
-            vo.setEnd(map.get("end").toString().substring(0, 19));
+            dto.setEnd(map.get("end").toString().substring(0, 19));
         }
-        vo.setAllDay((Boolean) map.get("allDay"));
+        dto.setAllDay((Boolean) map.get("allDay"));
 
         try {
-            calendarService.eventUpdate(vo);
+            calendarService.eventUpdate(dto);
             return "success";
         } catch (Exception e) {
             e.printStackTrace();
