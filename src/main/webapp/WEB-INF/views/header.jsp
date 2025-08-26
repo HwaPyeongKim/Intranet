@@ -39,10 +39,9 @@
             <li><a href="schedule">일정관리</a></li>
             <li><a href="work">업무관리</a></li>
             <li><a href="requests">전자결제</a></li>
-            <li><a href="message">메세지</a></li>
-            <li><a href="workList">마이페이지</a></li>
             <li><a href="receiveList">메세지</a></li>
-            <li><a href="mypage">마이페이지</a></li>
+            <li><a href="workList">마이페이지</a></li>
+
             <li class="profile">
                 <img src="${profileImg}" class="profileImg" />
                 <span>${loginUser.name}</span>

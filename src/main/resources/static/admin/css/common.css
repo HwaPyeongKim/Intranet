@@ -7,6 +7,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {bor
 textarea:focus {outline: 2px solid #50bde2;}
 
 #wrap {width: 100%; max-width:1450px; margin: 0 auto; padding-top: 80px;}
+.container {width: 90%; margin: 0 auto;}
 h2 {margin: 10px 0 30px; font-size: 2em;}
 textarea {padding: 10px;}
 
@@ -52,7 +53,7 @@ div.table > div.row > div.col:last-child {border-right: 0;}
 div.table > div.row.empty {line-height: 200px;}
 
 .boxBtns {margin: 20px 0;}
-.boxBtns button {float: right;}
+.boxBtns button {float: right; margin-left: 10px;}
 
 .paging {margin-top: 30px; text-align: center;}
 .paging a {margin:0 5px; font-size: 1.1em; font-weight: bold;}

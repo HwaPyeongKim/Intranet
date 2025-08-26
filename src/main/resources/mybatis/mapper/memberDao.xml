@@ -108,4 +108,8 @@
             order by ma.date, ma.starttime desc
         </where>
     </select>
+
+    <update id="updateLeave">
+        update member set leavedate = #{leavedate} where midx = #{midx}
+    </update>
 </mapper>
