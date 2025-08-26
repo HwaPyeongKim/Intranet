@@ -53,7 +53,7 @@
     </update>
 
     <insert id="insertComment">
-        insert into work_comment (widx, midx, content) values (#{widx}, #{midx}, #{content})
+        insert into work_comment (widx, midx, content, autoyn) values (#{widx}, #{midx}, #{content}, #{autoyn})
     </insert>
 
     <update id="updateComment">
@@ -62,6 +62,10 @@
 
     <update id="deleteComment">
         update work_comment set deleteyn = 'Y' where wcidx = #{wcidx}
+    </update>
+
+    <update id="changeStatus">
+        update work set status = #{next} where widx = #{widx}
     </update>
 
 

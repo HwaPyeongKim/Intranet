@@ -119,9 +119,21 @@ public class WorkController {
         if (loginUser != null) {
             WorkDto wdto = ws.selectOne(widx);
             ArrayList<WorkCommentDto> comments = ws.selectComments(widx);
-           
+
+            String status= "";
+
+            if (wdto.getStatus()==1) status = "대기중";
+            if (wdto.getStatus()==2) status = "진행중";
+            if (wdto.getStatus()==3) status = "보류";
+            if (wdto.getStatus()==4) status = "반려";
+            if (wdto.getStatus()==5) status = "검토중";
+            if (wdto.getStatus()==6) status = "완료";
+
+            model.addAttribute("status", status);
             model.addAttribute("workitem", wdto);
             model.addAttribute("comments", comments);
+
+
             url = "work/workView";
         }
         return url;
@@ -187,7 +199,7 @@ public class WorkController {
         if (content == null || content.equals("")) {
             model.addAttribute("msg", "댓글을 입력하세요");
         } else {
-            ws.insertComment(widx, midx, content);
+            ws.insertComment(widx, midx, content, "N");
         }
         return "redirect:/workView?widx="+widx;
     }
@@ -208,5 +220,27 @@ public class WorkController {
         return "redirect:/workView?widx="+widx;
     }
 
+    @GetMapping("/changeWorkStatus")
+    public String changeWorkStatus(@RequestParam("widx") int widx,
+                               @RequestParam("status") int status,
+                               @RequestParam("next") int next,
+                               HttpSession session) {
+        MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+        String url = "redirect:/workView?widx="+widx;
+        if (loginUser != null) {
+
+            String content = "";
+            if (next == 2) content = "업무가 진행되었습니다.";
+            if (next == 3) content = "업무가 보류되었습니다.";
+            if (next == 4) content = "업무가 반려되었습니다.";
+            if (next == 5) content = "업무 검토요청이 들어왔습니다.";
+            if (next == 6) content = "업무가 완료되었습니다.";
+
+
+            ws.changeStatus(widx, status, next);
+            ws.insertComment(widx, loginUser.getMidx(), content, "Y");
+        }
+        return url;
+    }
 
 }

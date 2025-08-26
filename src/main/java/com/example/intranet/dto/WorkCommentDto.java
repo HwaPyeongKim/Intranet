@@ -10,6 +10,7 @@ public class WorkCommentDto {
     private int widx;
     private int midx;
     private String content;
+    private String autoyn;
     private Timestamp writedate;
     private String deleteyn;
     private int loopnum; // 번호를 위한 변수
