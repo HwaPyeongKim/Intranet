@@ -23,7 +23,6 @@ public class WorkDto {
     private int loopnum;// 번호를 위한 변수
 
     private String empname;
-    @NotEmpty(message="수신자를 선택하세요")    @NotNull(message="수신자를 선택하세요")
     private String workername;
 
     private String originalname; // file 테이블 조인

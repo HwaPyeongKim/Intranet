@@ -53,6 +53,7 @@ public class WorkService {
             paging.setPage( paging.getEndPage() );
             paging.calPaging();
         }
+        if(paging.getPage()==0) paging.setStartNum(0);
 
         ArrayList<WorkDto> list = wdao.selectWork( paging, key, mdto.getMidx() );
         result.put("workList", list);
@@ -97,6 +98,7 @@ public class WorkService {
             paging.setPage( paging.getEndPage() );
             paging.calPaging();
         }
+        if(paging.getPage()==0) paging.setStartNum(0);
 
         ArrayList<WorkDto> list = wdao.selectYourWork( paging, key, mdto.getMidx() );
         result.put("workList", list);

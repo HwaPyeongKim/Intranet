@@ -44,32 +44,40 @@
         <div class="coltitle">진행상태</div>
       </div>
 
-      <c:forEach items="${workList}" var="work" varStatus="status">
-        <div class="row">
-          <div class="col">
-          ${(paging.page-1)*(paging.displayRow)+status.count}
-          </div>
-          <div class="col" style="cursor:pointer">
-          <a href="workView?widx=${work.widx}" style="text-decoration:none">
-          ${work.title}
-          </a>
-          </div>
-          <div class="col">${work.empname}</div>
-          <div class="col"><fmt:formatDate value="${work.writedate}" pattern="yyyy-MM-dd" /></div>
-          <div class="col"><fmt:formatDate value="${work.completedate}" pattern="yyyy-MM-dd" /></div>
-          <div class="col">
-            <c:choose>
-              <c:when test='${work.status=="1"}'>대기중</c:when>
-              <c:when test='${work.status=="2"}'>진행중</c:when>
-              <c:when test='${work.status=="3"}'>보류</c:when>
-              <c:when test='${work.status=="4"}'>반려</c:when>
-              <c:when test='${work.status=="5"}'>검토중</c:when>
-              <c:otherwise>완료</c:otherwise>
-            </c:choose>
-          </div>
-        </div>
-      </c:forEach>
-
+      <c:choose>
+            <c:when test="${empty workList}">
+                <div class="row empty">
+                    <div class="col">요청받은 업무가 없습니다.</div>
+                </div>
+            </c:when>
+            <c:otherwise>
+                  <c:forEach items="${workList}" var="work" varStatus="status">
+                    <div class="row" style="cursor:pointer; " onclick="location.href='workView?widx=${work.widx}'">
+                      <div class="col">
+                      ${(paging.page-1)*(paging.displayRow)+status.count}
+                      </div>
+                      <div class="col" style="cursor:pointer">
+                      <a href="workView?widx=${work.widx}" style="text-decoration:none">
+                      ${work.title}
+                      </a>
+                      </div>
+                      <div class="col">${work.empname}</div>
+                      <div class="col"><fmt:formatDate value="${work.writedate}" pattern="yyyy-MM-dd" /></div>
+                      <div class="col"><fmt:formatDate value="${work.completedate}" pattern="yyyy-MM-dd" /></div>
+                      <div class="col">
+                        <c:choose>
+                          <c:when test='${work.status=="1"}'>대기중</c:when>
+                          <c:when test='${work.status=="2"}'>진행중</c:when>
+                          <c:when test='${work.status=="3"}'>보류</c:when>
+                          <c:when test='${work.status=="4"}'>반려</c:when>
+                          <c:when test='${work.status=="5"}'>검토중</c:when>
+                          <c:otherwise>완료</c:otherwise>
+                        </c:choose>
+                      </div>
+                    </div>
+                  </c:forEach>
+            </c:otherwise>
+      </c:choose>
           <c:if test="${not empty workList}">
             <div class="paging" style="height: 50px; line-height: 50px">
             <c:if test="${paging.prev}"><a href="mywork?page=${paging.beginPage-1}">Prev</a></c:if>

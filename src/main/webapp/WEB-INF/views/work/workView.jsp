@@ -6,7 +6,7 @@
 </style>
 
 <section id="insertWork">
-    <form class="form fileForm shadow" style="width: 100%; padding: 20px; border: 1px solid #000; border-radius: 10px;">
+<div class="form fileForm shadow" style="width: 100%; padding: 20px; border: 1px solid #000; border-radius: 10px;">
 
     <h2>업무 내용</h2>
 
@@ -62,6 +62,7 @@
                         <input type="hidden" name="wcidx" value="${comment.wcidx}" />
 
                         <li class="commentList">
+                            <input type="hidden" name="prevText" value="${comment.content}" />
                             <div class="commentBtns clearfix">
                                 <span>${comment.name}</span>
                                 <small>(<fmt:formatDate value="${comment.writedate}" pattern="yyyy-MM-dd HH:mm:ss" />)</small>
@@ -92,6 +93,7 @@
             </li>
         </form>
     </ul>
+</div>
 </section>
 
 

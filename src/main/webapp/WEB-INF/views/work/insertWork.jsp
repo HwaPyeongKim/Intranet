@@ -33,10 +33,17 @@
                 <label for="worker">수신자</label>
                     <select name="worker" id="worker">
                         <option value="">수신자를 선택하세요</option>
-                        <!-- 모델에서 멤버 목록을 반복문으로 출력 -->
+                        <%-- 모델에서 멤버 목록을 반복문으로 출력 --%>
                         <c:forEach var="member" items="${members}">
                             <c:if test="${member.midx ne loginUser.midx}">
-                                <option value="${member.midx}">${member.name}</option>  <!-- member.id와 member.name을 사용 -->
+                                <c:choose>
+                                    <c:when test="${dto.worker eq member.midx}"> <%-- 필드값 오류로 다시 돌아올 때 수신자 정보 비교 --%>
+                                        <option value="${member.midx}" selected>${member.name}</option>  <%-- 기존에 선택했던 값 --%>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${member.midx}">${member.name}</option>  <%-- member.id와 member.name을 사용 --%>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:if>
                         </c:forEach>
                     </select>
@@ -49,7 +56,7 @@
                 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd'T'HH:mm" var="now" />
                 <input type="datetime-local"
                 min="${now}"
-                name="completedate" value="${dto.completedate}" style="width: 250px"/>
+                name="completedate" value="${completedate}" style="width: 250px"/>
             </div>
         </div>
         <div class="field">
