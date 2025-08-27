@@ -41,6 +41,11 @@
         font-style: italic;
         color: #888;
     }
+    .searchBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
 </style>
 
@@ -56,6 +61,9 @@
                 </select>
                 <input type="text" name="key" value="${key}"/>
                 <button>검색</button>
+            </div>
+            <div class="boxBtns clearfix" style="display: flex; align-items: center; justify-content: end">
+                <input type="button" name="btn_search" value="기안작성" onclick="location.href='requestsWriteForm'"/>&nbsp;
             </div>
 <%--            <select name="sort" id="sort">--%>
 <%--                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>--%>

@@ -1,10 +1,7 @@
 package com.example.intranet.service;
 
 import com.example.intranet.dao.IMemberDao;
-import com.example.intranet.dto.MemberAttendanceDto;
-import com.example.intranet.dto.MemberDto;
-import com.example.intranet.dto.Paging;
-import com.example.intranet.dto.TeamDto;
+import com.example.intranet.dto.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -225,5 +222,20 @@ public class MemberService {
             list.add(mdto);
         }
         return list;
+    }
+
+
+
+//    @@@@@@@@@@@@@@@@@@@@@ main
+    public MemberAttendanceDto selectInOutTime(int midx, String today) {
+        return mdao.selectInOutTime(midx, today);
+    }
+
+    public List<MemberRequestsDto> selectMyReqList(int midx) {
+        return mdao.selectMyReqList(midx);
+    }
+
+    public List<WorkDto> selectMyWorkList(int midx) {
+        return mdao.selectMyWorkList(midx);
     }
 }

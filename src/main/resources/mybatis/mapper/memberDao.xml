@@ -109,4 +109,21 @@
         </where>
     </select>
 
+<!-- @@@@@@@ main @@@@@@@ -->
+    <select id="selectInOutTime" resultType="com.example.intranet.dto.MemberAttendanceDto">
+        SELECT * FROM member_attendance WHERE midx = #{midx} and date = #{today}
+    </select>
+
+    <select id="selectMyReqList" resultType="com.example.intranet.dto.MemberRequestsDto">
+        select * from member_requests where confirm_midx = #{midx} and status = 1 order by ridx desc limit 5
+    </select>
+
+    <select id="selectMyWorkList" resultType="com.example.intranet.dto.WorkDto">
+        select *
+        , date_format(completedate, '%Y-%m-%d') as cdate
+        from work where worker = #{midx} and status = 1 order by completedate limit 5
+    </select>
+
+
+
 </mapper>
