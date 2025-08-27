@@ -1,5 +1,6 @@
 package com.example.intranet.dao;
 
+import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.TeamDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,6 +14,7 @@ public interface IAdminDao {
     void updateLeave(String midx, String leavedate);
     void updatePosition(String midx, String position);
     void updateLevel(String midx, String level);
+    void updateAttendance(String maidx, String endtime);
     ArrayList<TeamDto> selectTeamMembers(String type, String key, String sort, int midx, int level);
     TeamDto checkTeamName(String name);
     void insertTeam(String name);
@@ -21,4 +23,5 @@ public interface IAdminDao {
     ArrayList<TeamDto> selectTeamList();
     void addTeamMember(String midx, String tidx);
     String getTeamName(int tidx);
+    MemberAttendanceDto getMemberAttendances(int maidx);
 }

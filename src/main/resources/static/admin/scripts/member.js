@@ -23,10 +23,15 @@ function confirmJoin() {
 
 function setMember(type) {
     var c_midx = "";
-    var midxes = document.adminMemberInfo.midx;
+    var type = type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+    if (type == "Leave" || type == "Position" || type == "Level") {
+        var midxes = document.adminMemberInfo.midx;
+    } else if (type == "Attendance") {
+        var midxes = document.adminMemberAttendanceInfo.maidx;
+    }
     if (midxes.length == undefined) {
         if (midxes.checked == true) {
-            c_midx = midx.value;
+            c_midx = midxes.value;
         }
     } else if (midxes.length > 1) {
         for (i=0; i<midxes.length; i++) {
@@ -39,19 +44,12 @@ function setMember(type) {
         alert("직원을 선택해주세요.");
         return;
     } else {
-        if (type == "leave") {
-            var url = "updateLeaveForm?midxes=" + c_midx;
-            var option = "width=500, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
-            window.open(url,"updateLeaveForm",option);
-        } else if (type == "position") {
-            var url = "updatePositionForm?midxes=" + c_midx;
-            var option = "width=500, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
-            window.open(url,"updatePositionForm",option);
-        } else if (type == "level") {
-            var url = "updateLevelForm?midxes=" + c_midx;
-            var option = "width=500, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
-            window.open(url,"updateLevelForm",option);
+        var url = "updateForm?midxes=" + c_midx + "&type="+type;
+        var option = "width=500, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
+        if (type == "Attendance") {
+            option = "width=800, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
         }
+        window.open(url,"updateForm",option);
     }
 }
 
@@ -170,6 +168,47 @@ function updateLevel() {
             data: JSON.stringify(datas),
             success: function(response) {
                 alert("권한을 설정했습니다.");
+                if (window.opener && !window.opener.closed) {
+                    window.opener.location.reload();
+                }
+                window.close();
+            },
+            error: function() {
+                alert("오류가 발생했습니다. 관리자에게 문의해주세요.");
+            }
+        })
+    }
+}
+
+function updateAttendance() {
+    var endtime = document.updateAttendanceForm.endtime;
+    var datas = [];
+    if (endtime.length == undefined) {
+        if (!endtime.value) {
+            alert("퇴근시간을 입력해주세요.");
+            return;
+        }
+        var data = [endtime.attributes.maidx.value, endtime.value];
+        datas.push(data);
+    } else if (endtime.length > 1) {
+        for (i=0; i<endtime.length; i++) {
+            if (!endtime[i].value) {
+                alert("퇴근시간을 입력해주세요.");
+                return;
+            }
+            var data = [endtime[i].attributes.maidx.value, endtime[i].value];
+            datas.push(data);
+        }
+    }
+
+    if (datas.length > 0) {
+        $.ajax({
+            url: "updateAttendance",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(datas),
+            success: function(response) {
+                alert("퇴근시간이 저장되었습니다.");
                 if (window.opener && !window.opener.closed) {
                     window.opener.location.reload();
                 }

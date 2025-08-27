@@ -222,15 +222,20 @@ public class AdminController {
         return url;
     }
 
-    @GetMapping("/updateLeaveForm")
-    public String updateLeaveForm(@RequestParam("midxes") String midxes, HttpSession session, Model model) {
+    @GetMapping("/updateForm")
+    public String updateForm(@RequestParam("midxes") String midxes, @RequestParam("type") String type, HttpSession session, Model model) {
         String url = "admin/login";
         MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-        ArrayList<MemberDto> list = null;
-        if (mdto != null && mdto.getLevel() > 2) {
-            list = ms.getMembers(midxes);
+        if (type.equals("Attendance")) {
+            ArrayList<MemberAttendanceDto> list = as.getMemberAttendances(midxes); // midxes = maidx
             model.addAttribute("list", list);
-            url = "admin/updateLeave";
+        } else {
+            ArrayList<MemberDto> list = ms.getMembers(midxes);
+            model.addAttribute("list", list);
+        }
+
+        if (mdto != null && mdto.getLevel() > 2) {
+            url = "admin/update"+type;
         }
         return url;
     }
@@ -243,38 +248,12 @@ public class AdminController {
         return result;
     }
 
-    @GetMapping("/updatePositionForm")
-    public String updatePositionForm(@RequestParam("midxes") String midxes, HttpSession session, Model model) {
-        String url = "admin/login";
-        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-        ArrayList<MemberDto> list = null;
-        if (mdto != null && mdto.getLevel() > 2) {
-            list = ms.getMembers(midxes);
-            model.addAttribute("list", list);
-            url = "admin/updatePosition";
-        }
-        return url;
-    }
-
     @PostMapping("/updatePosition")
     @ResponseBody
     public HashMap<String, Object> updatePosition(@RequestBody List<List<String>> datas) {
         HashMap<String, Object> result = new HashMap<>();
         as.updatePosition(datas);
         return result;
-    }
-
-    @GetMapping("/updateLevelForm")
-    public String updateLevelForm(@RequestParam("midxes") String midxes, HttpSession session, Model model) {
-        String url = "admin/login";
-        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-        ArrayList<MemberDto> list = null;
-        if (mdto != null && mdto.getLevel() > 2) {
-            list = ms.getMembers(midxes);
-            model.addAttribute("list", list);
-            url = "admin/updateLevel";
-        }
-        return url;
     }
 
     @PostMapping("/updateLevel")
@@ -285,6 +264,13 @@ public class AdminController {
         return result;
     }
 
+    @PostMapping("/updateAttendance")
+    @ResponseBody
+    public HashMap<String, Object> updateAttendance(@RequestBody List<List<String>> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        as.updateAttendance(datas);
+        return result;
+    }
 
     @GetMapping("/adminTeamList")
     public String adminTeamList(HttpServletRequest request, HttpSession session, Model model) {

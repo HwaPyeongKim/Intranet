@@ -1,6 +1,7 @@
 package com.example.intranet.service;
 
 import com.example.intranet.dao.IAdminDao;
+import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.Paging;
 import com.example.intranet.dto.TeamDto;
@@ -43,6 +44,12 @@ public class AdminService {
     public void updateLevel(List<List<String>> datas) {
         for (List<String> data : datas) {
             adao.updateLevel(data.get(0), data.get(1)); // midx, level
+        }
+    }
+
+    public void updateAttendance(List<List<String>> datas) {
+        for (List<String> data : datas) {
+            adao.updateAttendance(data.get(0), data.get(1)); // maidx, endtime
         }
     }
 
@@ -165,5 +172,14 @@ public class AdminService {
 
     public String getTeamName(int tidx) {
         return adao.getTeamName(tidx);
+    }
+    public ArrayList<MemberAttendanceDto> getMemberAttendances(String maidxes) {
+        ArrayList<MemberAttendanceDto> list = new ArrayList<>();
+        String [] maidx = maidxes.split(",");
+        for (int i=0; i<maidx.length; i++) {
+            MemberAttendanceDto mdto = adao.getMemberAttendances(Integer.parseInt(maidx[i]));
+            list.add(mdto);
+        }
+        return list;
     }
 }

@@ -25,6 +25,10 @@
         update member set level = #{level} where midx = #{midx}
     </update>
 
+    <update id="updateAttendance">
+        update member_attendance set endtime = #{endtime} where maidx = #{maidx}
+    </update>
+
     <select id="selectTeamMembers" resultType="com.example.intranet.dto.TeamDto">
         select t.*
         , m.name as mname, m.position as mposition
@@ -87,6 +91,14 @@
 
     <select id="getTeamName">
         select name from team where tidx = #{tidx}
+    </select>
+
+    <select id="getMemberAttendances" resultType="com.example.intranet.dto.MemberAttendanceDto">
+        select ma.*
+        , m.name, m.userid, m.position
+        from member_attendance ma
+        left join member m on m.midx = ma.midx
+        where ma.maidx = #{maidx}
     </select>
 
 </mapper>
