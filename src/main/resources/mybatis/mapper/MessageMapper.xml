@@ -6,8 +6,8 @@
 <mapper namespace="com.example.intranet.dao.IMessageDao">
 
     <insert id="insertMessage" parameterType="com.example.intranet.dto.MessageDto">
-        INSERT INTO message (frommidx, tomidx, title, content, readyn, deleteyn, writedate)
-        VALUES (#{frommidx}, #{tomidx}, #{title}, #{content}, 'N', 'N', NOW())
+        INSERT INTO message (frommidx, tomidx, title, content, readyn, todeleteyn, fromdeleteyn, writedate)
+        VALUES (#{frommidx}, #{tomidx}, #{title}, #{content}, 'N', 'N', 'N', NOW())
     </insert>
 
     <select id="getMessageByUser" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
@@ -25,35 +25,31 @@
         UPDATE message SET readyn = 'Y', readdate = NOW() WHERE msidx = #{msidx}
     </update>
 
-    <update id="deleteMessage" parameterType="int">
-        UPDATE message SET deleteyn = 'Y' WHERE msidx = #{msidx}
-    </update>
-
-    <select id="getMessageReceive" resultType="com.example.intranet.dto.MessageDto">
-        select
-        ms.*
-        , mt.name as toname, mt.userid as touserid
-        , mf.name as fromname, mf.userid as fromuserid
-        from message ms
-        left join member mt on mt.midx = ms.tomidx
-        left join member mf on mf.midx = ms.frommidx
-        where tomidx = #{midx} and ms.deleteyn = 'n'
-        order by ms.writedate desc
+<!--    <select id="getMessageReceive" resultType="com.example.intranet.dto.MessageDto">-->
+<!--        select-->
+<!--        ms.*-->
+<!--        , mt.name as toname, mt.userid as touserid-->
+<!--        , mf.name as fromname, mf.userid as fromuserid-->
+<!--        from message ms-->
+<!--        left join member mt on mt.midx = ms.tomidx-->
+<!--        left join member mf on mf.midx = ms.frommidx-->
+<!--        where tomidx = #{midx} and ms.deleteyn = 'n'-->
+<!--        order by ms.writedate desc-->
 
 
-    </select>
+<!--    </select>-->
 
-    <select id="getMessageSent" resultType="com.example.intranet.dto.MessageDto">
-        select
-            ms.*
-             , mt.name as toname, mt.userid as touserid
-             , mf.name as fromname, mf.userid as fromuserid
-        from message ms
-                 left join member mt on mt.midx = ms.tomidx
-                 left join member mf on mf.midx = ms.frommidx
-        where frommidx = #{midx} and ms.deleteyn = 'n'
-        order by ms.writedate desc
-    </select>
+<!--    <select id="getMessageSent" resultType="com.example.intranet.dto.MessageDto">-->
+<!--        select-->
+<!--            ms.*-->
+<!--             , mt.name as toname, mt.userid as touserid-->
+<!--             , mf.name as fromname, mf.userid as fromuserid-->
+<!--        from message ms-->
+<!--                 left join member mt on mt.midx = ms.tomidx-->
+<!--                 left join member mf on mf.midx = ms.frommidx-->
+<!--        where frommidx = #{midx} and ms.deleteyn = 'n'-->
+<!--        order by ms.writedate desc-->
+<!--    </select>-->
 
 
     <select id="getMessageReceiveView" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
@@ -75,16 +71,86 @@
         WHERE m.msidx = #{msidx}
     </select>
 
+    <update id="todeleteMessage" parameterType="int">
+        UPDATE message SET todeleteyn = 'Y' WHERE msidx = #{msidx}
+    </update>
 
-    <delete id="deleteMessages" parameterType="list">
-        DELETE FROM messages
+    <update id="fromdeleteMessage" parameterType="int">
+        UPDATE message SET fromdeleteyn = 'Y' WHERE msidx = #{msidx}
+    </update>
+
+    <update id="todeleteMessages" parameterType="list">
+        UPDATE message SET todeleteyn = 'Y'
         WHERE msidx IN
         <foreach collection="msidxList" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
-    </delete>
+    </update>
 
+    <update id="fromdeleteMessages" parameterType="list">
+        UPDATE message SET fromdeleteyn = 'Y'
+        WHERE msidx IN
+        <foreach collection="msidxList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 
+    <select id="selectReceive" resultType="com.example.intranet.dto.MessageDto">
+        select ms.*, mf.name as fromname
+        from message ms
+        left join member mt on mt.midx = ms.tomidx
+        left join member mf on mf.midx = ms.frommidx
+        <where>
+            ms.todeleteyn = 'N'
+            and ms.tomidx = #{midx}
+            <if test="type == 'title'">
+                and ms.title like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'titleContent'">
+                and (ms.title like concat('%', #{key}, '%') OR ms.content like concat('%', #{key}, '%'))
+            </if>
+            <if test="type == 'name'">
+                and mf.name like concat('%', #{key}, '%')
+            </if>
+        </where>
 
+        <choose>
+            <when test="sort == 'desc'">
+                order by ms.writedate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by ms.writedate asc
+            </when>
+        </choose>
+    </select>
+
+    <select id="selectSent" resultType="com.example.intranet.dto.MessageDto">
+        select ms.*, mt.name as toname
+        from message ms
+        left join member mt on mt.midx = ms.tomidx
+        left join member mf on mf.midx = ms.frommidx
+        <where>
+            ms.fromdeleteyn = 'N'
+            and ms.frommidx = #{midx}
+            <if test="type == 'title'">
+                and ms.title like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'titleContent'">
+                and (ms.title like concat('%', #{key}, '%') OR ms.content like concat('%', #{key}, '%'))
+            </if>
+            <if test="type == 'name'">
+                and mt.name like concat('%', #{key}, '%')
+            </if>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by ms.writedate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by ms.writedate asc
+            </when>
+        </choose>
+    </select>
 
 </mapper>

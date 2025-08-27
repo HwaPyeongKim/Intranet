@@ -1,5 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<style>
+    #search {}
+    #work .row{
+        border: 1px solid #ccc;
+        display: flex;
+        justify-content: space-around;
+        padding: 13px 0;}
+    #work .coltitle{font-weight: bold;
+        display: flex;
+        justify-content: space-around;
+        flex:1; }
+
+    #work .col{
+        display: flex;
+        justify-content: space-around;
+        flex:1 }
+
+</style>
+
 <section id="work">
+
 
     <h2>업무관리</h2>
 
@@ -9,18 +29,27 @@
     </ul>
 
     <script>
-        if(window.location.pathname=='/work'){
-            document.getElementsByClassName("submenu")[0].firstElementChild.classList.add('on');
-            sessionStorage.setItem('workon','left')
-        }else if(window.location.pathname=='/workView'){
-            if(sessionStorage.getItem('workon')=='left'){
-                document.getElementsByClassName("submenu")[0].firstElementChild.classList.add('on');
-            }else{
-                document.getElementsByClassName("submenu")[0].lastElementChild.classList.add('on');
-            }
-        }else{
-            document.getElementsByClassName("submenu")[0].lastElementChild.classList.add('on');
-            sessionStorage.setItem('workon','right')
-        }
+        // 서브메뉴 어느곳에 불들어올지 설정
+        if (window.location.pathname == '/work') {  // /work 로 들어왔을때
 
+            document.getElementsByClassName("submenu")[0].firstElementChild.classList.add('on');
+            // 왼쪽에 불들어오게 하고
+            sessionStorage.setItem('workon', 'left')
+            // 세션에 값 left
+        } else if (window.location.pathname == '/workView') { // /workView 로 들어왔을때
+            if (sessionStorage.getItem('workon') == 'right') { // 세션을 get 했을때 right인 경우
+                document.getElementsByClassName("submenu")[0].lastElementChild.classList.add('on');
+                // 오른쪽에 불들어오게
+            } else {  // 세션을 get했을때 left거나 최초접속인 경우
+                document.getElementsByClassName("submenu")[0].firstElementChild.classList.add('on');
+                // 왼쪽에 불들어오게
+            }
+        } else if (window.location.pathname == '/workList') { // mypage/workList 로 들어왔을때
+            sessionStorage.setItem('workon', 'left')
+        } else {  // /work도 아니고 /workView도 아닌경우 (주로 yourwork에서 접속한 경우)
+            document.getElementsByClassName("submenu")[0].lastElementChild.classList.add('on');
+            // 오른쪽에 불들어오게
+            sessionStorage.setItem('workon', 'right')
+            // 세션에 값 right
+        }
     </script>
