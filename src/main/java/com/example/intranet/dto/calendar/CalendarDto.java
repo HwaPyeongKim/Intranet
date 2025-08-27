@@ -20,6 +20,10 @@ public class CalendarDto {
         분류별로 다른색상이 나오기 위해 eventColor 추가
      */
 
+    /*
+CalendarDto dto = new CalendarDto(workDto.title, workDto.writedate, workDto.completedate, workDto.midx)
+
+calendarService.calendarSave(dto);*/
     private Long calendarNo;
     private String title;
     private String start1;
