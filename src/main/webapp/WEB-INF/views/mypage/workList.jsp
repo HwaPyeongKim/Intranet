@@ -82,5 +82,7 @@
     </c:if>
 
 </section>
-
+<script>
+    sessionStorage.setItem('workon', 'left')
+</script>
 <%@ include file="../footer.jsp" %>
