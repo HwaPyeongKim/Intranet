@@ -110,4 +110,12 @@
         where ma.maidx = #{maidx}
     </select>
 
+    <update id="deleteBoard">
+        update board set deleteyn = 'Y' where bidx = #{bidx}
+    </update>
+
+    <update id="showBoard">
+        update board set showyn = #{showyn} where bidx = #{bidx}
+    </update>
+
 </mapper>

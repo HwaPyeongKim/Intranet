@@ -25,4 +25,6 @@ public interface IAdminDao {
     String getTeamName(int tidx);
     MemberAttendanceDto getMemberAttendances(int maidx);
     ArrayList<MemberDto> selectMemberNoTeam(String type, String key);
+    void deleteBoard(String bidx);
+    void showBoard(String bidx, String showyn);
 }

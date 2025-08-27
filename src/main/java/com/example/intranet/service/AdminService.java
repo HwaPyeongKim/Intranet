@@ -207,4 +207,16 @@ public class AdminService {
         }
         return list;
     }
+
+    public void deleteBoard(List<String> datas) {
+        for (String bidx : datas) {
+            adao.deleteBoard(bidx);
+        }
+    }
+
+    public void showBoard(List<List<String>> datas) {
+        for (List<String> data : datas) {
+            adao.showBoard(data.get(0), data.get(1)); // bidx, showyn
+        }
+    }
 }

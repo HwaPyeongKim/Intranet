@@ -376,4 +376,33 @@ public class AdminController {
         return result;
     }
 
+    @PostMapping("/deleteBoard")
+    @ResponseBody
+    public HashMap<String, Object> deleteBoard(@RequestBody List<String> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        as.deleteBoard(datas);
+        return result;
+    }
+
+    @PostMapping("/showBoard")
+    @ResponseBody
+    public void showBoard(@RequestBody List<List<String>> datas) {
+        as.showBoard(datas);
+    }
+
+//    @GetMapping("/adminViewBoard")
+//    public String adminViewBoard(@RequestParam("bidx") int bidx, HttpSession session, Model model) {
+//        MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+//        String url = "admin/login";
+//        if (loginUser != null) {
+//            bs.addRead(bidx, loginUser.getMidx());
+//            BoardDto bdto = bs.selectOne(bidx);
+//            ArrayList<BoardCommentDto> bcdto = bs.selectComments(bidx);
+//            model.addAttribute("item", bdto);
+//            model.addAttribute("comments", bcdto);
+//            url = "admin/viewBoard";
+//        }
+//        return url;
+//    }
+
 }
