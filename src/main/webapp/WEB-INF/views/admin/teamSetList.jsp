@@ -8,8 +8,8 @@
         <div class="searchBox">
             <div class="input">
                 <select name="type">
-                    <option value="muserid"<c:if test="${type == 'muserid'}"> selected</c:if>>아이디</option>
-                    <option value="mname"<c:if test="${type == 'mname'}"> selected</c:if>>이름</option>
+                    <option value="userid"<c:if test="${type == 'userid'}"> selected</c:if>>아이디</option>
+                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>이름</option>
                 </select>
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
@@ -19,25 +19,29 @@
 
     <div class="separator">
         <form method="post" name="adminNoTeam" id="adminNoTeam" class="shadow">
-            <h3>팀이 없는 직원</h3>
+            <div class="boxBtns">
+                <h3>팀이 없는 직원</h3>
+            </div>
             <table>
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="chkNoTeamAll" /></th>
                         <th>아이디</th>
                         <th>직급</th>
                         <th>이름</th>
                     </tr>
                 </thead>
-                <tbody ondragover="allowDrop()" ondrop="drop()">
+                <tbody id="noTeamTableBody">
                     <c:choose>
                         <c:when test="${empty memberList}">
                             <tr>
-                                <td colspan="3">팀이 없는 직원이 존재하지 않습니다.</td>
+                                <td colspan="4">팀이 없는 직원이 존재하지 않습니다.</td>
                             </tr>
                         </c:when>
                         <c:otherwise>
                             <c:forEach items="${memberList}" var="item">
-                                <tr id="member-${item.midx}" draggable="true" ondragstart="drag()">
+                                <tr>
+                                    <td><input type="checkbox" name="midx" value="${item.midx}" /></td>
                                     <td>${item.userid}</td>
                                     <td>${item.position}</td>
                                     <td>${item.name}</td>
@@ -48,6 +52,15 @@
                 </tbody>
             </table>
         </form>
+
+        <ul class="arrow">
+            <li>
+                <button type="button" onclick="addTeamMember()"><i class="fa-solid fa-arrow-right"></i></button>
+            </li>
+            <li>
+                <button type="button" onclick="deleteTeamMember()"><i class="fa-solid fa-arrow-left"></i></button>
+            </li>
+        </ul>
 
         <form method="post" name="adminYesTeam" id="adminYesTeam" class="shadow">
             <div class="boxBtns">
@@ -64,13 +77,14 @@
             <table>
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="chkTeamAll" /></th>
                         <th>아이디</th>
                         <th>직급</th>
                         <th>이름</th>
                     </tr>
                 </thead>
-                <tbody id="teamTableBody" ondragover="allowDrop()" ondrop="drop()">
-                    <td colspan="3">팀을 선택해주세요.</td>
+                <tbody id="teamTableBody">
+                    <td colspan="4">팀을 선택해주세요.</td>
                 </tbody>
             </table>
         </form>

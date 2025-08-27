@@ -19,10 +19,16 @@
     </form>
 
     <form method="post" name="adminMemberAttendanceInfo" id="adminMemberAttendanceInfo">
+        <c:if test="${loginUser.level > 2}">
+        <div class="boxBtns clearfix">
+            <button type="button" onclick="setMember('attendance')">퇴근처리</button>
+        </div>
+        </c:if>
 
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th>날짜</th>
                     <th>이름</th>
                     <th>출근시간</th>
@@ -40,10 +46,11 @@
                     <c:otherwise>
                         <c:forEach items="${list}" var="item">
                             <tr>
+                                <td><input type="checkbox" name="maidx" value="${item.maidx}" /></td>
                                 <td><fmt:formatDate value="${item.date}" pattern="yyyy-MM-dd" /></td>
                                 <td>${item.name}</td>
-                                <td><fmt:formatDate value="${item.starttime}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
-                                <td><fmt:formatDate value="${item.endtime}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
+                                <td><fmt:formatDate value="${item.starttime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                <td><fmt:formatDate value="${item.endtime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                             </tr>
                         </c:forEach>
                     </c:otherwise>

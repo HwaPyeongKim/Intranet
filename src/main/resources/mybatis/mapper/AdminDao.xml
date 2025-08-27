@@ -21,6 +21,14 @@
         update member set position = #{position} where midx = #{midx}
     </update>
 
+    <update id="updateLevel">
+        update member set level = #{level} where midx = #{midx}
+    </update>
+
+    <update id="updateAttendance">
+        update member_attendance set endtime = #{endtime} where maidx = #{maidx}
+    </update>
+
     <select id="selectTeamMembers" resultType="com.example.intranet.dto.TeamDto">
         select t.*
         , m.name as mname, m.position as mposition
@@ -61,7 +69,16 @@
     </insert>
 
     <select id="selectMemberNoTeam" resultType="com.example.intranet.dto.MemberDto">
-        select * from member where team is null or team = 0
+        select * from member
+        <where>
+            team is null or team = 0
+            <if test="type == 'name'">
+                and name like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'userid'">
+                and userid like concat('%', #{key}, '%')
+            </if>
+        </where>
     </select>
 
     <select id="selectTeams" resultType="com.example.intranet.dto.TeamDto">
@@ -76,5 +93,29 @@
     <select id="selectTeamList" resultType="com.example.intranet.dto.TeamDto">
         select * from team where deleteyn = 'N'
     </select>
+
+    <update id="addTeamMember">
+        update member set team = #{tidx} where midx = #{midx}
+    </update>
+
+    <select id="getTeamName">
+        select name from team where tidx = #{tidx}
+    </select>
+
+    <select id="getMemberAttendances" resultType="com.example.intranet.dto.MemberAttendanceDto">
+        select ma.*
+        , m.name, m.userid, m.position
+        from member_attendance ma
+        left join member m on m.midx = ma.midx
+        where ma.maidx = #{maidx}
+    </select>
+
+    <update id="deleteBoard">
+        update board set deleteyn = 'Y' where bidx = #{bidx}
+    </update>
+
+    <update id="showBoard">
+        update board set showyn = #{showyn} where bidx = #{bidx}
+    </update>
 
 </mapper>

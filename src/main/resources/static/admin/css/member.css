@@ -19,3 +19,5 @@ section#adminMemberUpdate .field div.address button {width: 10%; padding: 5px;}
 
 #adminTeamList .separator {display: flex; justify-content: space-between;}
 #adminTeamList .separator form {width: 45%; padding: 20px; border-radius: 10px;}
+#adminTeamList .arrow {}
+#adminTeamList .arrow li {margin: 30px 0;}

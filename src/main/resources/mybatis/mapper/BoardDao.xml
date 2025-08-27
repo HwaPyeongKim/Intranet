@@ -11,9 +11,9 @@
         from board b
         left join member m on m.midx = b.midx
         <where>
-            b.deleteyn = 'N' and b.showyn = 'Y'
+            b.deleteyn = 'N'
             <if test="category == 'main'">
-                and b.category = 'main'
+                and b.category in ('main', 'notice')
             </if>
             <if test="category == 'download'">
                 and b.category = 'download'
@@ -69,12 +69,12 @@
         , (select count(*) from board_comment bc where bc.bidx = b.bidx and bc.deleteyn = 'N') as comment_count
         from board b
         left join member m on m.midx = b.midx
-        where b.deleteyn = 'N' and b.noticeyn = 'Y' and b.showyn = 'Y'
+        where b.category = 'notice' and b.deleteyn = 'N' and b.showyn = 'Y'
         order by b.writedate desc
     </select>
 
     <update id="update" parameterType="com.example.intranet.dto.BoardDto">
-        update board set category = #{category}, title = #{title}, content = #{content}, midx = #{midx}, fidx = #{fidx}, updatedate = now() where bidx = #{bidx}
+        update board set category = #{category}, title = #{title}, content = #{content}, midx = #{midx}, fidx = #{fidx}, updatedate = now(), showyn = #{showyn} where bidx = #{bidx}
     </update>
 
     <select id="selectComments" resultType="com.example.intranet.dto.BoardCommentDto">
