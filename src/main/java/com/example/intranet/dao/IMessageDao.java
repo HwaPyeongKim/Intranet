@@ -39,7 +39,8 @@ public interface IMessageDao {
 
     void deleteMessages(List<Integer> msidxList);
 
-    ArrayList<MessageDto> select(int midx, String type, String key, String sort);
+    ArrayList<MessageDto> selectSent(int midx, String type, String key, String sort);
+    ArrayList<MessageDto> selectReceive(int midx, String type, String key, String sort);
 }
 
 

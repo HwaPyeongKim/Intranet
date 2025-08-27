@@ -47,7 +47,7 @@ public class MessageController {
         session.setAttribute("msgrs", "receive");
         if (mdto != null) {
             int midx = mdto.getMidx();
-            result = mgs.select(request, midx);
+            result = mgs.selectReceive(request, midx);
             model.addAttribute("message", result.get("message"));
             model.addAttribute("paging", result.get("paging"));
             model.addAttribute("type", result.get("type"));
@@ -74,17 +74,26 @@ public class MessageController {
 
     // 보낸 메세지
     @GetMapping("/sentList")
-    public String sentList(HttpSession session, Model model) {
+    public String sentList(HttpServletRequest request, HttpSession session, Model model) {
         String url = "member/login";
 
         MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
         session.setAttribute("msgrs", "sent");
         if (mdto != null) {
-            int midx = mdto.getMidx();   // 로그인 사용자 midx 사용
-            ArrayList<MessageDto> message = mgs.getMessageSent(midx);
-            System.out.println(midx);
-            model.addAttribute("message", message);
-            url = "message/sentList";  // 보낸 메시지 JSP 경로
+            int midx = mdto.getMidx();
+            result = mgs.selectSent(request, midx);
+            model.addAttribute("message", result.get("message"));
+            model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
+            model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
+            url = "message/sentList"; // 받은 메세지 JSP 경로
+
+//            int midx = mdto.getMidx();   // 로그인 사용자 midx 사용
+//            ArrayList<MessageDto> message = mgs.getMessageReceive(midx);
+//            System.out.println(midx);
+//            model.addAttribute("message", message);
         }
         return url;
     }
@@ -137,6 +146,7 @@ public class MessageController {
     }
 
     // 메시지 삭제
+    /// //////////////////////////////////
     @PostMapping("/deletemsg")
     public String delete(HttpSession session,
                          @RequestParam int msidx) {
@@ -156,6 +166,7 @@ public class MessageController {
 
         return url;
     }
+    /// ////////////////////////////////
 
     // 메세지 여러개 삭제
     @PostMapping("/deletemsgMulti")
@@ -170,7 +181,16 @@ public class MessageController {
         if (msidxList != null && !msidxList.isEmpty()) {
             mgs.deleteMessages(msidxList);
         }
-        return "redirect:/receiveList";
+        String msgrs = (String) session.getAttribute("msgrs");
+        String url = "";
+
+        if (msgrs.equals("receive") || msgrs==null) {
+            url = "redirect:/receiveList";
+        }else if (msgrs.equals("sent")) {
+            url = "redirect:/sentList";
+        }
+
+        return url;
     }
 
 

@@ -75,29 +75,22 @@
         WHERE m.msidx = #{msidx}
     </select>
 
-
-    <delete id="deleteMessages" parameterType="list">
-        DELETE FROM messages
+    <update id="deleteMessages" parameterType="list">
+        UPDATE message SET deleteyn = 'Y'
         WHERE msidx IN
         <foreach collection="msidxList" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
-    </delete>
+    </update>
 
-    <select id="select" resultType="com.example.intranet.dto.BoardDto">
-        select ms.*, m.name
-        , (select count(*) from board_comment bc where bc.bidx = ms.bidx and bc.deleteyn = 'N') as comment_count
+    <select id="selectReceive" resultType="com.example.intranet.dto.MessageDto">
+        select ms.*, mf.name as fromname
         from message ms
-        left join member m on m.midx = ms.midx
+        left join member mt on mt.midx = ms.tomidx
+        left join member mf on mf.midx = ms.frommidx
         <where>
-            ms.deleteyn = 'N' and ms.showyn = 'Y'
-            <if test="category == 'main'">
-                and ms.category = 'main'
-            </if>
-            <if test="category == 'download'">
-                and ms.category = 'download'
-            </if>
-
+            ms.deleteyn = 'N'
+            and ms.tomidx = #{midx}
             <if test="type == 'title'">
                 and ms.title like concat('%', #{key}, '%')
             </if>
@@ -105,7 +98,7 @@
                 and (ms.title like concat('%', #{key}, '%') OR ms.content like concat('%', #{key}, '%'))
             </if>
             <if test="type == 'name'">
-                and m.name like concat('%', #{key}, '%')
+                and mf.name like concat('%', #{key}, '%')
             </if>
         </where>
 
@@ -119,5 +112,33 @@
         </choose>
     </select>
 
+    <select id="selectSent" resultType="com.example.intranet.dto.MessageDto">
+        select ms.*, mt.name as toname
+        from message ms
+        left join member mt on mt.midx = ms.tomidx
+        left join member mf on mf.midx = ms.frommidx
+        <where>
+            ms.deleteyn = 'N'
+            and ms.frommidx = #{midx}
+            <if test="type == 'title'">
+                and ms.title like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'titleContent'">
+                and (ms.title like concat('%', #{key}, '%') OR ms.content like concat('%', #{key}, '%'))
+            </if>
+            <if test="type == 'name'">
+                and mt.name like concat('%', #{key}, '%')
+            </if>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by ms.writedate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by ms.writedate asc
+            </when>
+        </choose>
+    </select>
 
 </mapper>
