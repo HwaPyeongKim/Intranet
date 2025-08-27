@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @Mapper
 public interface IWorkDao {
-    ArrayList<WorkDto> selectWork(Paging paging, String key, int midx);
+    ArrayList<WorkDto> selectWork(String type, String key, String sort, int midx);
 
     int getAllCountForWork(String key, int midx);
 

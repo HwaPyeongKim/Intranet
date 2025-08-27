@@ -6,13 +6,41 @@
 <mapper namespace="com.example.intranet.dao.IWorkDao">
 
     <select id="selectWork" resultType="com.example.intranet.dto.WorkDto">
-        select * from work_view where title like concat( '%', #{key} , '%' ) and worker=#{midx} and deleteyn = 'N'
-        order by widx desc  limit  #{paging.displayRow}  offset  #{paging.startNum}
+        select w.*
+        , mt.name as workername
+        , mf.name as empname
+        from work w
+        left join member mf on mf.midx = w.midx
+        left join member mt on mt.midx = w.worker
+        <where>
+            w.deleteyn = 'N'
+            and worker = #{midx}
+            <choose>
+                <when test="type == 'title'">
+                    and w.title like concat('%', #{key}, '%')
+                </when>
+                <when test="type == 'titleContent'">
+                    and (w.title like concat('%', #{key}, '%') OR w.content like concat('%', #{key}, '%'))
+                </when>
+                <when test="type == 'name'">
+                    and mf.name like concat('%', #{key}, '%')
+                </when>
+            </choose>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by w.writedate desc
+            </when>
+            <when test="sort == 'asc'">
+                order by w.writedate asc
+            </when>
+        </choose>
     </select>
 
-    <select id="getAllCountForWork" resultType="_int">
-        select count(*) from work_view where title like concat('%', #{key} , '%' ) and worker=#{midx} and deleteyn = 'N'
-    </select>
+<!--    <select id="getAllCountForWork" resultType="_int">-->
+<!--        select count(*) from work_view where title like concat('%', #{key} , '%' ) and worker=#{midx} and deleteyn = 'N'-->
+<!--    </select>-->
 
     <select id="selectYourWork" resultType="com.example.intranet.dto.WorkDto">
         select * from work_view where title like concat( '%', #{key} , '%' ) and midx=#{midx} and deleteyn = 'N'

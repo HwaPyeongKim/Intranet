@@ -34,23 +34,43 @@ public class WorkController {
     @Autowired
     MemberService ms;
 
-    @GetMapping("work")
-    public String work( HttpServletRequest request, Model model ){
-
-        HttpSession session = request.getSession();
-        MemberDto mdto = (MemberDto)session.getAttribute("loginUser");
-        HashMap<String, Object> result = null;
+    @GetMapping("/work")
+    public String work(HttpServletRequest request, HttpSession session, Model model) {
         String url = "member/login";
-        if( mdto != null ){
-            url = "work/mywork";
-            result = ws.selectWork( request, mdto );
-            model.addAttribute("workList", result.get("workList"));
-            model.addAttribute("paging", result.get("paging"));
-            model.addAttribute("key", result.get("key"));
 
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (loginUser != null) {
+            result = ws.selectWork(request, loginUser.getMidx());
+
+            model.addAttribute("list", result.get("list"));
+            model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
+            model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
+
+            url = "work/mywork";
         }
         return url;
     }
+
+//    @GetMapping("work")
+//    public String work( HttpServletRequest request, Model model ){
+//
+//        HttpSession session = request.getSession();
+//        MemberDto mdto = (MemberDto)session.getAttribute("loginUser");
+//        HashMap<String, Object> result = null;
+//        String url = "member/login";
+//        if( mdto != null ){
+//            url = "work/mywork";
+//            result = ws.selectWork( request, mdto );
+//            model.addAttribute("workList", result.get("workList"));
+//            model.addAttribute("paging", result.get("paging"));
+//            model.addAttribute("key", result.get("key"));
+//
+//        }
+//        return url;
+//    }
 
     @GetMapping("yourwork")
     public String yourwork( HttpServletRequest request, Model model ){
