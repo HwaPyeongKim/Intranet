@@ -146,32 +146,31 @@ public class MessageController {
     }
 
     // 메시지 삭제
-    /// //////////////////////////////////
+
     @PostMapping("/deletemsg")
     public String delete(HttpSession session,
-                         @RequestParam int msidx) {
+                         @RequestParam int msidx, @RequestParam String activeTab) {
         String url = "member/login";
 
         MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-        String msgrs = (String) session.getAttribute("msgrs");
         if (mdto != null) {
-            mgs.deleteMessage(msidx);
+            mgs.deleteMessage(msidx, activeTab);
             // 삭제 후 목록으로 이동
-            if (msgrs.equals("receive")) {
+            if (activeTab.equals("receive")) {
                 url = "redirect:/receiveList";
-            }else if (msgrs.equals("sent")) {
+            }else if (activeTab.equals("sent")) {
                 url = "redirect:/sentList";
             }
         }
 
         return url;
     }
-    /// ////////////////////////////////
+
 
     // 메세지 여러개 삭제
     @PostMapping("/deletemsgMulti")
     public String deleteMessages(@RequestParam(value="msidxList", required=false) List<Integer> msidxList,
-                                 HttpSession session) {
+                                 HttpSession session, @RequestParam String activeTab) {
 
         MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
         if (mdto == null) {
@@ -179,14 +178,14 @@ public class MessageController {
         }
 
         if (msidxList != null && !msidxList.isEmpty()) {
-            mgs.deleteMessages(msidxList);
+            mgs.deleteMessages(msidxList, activeTab);
         }
-        String msgrs = (String) session.getAttribute("msgrs");
+
         String url = "";
 
-        if (msgrs.equals("receive") || msgrs==null) {
+        if (activeTab.equals("receive") || activeTab==null) {
             url = "redirect:/receiveList";
-        }else if (msgrs.equals("sent")) {
+        }else if (activeTab.equals("sent")) {
             url = "redirect:/sentList";
         }
 

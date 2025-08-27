@@ -24,8 +24,14 @@ public class MessageService {
         msdao.insertMessage(message);
     }
 
-    public void deleteMessage(int msidx) {
-        msdao.deleteMessage(msidx);
+    public void deleteMessage(int msidx, String activeTab) {
+        if (activeTab.equals("receive")) {
+            msdao.todeleteMessage(msidx);
+
+        }else if (activeTab.equals("sent")) {
+            msdao.fromdeleteMessage(msidx);
+
+        }
     }
 //
 //    public ArrayList<MessageDto> getMessageReceive(int midx) {
@@ -49,9 +55,17 @@ public class MessageService {
     }
 
     @Transactional  // 안전하게 트랜잭션 처리 (선택)
-    public void deleteMessages(List<Integer> msidxList) {
+    public void deleteMessages(List<Integer> msidxList, String activeTab) {
         if (msidxList == null || msidxList.isEmpty()) return;
-        msdao.deleteMessages(msidxList);
+
+
+        if (activeTab.equals("receive")) {
+            msdao.todeleteMessages(msidxList);
+
+        }else if (activeTab.equals("sent")) {
+            msdao.fromdeleteMessages(msidxList);
+
+        }
     }
 
     public HashMap<String, Object> selectSent(HttpServletRequest request, int midx) {

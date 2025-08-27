@@ -55,7 +55,9 @@
 
 
 <form method="post" action="deletemsg" onsubmit="return confirm('메세지를 삭제하시겠습니까?');">
+
     <input type="hidden" name="msidx" value="${message.msidx}">
+    <input type="hidden" name="activeTab" value="${activeTab}">
     <button type="submit">삭제</button>
 </form>
 

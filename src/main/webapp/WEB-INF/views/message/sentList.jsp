@@ -39,7 +39,7 @@
 
     <!-- ✅ 전체 삭제용 form -->
     <form id="multiDeleteForm" action="deletemsgMulti" method="post" name="multiDeleteForm">
-
+        <input type="hidden" name="activeTab" value="sent">
 
         <div class="table">
             <div class="row head">
