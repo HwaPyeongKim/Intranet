@@ -18,4 +18,6 @@ public interface IAdminDao {
     ArrayList<MemberDto> selectMemberNoTeam();
     ArrayList<TeamDto> selectTeams(int tidx);
     ArrayList<TeamDto> selectTeamList();
+    void addTeamMember(String midx, String tidx);
+    String getTeamName(int tidx);
 }

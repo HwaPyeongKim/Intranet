@@ -74,7 +74,7 @@ function updateLeave() {
                 contentType: "application/json",
                 data: JSON.stringify(datas),
                 success: function(response) {
-                    confirm("퇴사처리되었습니다.");
+                    alert("퇴사처리되었습니다.");
                     if (window.opener && !window.opener.closed) {
                         window.opener.location.reload();
                     }
@@ -95,7 +95,7 @@ function setPosition() {
     var midxes = document.adminMemberInfo.midx;
     if (midxes.length == undefined) {
         if (midxes.checked == true) {
-            c_midx = midx.value;
+            c_midx = midxes.value;
         }
     } else if (midxes.length > 1) {
         for (i=0; i<midxes.length; i++) {
@@ -184,6 +184,147 @@ function createTeam() {
     })
 }
 
+function addTeamMember() {
+    var datas = [];
+    var midxes = document.adminNoTeam.midx;
+    var tidx = $("#selectTeam").val();
+
+    if (tidx == 0) {
+        alert("이동할 팀을 선택해주세요.");
+        return;
+    }
+
+    if (midxes.length == undefined) {
+        if (midxes.checked == true) {
+            var data = [midxes.value, tidx];
+            datas.push(data);
+        }
+    } else if (midxes.length > 1) {
+        for (i=0; i<midxes.length; i++) {
+            if (midxes[i].checked == true) {
+                var data = [midxes[i].value, tidx];
+                datas.push(data);
+            }
+        }
+    }
+
+    if (datas.length == 0) {
+        alert("이동할 직원을 선택해주세요.");
+        return;
+    } else {
+        $.ajax({
+            url: "addTeamMember",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(datas),
+            success: function(response) {
+                $("#teamTableBody").empty();
+                var c_html = "";
+                if (response.teamMemberList.length > 0) {
+                    for (i=0; i<response.teamMemberList.length; i++) {
+                        c_html += "<tr>";
+                        c_html += "<td><input type='checkbox' name='midx' value='"+response.teamMemberList[i].midx+"'></td>";
+                        c_html += "<td>"+response.teamMemberList[i].muserid+"</td>";
+                        c_html += "<td>"+response.teamMemberList[i].mposition+"</td>";
+                        c_html += "<td>"+response.teamMemberList[i].mname+"</td>";
+                        c_html += "</tr>";
+                    }
+                } else {
+                    c_html = "<tr><td colspan='4'>구성원이 존재하지 않습니다.</td></tr>";
+                }
+                $("#teamTableBody").append(c_html);
+
+                $("#noTeamTableBody").empty();
+                c_html = "";
+                if (response.noTeamList.length > 0) {
+                    for (i=0; i<response.noTeamList.length; i++) {
+                        c_html += "<tr>";
+                        c_html += "<td><input type='checkbox' name='midx' value='"+response.noTeamList[i].midx+"'></td>";
+                        c_html += "<td>"+response.noTeamList[i].userid+"</td>";
+                        c_html += "<td>"+response.noTeamList[i].position+"</td>";
+                        c_html += "<td>"+response.noTeamList[i].name+"</td>";
+                        c_html += "</tr>";
+                    }
+                } else {
+                    c_html = "<tr><td colspan='4'>팀이 없는 직원이 존재하지 않습니다.</td></tr>";
+                }
+                $("#noTeamTableBody").append(c_html);
+            },
+            error: function() {
+                alert("오류가 발생했습니다. 관리자에게 문의해주세요.");
+            }
+        })
+    }
+}
+
+function deleteTeamMember() {
+    var datas = [];
+    var midxes = document.adminYesTeam.midx;
+    var tidx = $("#selectTeam").val();
+
+    if (midxes.length == undefined) {
+        if (midxes.checked == true) {
+            var data = [midxes.value, tidx];
+            datas.push(data);
+        }
+    } else if (midxes.length > 1) {
+        for (i=0; i<midxes.length; i++) {
+            if (midxes[i].checked == true) {
+                var data = [midxes[i].value, tidx];
+                datas.push(data);
+            }
+        }
+    }
+
+    if (datas.length == 0) {
+        alert("이동할 직원을 선택해주세요.");
+        return;
+    } else {
+        $.ajax({
+            url: "deleteTeamMember",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(datas),
+            success: function(response) {
+                $("#teamTableBody").empty();
+                var c_html = "";
+                if (response.teamMemberList.length > 0) {
+                    for (i=0; i<response.teamMemberList.length; i++) {
+                        c_html += "<tr>";
+                        c_html += "<td><input type='checkbox' name='midx' value='"+response.teamMemberList[i].midx+"'></td>";
+                        c_html += "<td>"+response.teamMemberList[i].muserid+"</td>";
+                        c_html += "<td>"+response.teamMemberList[i].mposition+"</td>";
+                        c_html += "<td>"+response.teamMemberList[i].mname+"</td>";
+                        c_html += "</tr>";
+                    }
+                } else {
+                    c_html = "<tr><td colspan='4'>구성원이 존재하지 않습니다.</td></tr>";
+                }
+                $("#teamTableBody").append(c_html);
+
+                $("#noTeamTableBody").empty();
+                c_html = "";
+                if (response.noTeamList.length > 0) {
+                    for (i=0; i<response.noTeamList.length; i++) {
+                        c_html += "<tr>";
+                        c_html += "<td><input type='checkbox' name='midx' value='"+response.noTeamList[i].midx+"'></td>";
+                        c_html += "<td>"+response.noTeamList[i].userid+"</td>";
+                        c_html += "<td>"+response.noTeamList[i].position+"</td>";
+                        c_html += "<td>"+response.noTeamList[i].name+"</td>";
+                        c_html += "</tr>";
+                    }
+                } else {
+                    c_html = "<tr><td colspan='4'>팀이 없는 직원이 존재하지 않습니다.</td></tr>";
+                }
+                $("#noTeamTableBody").append(c_html);
+            },
+            error: function() {
+                alert("오류가 발생했습니다. 관리자에게 문의해주세요.");
+            }
+        })
+    }
+}
+
 $(function (){
     $("#adminYesTeam #selectTeam").change(function(){
         var tidx = $(this).val();
@@ -192,20 +333,23 @@ $(function (){
             type: "POST",
             data: {tidx: tidx},
             success: function(response) {
+                $("#teamName").text(response.teamName);
                 if (response.result == 1) {
                     $("#teamTableBody").empty();
-                    c_html = "";
+                    var c_html = "";
                     for (i=0; i<response.list.length; i++) {
-                        c_html += "<tr id='"+response.list[i].midx+"' draggable='true' ondragstart='drag()'>";
+                        c_html += "<tr>";
+                        c_html += "<td><input type='checkbox' name='midx' value='"+response.list[i].midx+"'></td>";
                         c_html += "<td>"+response.list[i].muserid+"</td>";
                         c_html += "<td>"+response.list[i].mposition+"</td>";
                         c_html += "<td>"+response.list[i].mname+"</td>";
                         c_html += "</tr>";
                     }
                     $("#teamTableBody").append(c_html);
+
                 } else {
                     $("#teamTableBody").empty();
-                    c_html = "<tr><td colspan='3'>구성원이 존재하지 않습니다.</td></tr>";
+                    c_html = "<tr><td colspan='4'>구성원이 존재하지 않습니다.</td></tr>";
                     $("#teamTableBody").append(c_html);
                 }
             },
@@ -214,29 +358,22 @@ $(function (){
             }
         })
     });
+
+    $("#chkNoTeamAll").on("change", function() {
+        $("#noTeamTableBody input[name=midx]").prop("checked", $(this).prop("checked"));
+    });
+
+    $("#noTeamTableBody input[name=midx]").on("change", function() {
+        var allChecked = $("#noTeamTableBody input[name=midx]").length === $("#noTeamTableBody input[name=midx]:checked").length;
+        $("#chkNoTeamAll").prop("checked", allChecked);
+    });
+
+    $("#chkTeamAll").on("change", function() {
+        $("#teamTableBody input[name=midx]").prop("checked", $(this).prop("checked"));
+    });
+
+    $(document).on("change", "#teamTableBody input[name=midx]", function() {
+        var allChecked = $("#teamTableBody input[name=midx]").length === $("#teamTableBody input[name=midx]:checked").length;
+        $("#chkTeamAll").prop("checked", allChecked);
+    });
 })
-
-
-// 드래그 이벤트 시작
-
-// 드래그 가능한 요소에 id 저장
-function drag(e) {
-    e.dataTransfer.setData("text/plain", e.target.id);
-}
-
-// 드롭 가능한 영역에서 기본 동작 막기
-function allowDrop(e) {
-    e.preventDefault();
-}
-
-// 드롭 이벤트 처리
-function drop(e) {
-    e.preventDefault();
-    const id = e.dataTransfer.getData("text");
-    const draggedRow = document.getElementById(id);
-    const dropTarget = e.target.closest("tbody");
-
-    if (dropTarget && draggedRow) {
-        dropTarget.appendChild(draggedRow);
-    }
-}

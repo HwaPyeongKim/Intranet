@@ -77,4 +77,12 @@
         select * from team where deleteyn = 'N'
     </select>
 
+    <update id="addTeamMember">
+        update member set team = #{tidx} where midx = #{midx}
+    </update>
+
+    <select id="getTeamName">
+        select name from team where tidx = #{tidx}
+    </select>
+
 </mapper>

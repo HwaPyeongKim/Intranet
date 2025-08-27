@@ -332,7 +332,9 @@ public class AdminController {
     public HashMap<String, Object> selectTeam(@RequestParam("tidx") int tidx) {
         HashMap<String, Object> result = new HashMap<>();
         ArrayList<TeamDto> list = as.selectTeams(tidx);
-        if (list != null) {
+        String teamName = as.getTeamName(tidx);
+        result.put("teamName", teamName);
+        if (list.size() > 0) {
             result.put("result", 1);
             result.put("list", list);
         } else {
@@ -341,5 +343,27 @@ public class AdminController {
         return result;
     }
 
+    @PostMapping("/addTeamMember")
+    @ResponseBody
+    public HashMap<String, Object> addTeamMember(@RequestBody List<List<String>> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<TeamDto> teamMemberList = as.addTeamMember(datas);
+        ArrayList<MemberDto> noTeamList = as.selectMemberNoTeam();
+        result.put("teamMemberList", teamMemberList);
+        result.put("noTeamList", noTeamList);
+        return result;
+    }
+
+    @PostMapping("/deleteTeamMember")
+    @ResponseBody
+    public HashMap<String, Object> deleteTeamMember(@RequestBody List<List<String>> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        int tidx = Integer.parseInt(datas.get(0).get(1));
+        ArrayList<MemberDto> noTeamList = as.deleteTeamMember(datas);
+        ArrayList<TeamDto> teamMemberList = as.selectTeams(tidx);
+        result.put("teamMemberList", teamMemberList);
+        result.put("noTeamList", noTeamList);
+        return result;
+    }
 
 }

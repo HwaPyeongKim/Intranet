@@ -140,4 +140,24 @@ public class AdminService {
     public ArrayList<TeamDto> selectTeamList() {
         return adao.selectTeamList();
     }
+    public ArrayList<TeamDto> addTeamMember(List<List<String>> datas) {
+        int tidx = 0;
+        for (List<String> data : datas) {
+            tidx = Integer.parseInt(data.get(1));
+            adao.addTeamMember(data.get(0), data.get(1)); // midx, tidx
+        }
+        return selectTeams(tidx);
+    }
+
+    public ArrayList<MemberDto> deleteTeamMember(List<List<String>> datas) {
+        for (List<String> data : datas) {
+            adao.addTeamMember(data.get(0), "0"); // midx, tidx
+        }
+
+        return selectMemberNoTeam();
+    }
+
+    public String getTeamName(int tidx) {
+        return adao.getTeamName(tidx);
+    }
 }
