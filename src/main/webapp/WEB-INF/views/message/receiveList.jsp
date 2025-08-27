@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <section>
     <h2>메세지</h2>
 
@@ -11,15 +12,13 @@
         <li><a href="sentList">보낸메시지</a></li>
     </ul>
 
+    <div class="boxBtns clearfix">
+        <!-- 삭제 버튼과 작성 버튼 간격 -->
+        <button type="button" id="deleteSelected" style="margin-right:10px;" onclick="deleteSelected()">삭제</button>
+        <button type="button" onclick="location.href='writemsg'">메시지 작성</button>
+    </div>
 
-
-        <div class="boxBtns clearfix">
-            <!-- 삭제 버튼을 왼쪽, 작성 버튼은 오른쪽에 간격 주기 -->
-            <button type="submit" id="deleteSelected" style="margin-right:10px;">삭제</button>
-            <button type="button" onclick="location.href='writemsg'">메시지 작성</button>
-        </div>
-
-        <form method="get" name="search" id="searchForm">
+    <form method="get" name="search" id="searchForm">
         <div class="searchBox">
             <div class="input">
                 <select name="type">
@@ -27,20 +26,20 @@
                     <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>제목+내용</option>
                     <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>보낸사람</option>
                 </select>
-                <input type="text" name="key" value="${key}" />
+                <input type="text" name="key" value="${key}"/>
                 <button>검색</button>
             </div>
             <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>
+                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>최신순</option>
+                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성순</option>
             </select>
         </div>
-        </form>
-
+    </form>
 
     <!-- ✅ 전체 삭제용 form -->
-    <form id="multiDeleteForm" action="deletemsgMulti" method="post">
-    
+    <form id="multiDeleteForm" action="deletemsgMulti" method="post" name="multiDeleteForm">
+
+        <input type="hidden" name="activeTab" value="receive">
 
         <div class="table">
             <div class="row head">
@@ -68,7 +67,7 @@
                             <div class="col">${msg.fromname}</div>
                             <div class="col title">
                                 <a href="receiveView?msidx=${msg.msidx}">
-                                    ${msg.title}
+                                        ${msg.title}
                                 </a>
                             </div>
                             <div class="col">${msg.content}</div>
@@ -88,13 +87,13 @@
 
 <script>
     // 전체선택 체크박스
-    document.getElementById("checkAll").addEventListener("change", function() {
+    document.getElementById("checkAll").addEventListener("change", function () {
         document.querySelectorAll("input[name='msidxList']")
             .forEach(cb => cb.checked = this.checked);
     });
 
     // 폼 제출 전에 확인 및 선택 여부 검사
-    document.getElementById("multiDeleteForm").addEventListener("submit", function(e) {
+    document.getElementById("multiDeleteForm").addEventListener("submit", function (e) {
         const anyChecked = Array.from(document.querySelectorAll("input[name='msidxList']")).some(cb => cb.checked);
         if (!anyChecked) {
             alert("삭제할 메시지를 선택하세요.");
@@ -105,6 +104,11 @@
             e.preventDefault();
         }
     });
+
+
+    function deleteSelected() {
+        document.multiDeleteForm.submit()
+    }
 </script>
 
 <%@ include file="../footer.jsp" %>
