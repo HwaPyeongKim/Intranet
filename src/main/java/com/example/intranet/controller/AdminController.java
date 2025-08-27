@@ -1,8 +1,6 @@
 package com.example.intranet.controller;
 
-import com.example.intranet.dto.FileDto;
-import com.example.intranet.dto.MemberAttendanceDto;
-import com.example.intranet.dto.MemberDto;
+import com.example.intranet.dto.*;
 import com.example.intranet.service.AdminService;
 import com.example.intranet.service.BoardService;
 import com.example.intranet.service.FileService;
@@ -13,14 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -223,6 +220,125 @@ public class AdminController {
             url = "admin/boardDownloadList";
         }
         return url;
+    }
+
+    @GetMapping("/updateLeaveForm")
+    public String updateLeaveForm(@RequestParam("midxes") String midxes, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        ArrayList<MemberDto> list = null;
+        if (mdto != null && mdto.getLevel() > 2) {
+            list = ms.getMembers(midxes);
+            model.addAttribute("list", list);
+            url = "admin/updateLeave";
+        }
+        return url;
+    }
+
+    @PostMapping("/updateLeave")
+    @ResponseBody
+    public HashMap<String, Object> updateLeave(@RequestBody List<List<String>> datas, HttpSession session, Model model) {
+        HashMap<String, Object> result = new HashMap<>();
+        as.updateLeave(datas);
+        return result;
+    }
+
+    @GetMapping("/updatePositionForm")
+    public String updatePositionForm(@RequestParam("midxes") String midxes, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        ArrayList<MemberDto> list = null;
+        if (mdto != null && mdto.getLevel() > 2) {
+            list = ms.getMembers(midxes);
+            model.addAttribute("list", list);
+            url = "admin/updatePosition";
+        }
+        return url;
+    }
+
+    @PostMapping("/updatePosition")
+    @ResponseBody
+    public HashMap<String, Object> updatePosition(@RequestBody List<List<String>> datas, HttpSession session, Model model) {
+        HashMap<String, Object> result = new HashMap<>();
+        as.updatePosition(datas);
+        return result;
+    }
+
+    @GetMapping("/adminTeamList")
+    public String adminTeamList(HttpServletRequest request, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (mdto != null) {
+            if (mdto.getLevel() > 1) {
+                result = as.selectTeamMembers(request, mdto.getMidx(), mdto.getLevel());
+                model.addAttribute("list", result.get("list"));
+                model.addAttribute("paging", result.get("paging"));
+                model.addAttribute("type", result.get("type"));
+                model.addAttribute("key", result.get("key"));
+                model.addAttribute("sort", result.get("sort"));
+                url = "admin/teamList";
+            }
+        }
+        return url;
+    }
+
+    @GetMapping("/createTeamForm")
+    public String createTeamForm(HttpServletRequest request, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        result = as.selectTeamMembers(request, mdto.getMidx(), mdto.getLevel());
+        model.addAttribute("list", result.get("list"));
+        url = "admin/createTeam";
+
+        return url;
+    }
+
+    @PostMapping("/createTeam")
+    @ResponseBody
+    public HashMap<String, Object> createTeam(@RequestParam("name") String name) {
+        HashMap<String, Object> result = new HashMap<>();
+        if (name == null || name.equals("")) {
+            result.put("result", 0);
+            result.put("msg", "팀명을 입력해주세요.");
+        } else {
+            TeamDto tdto = as.checkTeamName(name);
+            if (tdto != null) {
+                result.put("result", 0);
+                result.put("msg", "이미 존재하는 팀명입니다.");
+            } else {
+                result.put("result", 1);
+                as.insertTeam(name);
+            }
+        }
+        return result;
+    }
+
+    @GetMapping("/setTeamMemberForm")
+    public String setTeamMemberForm(HttpServletRequest request, Model model) {
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<TeamDto> teamList = as.selectTeamList();
+        ArrayList<MemberDto> memberList = as.selectMemberNoTeam();
+        ArrayList<TeamDto> teamMemberList = as.selectTeams(0);
+        model.addAttribute("teamList", teamList);
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("teamMemberList", teamMemberList);
+        return "admin/teamSetList";
+    }
+
+    @PostMapping("/selectTeam")
+    @ResponseBody
+    public HashMap<String, Object> selectTeam(@RequestParam("tidx") int tidx) {
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<TeamDto> list = as.selectTeams(tidx);
+        if (list != null) {
+            result.put("result", 1);
+            result.put("list", list);
+        } else {
+            result.put("result", 0);
+        }
+        return result;
     }
 
 

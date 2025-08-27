@@ -7,7 +7,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {bor
 textarea:focus {outline: 2px solid #50bde2;}
 
 #wrap {width: 100%; max-width:1450px; margin: 0 auto; padding-top: 80px;}
+.container {width: 90%; margin: 0 auto;}
 h2 {margin: 10px 0 30px; font-size: 2em;}
+h3 {margin: 10px 0; font-size: 1.5em;}
 textarea {padding: 10px;}
 
 .main_color {color: #50bde2;}
@@ -24,9 +26,12 @@ header .nav .gnb > li > span {display: block; margin-bottom: 10px; cursor: point
 header .nav .lnb {display: none; background: #32a2c6;}
 header .nav .lnb li {border-top: 1px solid #3788d8; padding: 15px 0; text-indent: 25px;}
 header .loginProfile {float: right; margin-right: 15px; margin-top: 15px;}
-header .loginProfile img {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}
+header .loginProfile > img {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}
 header .loginProfile span {display: inline-block;}
-header .loginProfile a {padding: 5px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold;}
+header .loginProfile .messageBox {position: relative; display: inline-block; vertical-align: middle; margin-right: 10px;}
+header .loginProfile .messageBox img {display: inline-block; width: 25px;}
+header .loginProfile .messageBox i {display: none; position: absolute; top: -10px; right: -10px; width: 20px; height: 20px; background: #f00; border-radius: 50%; color: #fff; font-size: .9em; text-align: center; line-height: 20px;}
+header .loginProfile #tomain {padding: 5px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold;}
 
 .field {display: flex; margin: 10px 0;}
 .field label {flex: 1; padding: 10px 0;}
@@ -51,8 +56,9 @@ div.table > div.row > div.col.title {flex: 4;}
 div.table > div.row > div.col:last-child {border-right: 0;}
 div.table > div.row.empty {line-height: 200px;}
 
-.boxBtns {margin: 20px 0;}
-.boxBtns button {float: right;}
+.boxBtns {margin: 20px 0; position: relative;}
+.boxBtns button {float: right; margin-left: 10px;}
+.boxBtns select {position: absolute; top: 0; right: 0; padding: 5px;}
 
 .paging {margin-top: 30px; text-align: center;}
 .paging a {margin:0 5px; font-size: 1.1em; font-weight: bold;}

@@ -25,21 +25,19 @@ public interface IMessageDao {
     // 삭제 처리
     void deleteMessage(int msidx);
 
-
 //    List<MemberDto> getAllMembers();
-
 
     ArrayList<MessageDto> getMessageReceive(int midx);
 
     ArrayList<MessageDto> getMessageSent(int midx);
 
-
     MessageDto getMessageReceiveView(int msidx);
 
     MessageDto getMessageSentView(int msidx);
 
-
     List<MessageDto> getMessage(int userId);
+
+    void deleteMessages(List<Integer> msidxList);
 }
 
 

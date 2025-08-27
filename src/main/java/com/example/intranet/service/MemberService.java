@@ -4,6 +4,7 @@ import com.example.intranet.dao.IMemberDao;
 import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.Paging;
+import com.example.intranet.dto.TeamDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -213,5 +215,15 @@ public class MemberService {
         result.put("sort", sort);
 
         return result;
+    }
+
+    public ArrayList<MemberDto> getMembers(String midxes) {
+        ArrayList<MemberDto> list = new ArrayList<>();
+        String [] midx = midxes.split(",");
+        for (int i=0; i<midx.length; i++) {
+            MemberDto mdto = mdao.selectMember(Integer.parseInt(midx[i]));
+            list.add(mdto);
+        }
+        return list;
     }
 }

@@ -13,4 +13,68 @@
         update member set userid = #{userid}, pwd = #{pwd}, position = #{position}, name = #{name}, email = #{email}, phone = #{phone}, postcode = #{postcode}, address1 = #{address1}, address2 = #{address2}, image = #{image} where midx = #{midx}
     </update>
 
+    <update id="updateLeave">
+        update member set leavedate = #{leavedate} where midx = #{midx}
+    </update>
+
+    <update id="updatePosition">
+        update member set position = #{position} where midx = #{midx}
+    </update>
+
+    <select id="selectTeamMembers" resultType="com.example.intranet.dto.TeamDto">
+        select t.*
+        , m.name as mname, m.position as mposition
+        , (select count(*) from member where deleteyn = 'N' and leavedate is null and team = t.tidx) as rowspan
+        from team t
+        left join member m on m.team = t.tidx
+        <where>
+            t.deleteyn = 'N' and m.deleteyn = 'N'
+            <if test="level == 2">
+                and t.tidx = (select team from member where midx = #{midx})
+            </if>
+
+            <if test="type == 'name'">
+                and t.name like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'mname'">
+                and m.name like concat('%', #{key}, '%')
+            </if>
+        </where>
+
+        <choose>
+            <when test="sort == 'desc'">
+                order by t.writedate desc, m.level, m.name desc
+            </when>
+            <when test="sort == 'asc'">
+                order by t.writedate asc, m.level, m.name desc
+            </when>
+        </choose>
+
+    </select>
+
+    <select id="checkTeamName" resultType="com.example.intranet.dto.TeamDto">
+        select * from team where name = #{name} and deleteyn = 'N'
+    </select>
+
+    <insert id="insertTeam">
+        insert into team (name) values (#{name})
+    </insert>
+
+    <select id="selectMemberNoTeam" resultType="com.example.intranet.dto.MemberDto">
+        select * from member where team is null or team = 0
+    </select>
+
+    <select id="selectTeams" resultType="com.example.intranet.dto.TeamDto">
+        select t.*
+        , m.midx as midx, m.userid as muserid, m.name as mname, m.position as mposition
+        from team t
+        left join member m on m.team = t.tidx
+        where t.tidx = #{tidx} and t.deleteyn = 'N' and m.deleteyn = 'N'
+        order by m.level, m.name desc
+    </select>
+
+    <select id="selectTeamList" resultType="com.example.intranet.dto.TeamDto">
+        select * from team where deleteyn = 'N'
+    </select>
+
 </mapper>

@@ -56,6 +56,11 @@ public class WorkService {
         if(paging.getPage()==0) paging.setStartNum(0);
 
         ArrayList<WorkDto> list = wdao.selectWork( paging, key, mdto.getMidx() );
+        for (WorkDto workdto : list) {
+            int comment_count = wdao.selectComments(workdto.getWidx()).size();
+
+            workdto.setComment_count(comment_count);
+        }
         result.put("workList", list);
         result.put("paging", paging);
         result.put("key", key);
@@ -101,6 +106,11 @@ public class WorkService {
         if(paging.getPage()==0) paging.setStartNum(0);
 
         ArrayList<WorkDto> list = wdao.selectYourWork( paging, key, mdto.getMidx() );
+        for (WorkDto workdto : list) {
+            int comment_count = wdao.selectComments(workdto.getWidx()).size();
+
+            workdto.setComment_count(comment_count);
+        }
         result.put("workList", list);
         result.put("paging", paging);
         result.put("key", key);
@@ -120,10 +130,11 @@ public class WorkService {
 
     public void update(WorkDto workdto) { wdao.update(workdto); }
 
-    public void insertComment(int widx, int midx, String content) {wdao.insertComment(widx, midx, content);}
+    public void insertComment(int widx, int midx, String content, String autoyn) {wdao.insertComment(widx, midx, content, autoyn);}
 
     public void updateComment(int wcidx, String content) {wdao.updateComment(wcidx, content);}
 
     public void deleteComment(int wcidx) {wdao.deleteComment(wcidx);}
 
+    public void changeStatus(int widx, int status, int next) { wdao.changeStatus(widx, status, next); }
 }

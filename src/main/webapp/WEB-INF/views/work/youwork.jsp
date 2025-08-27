@@ -58,7 +58,10 @@
                         </div>
                         <div class="col" style="cursor:pointer; ">
                             <a href="workView?widx=${work.widx}" style="text-decoration:none">
-                                    ${work.title}
+                                ${work.title}
+                                <c:if test="${work.comment_count>0}">
+                                <span style="color: blue">[${work.comment_count}]</span>
+                                </c:if>
                             </a>
                         </div>
                         <div class="col">${work.workername}</div>
