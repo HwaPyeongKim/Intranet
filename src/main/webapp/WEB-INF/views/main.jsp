@@ -18,11 +18,11 @@
                 <div class="inout-info">
                     <div class="in_time timebox">
                         <div class="title">출근시간</div>
-                        <div class="time">${starttime}</div>
+                        <div class="time"><fmt:formatDate value="${madto.starttime}" pattern="HH:mm:ss" /></div>
                     </div>
                     <div class="out_time timebox">
                         <div class="title">퇴근시간</div>
-                        <div class="time">18:50:02</div>
+                        <div class="time"><fmt:formatDate value="${madto.endtime}" pattern="HH:mm:ss" /></div>
                     </div>
                 </div>
 <%--                <div class="main_btn_out">퇴근하기</div>--%>
@@ -53,11 +53,11 @@
                     <i class="far fa-edit"></i>
                     기안작성
                 </a>
-                <a class="widget" onclick="location.href='requestsWriteForm'">
+                <a class="widget" onclick="location.href='insertWorkForm'">
                     <i class="far fa-file-alt"></i>
                     업무요청
                 </a>
-                <a class="widget" onclick="location.href='requestsWriteForm'">
+                <a class="widget" onclick="location.href='writemsg'">
                     <i class="far fa-envelope"></i>
                     메세지작성
                 </a>
@@ -66,24 +66,32 @@
                 <div class="approval-docs">
                     <h4 class="title">결재할 문서</h4>
                     <ul class="approval-list">
-                        <li><span class="dot blue"></span> 하루 - 경비신청서</li>
-                        <li><span class="dot green"></span> 일주일 - 인사평형</li>
-                        <li><span class="dot orange"></span> 완료 - 휴가신청서</li>
-                        <li><span class="dot red"></span> 이후 - 경비신청서</li>
+                        <c:forEach items="${mrdtoList}" var="item">
+                                 <li><a href="getListDetail?ridx=${item.ridx}">${item.title}</a></li>
+                        </c:forEach>
                     </ul>
                 </div>
 
                 <div class="work-status">
                     <h4 class="title">처리할 업무</h4>
                     <ul class="work-list">
-                        <li>(급급) KT Cloud 연결 중...</li>
-                        <li>비즈오피스 정기 업데이트...</li>
-                        <li>비즈오피스 정기 업데이트...</li>
+                        <c:forEach items="${workList}" var="item">
+                             <li>
+                                 <a href="workView?widx=${item.widx}">
+                                     <c:if test="${item.cdate == today}">
+                                        <span class="dot red"></span>
+                                    </c:if>
+                                    <span class="worktitle">${item.title}</span>
+
+                                 </a>
+                                 <span class="enddate">~&nbsp;<fmt:formatDate value="${item.completedate}" pattern="MM-dd" /></span>
+                             </li>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>
             <div class="main_cal_week">
-
+<%--                뭐넣을지고민..--%>
             </div>
         </div>
     </div>

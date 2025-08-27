@@ -2,10 +2,12 @@ package com.example.intranet.dao;
 
 import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
-import com.example.intranet.dto.TeamDto;
+import com.example.intranet.dto.MemberRequestsDto;
+import com.example.intranet.dto.WorkDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Mapper
 public interface IMemberDao {
@@ -23,4 +25,13 @@ public interface IMemberDao {
     ArrayList<MemberDto> selectMembers(String type, String key, String sort, int midx, int level);
     int checkNewMessage(int midx);
     ArrayList<MemberAttendanceDto> selectMemberAttendances(String type, String key, String sort, int midx, int level, String startdate, String enddate);
+
+
+
+    //@@@@@@@main
+    MemberAttendanceDto selectInOutTime(int midx, String today);
+
+    List<MemberRequestsDto> selectMyReqList(int midx);
+
+    List<WorkDto> selectMyWorkList(int midx);
 }
