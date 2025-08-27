@@ -21,6 +21,10 @@
         update member set position = #{position} where midx = #{midx}
     </update>
 
+    <update id="updateLevel">
+        update member set level = #{level} where midx = #{midx}
+    </update>
+
     <select id="selectTeamMembers" resultType="com.example.intranet.dto.TeamDto">
         select t.*
         , m.name as mname, m.position as mposition

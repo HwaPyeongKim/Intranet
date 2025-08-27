@@ -21,7 +21,7 @@ function confirmJoin() {
     }
 }
 
-function checkLeave() {
+function setMember(type) {
     var c_midx = "";
     var midxes = document.adminMemberInfo.midx;
     if (midxes.length == undefined) {
@@ -36,12 +36,22 @@ function checkLeave() {
         }
     }
     if (c_midx == "") {
-        alert("퇴사 처리할 직원을 선택해주세요.");
+        alert("직원을 선택해주세요.");
         return;
     } else {
-        var url = "updateLeaveForm?midxes=" + c_midx;
-        var option = "width=500, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
-        window.open(url,"updateLeaveForm",option);
+        if (type == "leave") {
+            var url = "updateLeaveForm?midxes=" + c_midx;
+            var option = "width=500, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
+            window.open(url,"updateLeaveForm",option);
+        } else if (type == "position") {
+            var url = "updatePositionForm?midxes=" + c_midx;
+            var option = "width=500, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
+            window.open(url,"updatePositionForm",option);
+        } else if (type == "level") {
+            var url = "updateLevelForm?midxes=" + c_midx;
+            var option = "width=500, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
+            window.open(url,"updateLevelForm",option);
+        }
     }
 }
 
@@ -90,30 +100,6 @@ function updateLeave() {
     }
 }
 
-function setPosition() {
-    var c_midx = "";
-    var midxes = document.adminMemberInfo.midx;
-    if (midxes.length == undefined) {
-        if (midxes.checked == true) {
-            c_midx = midxes.value;
-        }
-    } else if (midxes.length > 1) {
-        for (i=0; i<midxes.length; i++) {
-            if (midxes[i].checked == true) {
-                c_midx += c_midx === "" ? midxes[i].value : "," + midxes[i].value;
-            }
-        }
-    }
-    if (c_midx == "") {
-        alert("직급을 설정할 직원을 선택해주세요.");
-        return;
-    } else {
-        var url = "updatePositionForm?midxes=" + c_midx;
-        var option = "width=500, height=400, left=100, top=100, menubar=no, location=no, status=no, resizable=no, scrollbars=yes";
-        window.open(url,"updatePositionForm",option);
-    }
-}
-
 function updatePosition() {
     var position = document.updatePositionForm.position;
     var datas = [];
@@ -143,6 +129,47 @@ function updatePosition() {
             data: JSON.stringify(datas),
             success: function(response) {
                 alert("직급을 설정했습니다.");
+                if (window.opener && !window.opener.closed) {
+                    window.opener.location.reload();
+                }
+                window.close();
+            },
+            error: function() {
+                alert("오류가 발생했습니다. 관리자에게 문의해주세요.");
+            }
+        })
+    }
+}
+
+function updateLevel() {
+    var level = document.updateLevelForm.level;
+    var datas = [];
+    if (level.length == undefined) {
+        if (!level.value) {
+            alert("권한을 입력해주세요.");
+            return;
+        }
+        var data = [level.attributes.midx.value, level.value];
+        datas.push(data);
+    } else if (level.length > 1) {
+        for (i=0; i<level.length; i++) {
+            if (!level[i].value) {
+                alert("권한을 입력해주세요.");
+                return;
+            }
+            var data = [level[i].attributes.midx.value, level[i].value];
+            datas.push(data);
+        }
+    }
+
+    if (datas.length > 0) {
+        $.ajax({
+            url: "updateLevel",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(datas),
+            success: function(response) {
+                alert("권한을 설정했습니다.");
                 if (window.opener && !window.opener.closed) {
                     window.opener.location.reload();
                 }

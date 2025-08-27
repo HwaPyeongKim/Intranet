@@ -40,6 +40,12 @@ public class AdminService {
         }
     }
 
+    public void updateLevel(List<List<String>> datas) {
+        for (List<String> data : datas) {
+            adao.updateLevel(data.get(0), data.get(1)); // midx, level
+        }
+    }
+
     public HashMap<String, Object> selectTeamMembers(HttpServletRequest request, int midx, int level) {
         HttpSession session = request.getSession();
 

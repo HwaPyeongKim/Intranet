@@ -12,6 +12,7 @@ public interface IAdminDao {
     void updateMember(MemberDto memberdto);
     void updateLeave(String midx, String leavedate);
     void updatePosition(String midx, String position);
+    void updateLevel(String midx, String level);
     ArrayList<TeamDto> selectTeamMembers(String type, String key, String sort, int midx, int level);
     TeamDto checkTeamName(String name);
     void insertTeam(String name);

@@ -258,11 +258,33 @@ public class AdminController {
 
     @PostMapping("/updatePosition")
     @ResponseBody
-    public HashMap<String, Object> updatePosition(@RequestBody List<List<String>> datas, HttpSession session, Model model) {
+    public HashMap<String, Object> updatePosition(@RequestBody List<List<String>> datas) {
         HashMap<String, Object> result = new HashMap<>();
         as.updatePosition(datas);
         return result;
     }
+
+    @GetMapping("/updateLevelForm")
+    public String updateLevelForm(@RequestParam("midxes") String midxes, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        ArrayList<MemberDto> list = null;
+        if (mdto != null && mdto.getLevel() > 2) {
+            list = ms.getMembers(midxes);
+            model.addAttribute("list", list);
+            url = "admin/updateLevel";
+        }
+        return url;
+    }
+
+    @PostMapping("/updateLevel")
+    @ResponseBody
+    public HashMap<String, Object> updateLevel(@RequestBody List<List<String>> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        as.updateLevel(datas);
+        return result;
+    }
+
 
     @GetMapping("/adminTeamList")
     public String adminTeamList(HttpServletRequest request, HttpSession session, Model model) {
