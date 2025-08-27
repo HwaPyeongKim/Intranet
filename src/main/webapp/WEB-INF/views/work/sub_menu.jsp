@@ -1,5 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<style>
+    #search {}
+    #work .row{
+        border: 1px solid #ccc;
+        display: flex;
+        justify-content: space-around;
+        padding: 13px 0;}
+    #work .coltitle{font-weight: bold;
+        display: flex;
+        justify-content: space-around;
+        flex:1; }
+
+    #work .col{
+        display: flex;
+        justify-content: space-around;
+        flex:1 }
+
+</style>
+
 <section id="work">
+
 
     <h2>업무관리</h2>
 

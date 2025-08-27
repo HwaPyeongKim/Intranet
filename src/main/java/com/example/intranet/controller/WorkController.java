@@ -70,25 +70,47 @@ public class WorkController {
 //
 //        }
 //        return url;
-//    }
+//    } //검색기능 수정전
 
-    @GetMapping("yourwork")
-    public String yourwork( HttpServletRequest request, Model model ){
 
-        HttpSession session = request.getSession();
-        MemberDto mdto = (MemberDto)session.getAttribute("loginUser");
-        HashMap<String, Object> result = null;
+
+    @GetMapping("/yourwork")
+    public String yourwork(HttpServletRequest request, HttpSession session, Model model) {
         String url = "member/login";
-        if( mdto != null ){
-            url = "work/youwork";
-            result = ws.selectYourWork( request, mdto );
-            model.addAttribute("workList", result.get("workList"));
-            model.addAttribute("paging", result.get("paging"));
-            model.addAttribute("key", result.get("key"));
 
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (loginUser != null) {
+            result = ws.selectYourWork(request, loginUser.getMidx());
+
+            model.addAttribute("list", result.get("list"));
+            model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
+            model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
+
+            url = "work/youwork";
         }
         return url;
     }
+
+//    @GetMapping("yourwork")
+//    public String yourwork( HttpServletRequest request, Model model ){
+//
+//        HttpSession session = request.getSession();
+//        MemberDto mdto = (MemberDto)session.getAttribute("loginUser");
+//        HashMap<String, Object> result = null;
+//        String url = "member/login";
+//        if( mdto != null ){
+//            url = "work/youwork";
+//            result = ws.selectYourWork( request, mdto );
+//            model.addAttribute("workList", result.get("workList"));
+//            model.addAttribute("paging", result.get("paging"));
+//            model.addAttribute("key", result.get("key"));
+//
+//        }
+//        return url;
+//    } //검색기능 수정전
 
     @GetMapping("/insertWorkForm")
     public String insertWorkForm(Model model) {

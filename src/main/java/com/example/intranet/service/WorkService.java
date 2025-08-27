@@ -78,6 +78,12 @@ public class WorkService {
             }
         }
 
+        for (WorkDto workdto : list) {
+            int comment_count = wdao.selectComments(workdto.getWidx()).size();
+
+            workdto.setComment_count(comment_count);
+        }
+
         result.put("list", list);
         result.put("paging", paging);
         result.put("type", type);
@@ -137,55 +143,132 @@ public class WorkService {
 //        return result;
 //    }
 
-    public HashMap<String, Object> selectYourWork(HttpServletRequest request, MemberDto mdto) {
-        HashMap<String, Object> result = new HashMap<>();
-
+    public HashMap<String, Object> selectYourWork(HttpServletRequest request, int midx) {
         HttpSession session = request.getSession();
 
-        if( request.getParameter("first") != null ) {
+        if (request.getParameter("first") != null) {
             session.removeAttribute("page");
             session.removeAttribute("key");
         }
 
-        int page=1;
-        if(request.getParameter("page") != null){
+        int page = 1;
+        if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
             session.setAttribute("page", page);
-        }else if( session.getAttribute("page") != null){
+        } else if (session.getAttribute("page") != null) {
             page = (Integer) session.getAttribute("page");
         }
-        String key="";
-        if( request.getParameter("key") != null){
-            key=request.getParameter("key");
+
+        String key = "";
+        String type = "";
+        if (request.getParameter("key") != null) {
+            type =  request.getParameter("type");
+            key = request.getParameter("key");
+            session.setAttribute("type", type);
             session.setAttribute("key", key);
-        }else if( session.getAttribute("key") != null){
-            key = (String)session.getAttribute("key");
+        } else if (session.getAttribute("key") != null) {
+            type = (String) session.getAttribute("type");
+            key = (String) session.getAttribute("key");
         }
+
+        String sort = "desc";
+        if (request.getParameter("sort") != null) {
+            sort = request.getParameter("sort");
+        }
+
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<WorkDto> lists = wdao.selectYourWork(type, key, sort, midx);
+        ArrayList<WorkDto> list = new ArrayList<>();
+
         Paging paging = new Paging();
         paging.setPage(page);
         paging.setDisplayPage(10);
         paging.setDisplayRow(10);
-        int count = wdao.getAllCountForYourWork( key, mdto.getMidx() );
+        int count = lists.size();
         paging.setTotalCount(count);
         paging.calPaging();
 
-        if( page > paging.getEndPage() ) {
-            paging.setPage( paging.getEndPage() );
+        if (page > paging.getEndPage()) {
+            paging.setPage(paging.getEndPage());
             paging.calPaging();
         }
-//        if(paging.getPage()==0) paging.setStartNum(0);
 
-        ArrayList<WorkDto> list = wdao.selectYourWork( paging, key, mdto.getMidx() );
+        if (lists.size() > 0) {
+            for (int i=paging.getStartNum(); i<lists.size(); i++) {
+                WorkDto wdto = lists.get(i);
+                wdto.setLoopnum(i+1);
+                list.add(wdto);
+                if (i == paging.getStartNum() + paging.getDisplayRow() - 1) {
+                    break;
+                }
+            }
+        }
+
         for (WorkDto workdto : list) {
             int comment_count = wdao.selectComments(workdto.getWidx()).size();
 
             workdto.setComment_count(comment_count);
         }
-        result.put("workList", list);
+
+        result.put("list", list);
         result.put("paging", paging);
+        result.put("type", type);
         result.put("key", key);
+        result.put("sort", sort);
+
         return result;
     }
+
+
+//    public HashMap<String, Object> selectYourWork(HttpServletRequest request, MemberDto mdto) {
+//        HashMap<String, Object> result = new HashMap<>();
+//
+//        HttpSession session = request.getSession();
+//
+//        if( request.getParameter("first") != null ) {
+//            session.removeAttribute("page");
+//            session.removeAttribute("key");
+//        }
+//
+//        int page=1;
+//        if(request.getParameter("page") != null){
+//            page = Integer.parseInt(request.getParameter("page"));
+//            session.setAttribute("page", page);
+//        }else if( session.getAttribute("page") != null){
+//            page = (Integer) session.getAttribute("page");
+//        }
+//        String key="";
+//        if( request.getParameter("key") != null){
+//            key=request.getParameter("key");
+//            session.setAttribute("key", key);
+//        }else if( session.getAttribute("key") != null){
+//            key = (String)session.getAttribute("key");
+//        }
+//        Paging paging = new Paging();
+//        paging.setPage(page);
+//        paging.setDisplayPage(10);
+//        paging.setDisplayRow(10);
+//        int count = wdao.getAllCountForYourWork( key, mdto.getMidx() );
+//        paging.setTotalCount(count);
+//        paging.calPaging();
+//
+//        if( page > paging.getEndPage() ) {
+//            paging.setPage( paging.getEndPage() );
+//            paging.calPaging();
+//        }
+////        if(paging.getPage()==0) paging.setStartNum(0);
+//
+//        ArrayList<WorkDto> list = wdao.selectYourWork( paging, key, mdto.getMidx() );
+//        for (WorkDto workdto : list) {
+//            int comment_count = wdao.selectComments(workdto.getWidx()).size();
+//
+//            workdto.setComment_count(comment_count);
+//        }
+//        result.put("workList", list);
+//        result.put("paging", paging);
+//        result.put("key", key);
+//        return result;
+//    }
 
     public void insert(WorkDto workdto) {
         wdao.insert(workdto);
