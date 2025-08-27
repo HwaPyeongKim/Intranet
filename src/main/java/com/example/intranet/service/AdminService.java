@@ -141,8 +141,33 @@ public class AdminService {
         adao.insertTeam(name);
     }
 
-    public ArrayList<MemberDto> selectMemberNoTeam() {
-        return adao.selectMemberNoTeam();
+    public HashMap<String, Object> selectMemberNoTeam(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        if (request.getParameter("first") != null) {
+            session.removeAttribute("page");
+            session.removeAttribute("key");
+        }
+
+        String key = "";
+        String type = "";
+        if (request.getParameter("key") != null) {
+            type =  request.getParameter("type");
+            key = request.getParameter("key");
+            session.setAttribute("type", type);
+            session.setAttribute("key", key);
+        } else if (session.getAttribute("key") != null) {
+            type = (String) session.getAttribute("type");
+            key = (String) session.getAttribute("key");
+        }
+
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<MemberDto> list = adao.selectMemberNoTeam(type, key);
+        result.put("list", list);
+        result.put("type", type);
+        result.put("key", key);
+
+        return result;
     }
 
     public ArrayList<TeamDto> selectTeams(int tidx) {
@@ -167,7 +192,7 @@ public class AdminService {
             adao.addTeamMember(data.get(0), "0"); // midx, tidx
         }
 
-        return selectMemberNoTeam();
+        return adao.selectMemberNoTeam();
     }
 
     public String getTeamName(int tidx) {

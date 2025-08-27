@@ -69,7 +69,16 @@
     </insert>
 
     <select id="selectMemberNoTeam" resultType="com.example.intranet.dto.MemberDto">
-        select * from member where team is null or team = 0
+        select * from member
+        <where>
+            team is null or team = 0
+            <if test="type == 'name'">
+                and name like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'userid'">
+                and userid like concat('%', #{key}, '%')
+            </if>
+        </where>
     </select>
 
     <select id="selectTeams" resultType="com.example.intranet.dto.TeamDto">

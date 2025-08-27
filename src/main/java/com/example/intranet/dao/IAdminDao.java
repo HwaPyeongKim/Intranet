@@ -24,4 +24,5 @@ public interface IAdminDao {
     void addTeamMember(String midx, String tidx);
     String getTeamName(int tidx);
     MemberAttendanceDto getMemberAttendances(int maidx);
+    ArrayList<MemberDto> selectMemberNoTeam(String type, String key);
 }

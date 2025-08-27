@@ -327,11 +327,13 @@ public class AdminController {
     public String setTeamMemberForm(HttpServletRequest request, Model model) {
         HashMap<String, Object> result = new HashMap<>();
         ArrayList<TeamDto> teamList = as.selectTeamList();
-        ArrayList<MemberDto> memberList = as.selectMemberNoTeam();
+        HashMap<String, Object> memberList = as.selectMemberNoTeam(request);
         ArrayList<TeamDto> teamMemberList = as.selectTeams(0);
         model.addAttribute("teamList", teamList);
-        model.addAttribute("memberList", memberList);
+        model.addAttribute("memberList", memberList.get("list"));
         model.addAttribute("teamMemberList", teamMemberList);
+        model.addAttribute("type", memberList.get("type"));
+        model.addAttribute("key", memberList.get("key"));
         return "admin/teamSetList";
     }
 
@@ -353,12 +355,12 @@ public class AdminController {
 
     @PostMapping("/addTeamMember")
     @ResponseBody
-    public HashMap<String, Object> addTeamMember(@RequestBody List<List<String>> datas) {
+    public HashMap<String, Object> addTeamMember(@RequestBody List<List<String>> datas, HttpServletRequest request) {
         HashMap<String, Object> result = new HashMap<>();
         ArrayList<TeamDto> teamMemberList = as.addTeamMember(datas);
-        ArrayList<MemberDto> noTeamList = as.selectMemberNoTeam();
+        HashMap<String, Object> noTeamList = as.selectMemberNoTeam(request);
         result.put("teamMemberList", teamMemberList);
-        result.put("noTeamList", noTeamList);
+        result.put("noTeamList", noTeamList.get("list"));
         return result;
     }
 

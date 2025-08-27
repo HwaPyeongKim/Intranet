@@ -8,8 +8,8 @@
         <div class="searchBox">
             <div class="input">
                 <select name="type">
-                    <option value="muserid"<c:if test="${type == 'muserid'}"> selected</c:if>>아이디</option>
-                    <option value="mname"<c:if test="${type == 'mname'}"> selected</c:if>>이름</option>
+                    <option value="userid"<c:if test="${type == 'userid'}"> selected</c:if>>아이디</option>
+                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>이름</option>
                 </select>
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
