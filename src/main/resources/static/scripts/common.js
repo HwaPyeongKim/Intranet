@@ -105,5 +105,31 @@ $(document).ready(function() {
         error: function() {
             console.log("새로운 메세지를 가져오는데 실패했습니다.");
         }
-    })
+    });
+
+    var boardMenu = ["/board","/download","/writeBoardForm","/viewBoard"];
+    var scheduleMenu = ["/schedule"];
+    var workMenu = ["/work","/yourwork","/insertWorkForm","/workView"];
+    var requestsMenu = ["/requests","/requestsDetail","/requestsWriteForm"];
+    var messageMenu = ["/receiveList","/sentList","/receiveView","/sentView","/writemsg"];
+    var mypageMenu = ["/workList","/vacationList","/profile","/writeVacationForm","/editProfile","/checkPwd","/changePwdForm"];
+    if (boardMenu.includes(window.location.pathname)) {
+        $("header ul.nav li a").removeClass("main_color");
+        $("header ul.nav li a.boardMenu").addClass("main_color");
+    } else if (scheduleMenu.includes(window.location.pathname)) {
+        $("header ul.nav li a").removeClass("main_color");
+        $("header ul.nav li a.scheduleMenu").addClass("main_color");
+    } else if (workMenu.includes(window.location.pathname)) {
+        $("header ul.nav li a").removeClass("main_color");
+        $("header ul.nav li a.workMenu").addClass("main_color");
+    } else if (requestsMenu.includes(window.location.pathname)) {
+        $("header ul.nav li a").removeClass("main_color");
+        $("header ul.nav li a.requestsMenu").addClass("main_color");
+    } else if (messageMenu.includes(window.location.pathname)) {
+        $("header ul.nav li a").removeClass("main_color");
+        $("header ul.nav li a.messageMenu").addClass("main_color");
+    } else if (mypageMenu.includes(window.location.pathname)) {
+        $("header ul.nav li a").removeClass("main_color");
+        $("header ul.nav li a.mypageMenu").addClass("main_color");
+    }
 });

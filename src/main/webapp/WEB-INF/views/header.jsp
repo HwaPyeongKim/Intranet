@@ -38,12 +38,12 @@
             <c:if test="${loginUser.level > 1}">
                 <li><a href="adminLoginForm">관리자</a></li>
             </c:if>
-            <li><a href="board">게시판</a></li>
-            <li><a href="schedule">일정관리</a></li>
-            <li><a href="work">업무관리</a></li>
-            <li><a href="requests">전자결제</a></li>
-            <li><a href="receiveList">메세지</a></li>
-            <li><a href="workList">마이페이지</a></li>
+            <li><a href="board" class="boardMenu">게시판</a></li>
+            <li><a href="schedule" class="scheduleMenu">일정관리</a></li>
+            <li><a href="work" class="workMenu">업무관리</a></li>
+            <li><a href="requests" class="requestsMenu">전자결제</a></li>
+            <li><a href="receiveList" class="messageMenu">메세지</a></li>
+            <li><a href="workList" class="mypageMenu">마이페이지</a></li>
 
             <li class="profile">
                 <img src="${profileImg}" class="profileImg" />
