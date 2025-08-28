@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html lang="ko">
 <head>
     <title>Grouping - Admin</title>
@@ -24,7 +25,7 @@
 
 <header>
     <div class="nav">
-        <a href="#" id="logo">로고</a>
+        <a href="adminLoginForm" id="logo"><img src="/images/logo.png"/></a>
         <ul class="gnb">
             <li>
                 <span>직원 관리</span>

@@ -28,7 +28,7 @@
         <table>
             <thead>
                 <tr>
-                    <th></th>
+                    <th><input type="checkbox" /></th>
                     <th>날짜</th>
                     <th>이름</th>
                     <th>출근시간</th>

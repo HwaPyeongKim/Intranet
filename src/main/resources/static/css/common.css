@@ -8,7 +8,7 @@ textarea:focus {outline: 2px solid #50bde2;}
 
 #wrap {width: 100%; max-width:1200px; margin: 0 auto;}
 h2 {margin: 10px 0 30px; font-size: 2em;}
-textarea {padding: 10px;}
+textarea {padding: 10px; background: #f9f9f9;}
 
 .main_color {color: #50bde2;}
 .sub_color {color: #fff;}
@@ -56,6 +56,7 @@ div.table > div.row:last-child {border-bottom: 0;}
 div.table > div.head.row > div.col {font-weight: bold;}
 div.table > div.row > div.col {flex: 1; text-align: center; padding: 10px 5px;}
 div.table > div.row > div.col.title {flex: 4;}
+div.table > div.row > div.col span.new {font-weight: bold; color: #f00;}
 div.table > div.row.empty {line-height: 200px;}
 
 .boxBtns {margin: 20px 0;}

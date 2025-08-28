@@ -34,7 +34,7 @@
         <table>
             <thead>
                 <tr>
-                    <th></th>
+                    <th><input type="checkbox" /></th>
                     <th class="col">번호</th>
                     <th class="col title">제목</th>
                     <th class="col">작성자</th>
@@ -69,6 +69,7 @@
                                     <a href="viewBoard?bidx=${item.bidx}" target="_blank">
                                         ${item.title}
                                         <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
+                                        <c:if test="${fn:substring(item.writedate, 0, 10) == today}"><span class="new"> New</span></c:if>
                                     </a>
                                 </td>
                                 <td class="col">${item.name}</td>
@@ -92,6 +93,7 @@
                                     <a href="viewBoard?bidx=${item.bidx}">
                                         ${item.title}
                                         <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
+                                        <c:if test="${fn:substring(item.writedate, 0, 10) == today}"><span class="new"> New</span></c:if>
                                     </a>
                                 </td>
                                 <td class="col">${item.name}</td>
