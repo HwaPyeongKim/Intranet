@@ -15,6 +15,8 @@
 
     <%--개별 링크--%>
     <link rel="stylesheet" type="text/css" href="admin/css/member.css">
+    <script src="admin/scripts/member.js"></script>
+    <script src="admin/scripts/board.js"></script>
 </head>
 <body>
 
@@ -29,6 +31,7 @@
                 <ul class="lnb">
                     <li><a href="adminMemberList?first=Y">직원 목록</a></li>
                     <li><a href="adminMemberAttendanceList?first=Y">직원 근태현황</a></li>
+                    <li><a href="adminTeamList?first=Y">팀 목록</a></li>
                 </ul>
             </li>
             <li>
@@ -43,7 +46,11 @@
     <div class="loginProfile">
         <img src="${profileImg}" />
         <span>${loginUser.name}</span>
-        <a href="main">사용자 페이지로 이동</a>
+        <a href="receiveList" class="messageBox">
+            <img src="/images/message.png" />
+            <i>0</i>
+        </a>
+        <a href="main" id="tomain">사용자 페이지로 이동</a>
         <button type="button" onclick="location.href='logout'">로그아웃</button>
         <button type="button" data-midx="${loginUser.midx}" id="workoutBtn">퇴근</button>
     </div>

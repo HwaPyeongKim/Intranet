@@ -11,7 +11,7 @@ public class BoardDto {
     private String title;
     private String content;
     private String pwd;
-    private String fidx;
+    private Integer fidx;
     private int midx;
     private Timestamp updatedate;
     private Timestamp writedate;

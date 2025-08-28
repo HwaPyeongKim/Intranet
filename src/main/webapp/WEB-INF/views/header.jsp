@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="/css/member.css">
     <link rel="stylesheet" type="text/css" href="/css/board.css">
     <link rel="stylesheet" type="text/css" href="/css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+
     <script src="/scripts/member.js"></script>
     <script src="/scripts/board.js"></script>
     <script src="/scripts/work.js"></script>
@@ -29,11 +31,11 @@
 
     <c:if test="${loginUser != null}">
     <header>
-        <a href="/" id="logo">로고</a>
+        <a href="main" id="logo"><img src="/images/logo.png"/></a>
 
         <ul class="nav">
             <c:if test="${loginUser.level > 1}">
-            <li><a href="adminLoginForm">관리자</a></li>
+                <li><a href="adminLoginForm">관리자</a></li>
             </c:if>
             <li><a href="board">게시판</a></li>
             <li><a href="schedule">일정관리</a></li>
@@ -45,7 +47,7 @@
             <li class="profile">
                 <img src="${profileImg}" class="profileImg" />
                 <span>${loginUser.name}</span>
-                <a href="#" class="messageBox">
+                <a href="receiveList" class="messageBox">
                     <img src="/images/message.png" />
                     <i>0</i>
                 </a>

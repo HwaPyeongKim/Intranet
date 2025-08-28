@@ -1,0 +1,203 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+}
+
+.dashboard-container {
+    display: flex;
+    gap: 20px;
+}
+
+.profile-section {
+    width: 260px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.profile-card {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-section .profile-image {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background-color: #d9e4f5;
+    margin: 0 auto 20px;
+    overflow: hidden;
+}
+.profile-section .profile-image .profileImg{
+    width: 100%;
+    object-fit: cover;
+}
+
+.profile-section .profile-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.inout-info{
+    background: #f5f5f5;
+    border-radius: 4px;
+    display: flex;
+    margin-bottom: 40px;
+}
+.inout-info .timebox{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    padding: 25px 0;
+
+}
+.inout-info .timebox .title{
+    margin-bottom: 12px;
+    color: #797979;
+    font-size: 14px;
+}
+
+.inout-info .timebox .time{
+    font-size: 21px;
+    font-weight: bold;
+}
+
+/*.main_btn_out {border: 1px solid #ccc; padding: 10px 20px;display:inline-block;}*/
+
+
+.calendar-section {
+    width: 260px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px 15px 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.calendar-section #calendar-container .calendar {
+    cursor: pointer;
+}
+.calendar-section #calendar-container thead{display: none;}
+.calendar-section #calendar-container .fc .fc-toolbar.fc-header-toolbar{
+    margin-bottom: 10px;
+}
+.calendar-section #calendar-container .fc .fc-toolbar-title{
+    font-size: 20px;
+}
+.calendar-section #calendar-container .fc-theme-standard td, .fc-theme-standard th{
+    border: none;
+}
+.calendar-section #calendar-container .fc-theme-standard .fc-scrollgrid {
+    border: none;
+}
+.calendar-section #calendar-container .fc-event-time,.fc-event-title{display: none;}
+
+.main-section {
+    flex: 1;
+}
+
+.announcement {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.btn-announcement {
+    background-color: #64b5f6;
+    color: #fff;
+    border: none;
+    padding: 16px 26px;
+    border-radius: 6px;
+}
+
+.announcement-text {
+    font-size: 16px;
+    padding: 21px 23px;
+    border-radius: 6px;
+    background: #fff;
+    flex: 1;
+    font-weight: bold;
+}
+
+.main_widget_box {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.widget {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.main_apwork_wrap{
+    display: flex;
+    gap: 15px;
+}
+.main_apwork_wrap .title{
+    font-size: 20px;
+    border-bottom: 1px solid #e9e9e9;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+}
+
+.work-status, .approval-docs{flex: 1;}
+.work-status, .approval-docs, .resource-schedule, .main_cal_week {
+    background-color: #fff;
+    padding: 24px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    height: 226px;
+}
+
+.approval-docs ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.approval-docs li, .work-status li {
+    font-size: 14px;
+    padding: 10px;
+    position: relative;
+}
+.approval-docs li:hover, .work-status li:hover{background-color: rgb(215 231 241 / 50%);border-radius: 12px;transition: 0.2s;}
+
+.approval-docs li a, .work-list li a{
+    font-size: 16px;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 308px;
+}
+.work-list li a .worktitle {}
+
+.work-status .enddate{position: absolute;
+    right: 13px;
+    top: 10px;}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: text-top;
+}
+
+.dot.blue { border: 3px solid #42a5f5; }
+.dot.green { border: 3px solid #66bb6a; }
+.dot.orange { border: 3px solid #ffa726; }
+.dot.red { border: 3px solid #ef5350;}

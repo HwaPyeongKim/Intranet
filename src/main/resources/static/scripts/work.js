@@ -21,6 +21,32 @@ function go_list(){
     }
 }
 
+
+function changeWorkStatus(widx, status, next) {
+    if (status == 1) {
+        if (!confirm("업무를 진행하시겠습니까?")) {
+            return;
+        }
+    } else if (next == 5) {
+        if (!confirm("검토 요청하시겠습니까?")) {
+            return;
+        }
+    } else if (status == 5 && next == 3) {
+        if (!confirm("보류하시겠습니까?")) {
+            return;
+        }
+    } else if (status == 5 && next == 4) {
+        if (!confirm("반려하시겠습니까?")) {
+            return;
+        }
+    } else if (status == 5 && next == 6) {
+        if (!confirm("승인하시겠습니까?")) {
+            return;
+        }
+    }
+    location.href = "changeWorkStatus?widx=" + widx + "&status=" + status + "&next=" + next;
+
+}
 $(function (){
     $(document).on('click', '.updateComment', function() {
         var widx = $(this).attr("data-widx");

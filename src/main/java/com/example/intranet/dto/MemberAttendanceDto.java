@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 
 @Data
 public class MemberAttendanceDto {
+    private int maidx;
     private int midx;
     private Date date;
     private Timestamp starttime;
@@ -14,4 +15,6 @@ public class MemberAttendanceDto {
     private int loopnum; // 번호를 위한 변수
 
     private String name; // member 테이블 조인
+    private String userid; // member 테이블 조인
+    private String position; // member 테이블 조인
 }

@@ -30,13 +30,13 @@
     }
 
     .info-row {
-        margin-bottom: 14px;
         font-size: 18px;
+        line-height: 42px;
     }
 
     .info-row .label {
         display: inline-block;
-        width: 110px;
+        width: 160px;
         font-weight: 600;
     }
 
@@ -175,6 +175,25 @@
     <section class="request-info-box">
         <div class="info-row"><span class="label">작성자</span> ${rdto.mname} ${rdto.mposition}</div>
         <div class="info-row"><span class="label">제목</span> ${rdto.title}</div>
+
+        <c:if test="${rdto.category != 1}">
+            <div class="info-row"><span class="label">구분</span>
+                <c:choose>
+                    <c:when test="${rdto.category == '2'}">연차</c:when>
+                    <c:when test="${rdto.category == '3'}">오전반차</c:when>
+                    <c:when test="${rdto.category == '4'}">오후반차</c:when>
+                </c:choose>
+            </div>
+            <div class="info-row"><span class="label">휴가 희망일자</span>
+                <c:choose>
+                    <c:when test="${rdto.category == '2'}">${rdto.startdate}&nbsp;~&nbsp;${rdto.enddate}
+                    </c:when>
+                    <c:when test="${rdto.category == '3'}">${rdto.startdate}</c:when>
+                    <c:when test="${rdto.category == '4'}">${rdto.startdate}</c:when>
+                </c:choose>
+            </div>
+        </c:if>
+
         <div class="info-row"><span class="label">작성일자</span> ${rdto.writedate}</div>
         <c:if test="${rdto.status == '3' || rdto.status == '4'}">
             <div class="info-row"><span class="label">처리일자</span> ${rdto.confirmdate}</div>

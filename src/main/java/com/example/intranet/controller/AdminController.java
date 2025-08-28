@@ -1,8 +1,6 @@
 package com.example.intranet.controller;
 
-import com.example.intranet.dto.FileDto;
-import com.example.intranet.dto.MemberAttendanceDto;
-import com.example.intranet.dto.MemberDto;
+import com.example.intranet.dto.*;
 import com.example.intranet.service.AdminService;
 import com.example.intranet.service.BoardService;
 import com.example.intranet.service.FileService;
@@ -224,15 +222,20 @@ public class AdminController {
         return url;
     }
 
-    @GetMapping("/updateLeaveForm")
-    public String updateLeaveForm(@RequestParam("midxes") String midxes, HttpSession session, Model model) {
+    @GetMapping("/updateForm")
+    public String updateForm(@RequestParam("midxes") String midxes, @RequestParam("type") String type, HttpSession session, Model model) {
         String url = "admin/login";
         MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-        ArrayList<MemberDto> list = null;
-        if (mdto != null && mdto.getLevel() > 2) {
-            list = ms.getMembers(midxes);
+        if (type.equals("Attendance")) {
+            ArrayList<MemberAttendanceDto> list = as.getMemberAttendances(midxes); // midxes = maidx
             model.addAttribute("list", list);
-            url = "admin/updateLeave";
+        } else {
+            ArrayList<MemberDto> list = ms.getMembers(midxes);
+            model.addAttribute("list", list);
+        }
+
+        if (mdto != null && mdto.getLevel() > 2) {
+            url = "admin/update"+type;
         }
         return url;
     }
@@ -241,8 +244,165 @@ public class AdminController {
     @ResponseBody
     public HashMap<String, Object> updateLeave(@RequestBody List<List<String>> datas, HttpSession session, Model model) {
         HashMap<String, Object> result = new HashMap<>();
-        ms.updateLeave(datas);
+        as.updateLeave(datas);
         return result;
     }
+
+    @PostMapping("/updatePosition")
+    @ResponseBody
+    public HashMap<String, Object> updatePosition(@RequestBody List<List<String>> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        as.updatePosition(datas);
+        return result;
+    }
+
+    @PostMapping("/updateLevel")
+    @ResponseBody
+    public HashMap<String, Object> updateLevel(@RequestBody List<List<String>> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        as.updateLevel(datas);
+        return result;
+    }
+
+    @PostMapping("/updateAttendance")
+    @ResponseBody
+    public HashMap<String, Object> updateAttendance(@RequestBody List<List<String>> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        as.updateAttendance(datas);
+        return result;
+    }
+
+    @GetMapping("/adminTeamList")
+    public String adminTeamList(HttpServletRequest request, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        if (mdto != null) {
+            if (mdto.getLevel() > 1) {
+                result = as.selectTeamMembers(request, mdto.getMidx(), mdto.getLevel());
+                model.addAttribute("list", result.get("list"));
+                model.addAttribute("paging", result.get("paging"));
+                model.addAttribute("type", result.get("type"));
+                model.addAttribute("key", result.get("key"));
+                model.addAttribute("sort", result.get("sort"));
+                url = "admin/teamList";
+            }
+        }
+        return url;
+    }
+
+    @GetMapping("/createTeamForm")
+    public String createTeamForm(HttpServletRequest request, HttpSession session, Model model) {
+        String url = "admin/login";
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        HashMap<String, Object> result = null;
+        result = as.selectTeamMembers(request, mdto.getMidx(), mdto.getLevel());
+        model.addAttribute("list", result.get("list"));
+        url = "admin/createTeam";
+
+        return url;
+    }
+
+    @PostMapping("/createTeam")
+    @ResponseBody
+    public HashMap<String, Object> createTeam(@RequestParam("name") String name) {
+        HashMap<String, Object> result = new HashMap<>();
+        if (name == null || name.equals("")) {
+            result.put("result", 0);
+            result.put("msg", "팀명을 입력해주세요.");
+        } else {
+            TeamDto tdto = as.checkTeamName(name);
+            if (tdto != null) {
+                result.put("result", 0);
+                result.put("msg", "이미 존재하는 팀명입니다.");
+            } else {
+                result.put("result", 1);
+                as.insertTeam(name);
+            }
+        }
+        return result;
+    }
+
+    @GetMapping("/setTeamMemberForm")
+    public String setTeamMemberForm(HttpServletRequest request, Model model) {
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<TeamDto> teamList = as.selectTeamList();
+        HashMap<String, Object> memberList = as.selectMemberNoTeam(request);
+        ArrayList<TeamDto> teamMemberList = as.selectTeams(0);
+        model.addAttribute("teamList", teamList);
+        model.addAttribute("memberList", memberList.get("list"));
+        model.addAttribute("teamMemberList", teamMemberList);
+        model.addAttribute("type", memberList.get("type"));
+        model.addAttribute("key", memberList.get("key"));
+        return "admin/teamSetList";
+    }
+
+    @PostMapping("/selectTeam")
+    @ResponseBody
+    public HashMap<String, Object> selectTeam(@RequestParam("tidx") int tidx) {
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<TeamDto> list = as.selectTeams(tidx);
+        String teamName = as.getTeamName(tidx);
+        result.put("teamName", teamName);
+        if (list.size() > 0) {
+            result.put("result", 1);
+            result.put("list", list);
+        } else {
+            result.put("result", 0);
+        }
+        return result;
+    }
+
+    @PostMapping("/addTeamMember")
+    @ResponseBody
+    public HashMap<String, Object> addTeamMember(@RequestBody List<List<String>> datas, HttpServletRequest request) {
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<TeamDto> teamMemberList = as.addTeamMember(datas);
+        HashMap<String, Object> noTeamList = as.selectMemberNoTeam(request);
+        result.put("teamMemberList", teamMemberList);
+        result.put("noTeamList", noTeamList.get("list"));
+        return result;
+    }
+
+    @PostMapping("/deleteTeamMember")
+    @ResponseBody
+    public HashMap<String, Object> deleteTeamMember(@RequestBody List<List<String>> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        int tidx = Integer.parseInt(datas.get(0).get(1));
+        ArrayList<MemberDto> noTeamList = as.deleteTeamMember(datas);
+        ArrayList<TeamDto> teamMemberList = as.selectTeams(tidx);
+        result.put("teamMemberList", teamMemberList);
+        result.put("noTeamList", noTeamList);
+        return result;
+    }
+
+    @PostMapping("/deleteBoard")
+    @ResponseBody
+    public HashMap<String, Object> deleteBoard(@RequestBody List<String> datas) {
+        HashMap<String, Object> result = new HashMap<>();
+        as.deleteBoard(datas);
+        return result;
+    }
+
+    @PostMapping("/showBoard")
+    @ResponseBody
+    public void showBoard(@RequestBody List<List<String>> datas) {
+        as.showBoard(datas);
+    }
+
+//    @GetMapping("/adminViewBoard")
+//    public String adminViewBoard(@RequestParam("bidx") int bidx, HttpSession session, Model model) {
+//        MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+//        String url = "admin/login";
+//        if (loginUser != null) {
+//            bs.addRead(bidx, loginUser.getMidx());
+//            BoardDto bdto = bs.selectOne(bidx);
+//            ArrayList<BoardCommentDto> bcdto = bs.selectComments(bidx);
+//            model.addAttribute("item", bdto);
+//            model.addAttribute("comments", bcdto);
+//            url = "admin/viewBoard";
+//        }
+//        return url;
+//    }
 
 }

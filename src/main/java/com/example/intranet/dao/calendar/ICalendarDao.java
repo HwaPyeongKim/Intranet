@@ -17,7 +17,6 @@ public interface ICalendarDao {
 
     /**
      * 캘린더 일정 조회하기
-     *
      * @return
      * @throws Exception
      */
@@ -25,15 +24,13 @@ public interface ICalendarDao {
 
     /**
      * 캘린더 일정 저장하기
-     *
-     * @param vo
+     * @param dto
      * @throws Exception
      */
-    void calendarSave(CalendarDto vo) throws Exception;
+    void calendarSave(CalendarDto dto) throws Exception;
 
     /**
      * 캘린더 일정 삭제하기
-     *
      * @param no
      * @throws Exception
      */
@@ -41,9 +38,8 @@ public interface ICalendarDao {
 
     /**
      * 캘린더 일정 수정하기
-     *
-     * @param vo
+     * @param dto
      * @throws Exception
      */
-    void eventUpdate(CalendarDto vo) throws Exception;
+    void eventUpdate(CalendarDto dto) throws Exception;
 }

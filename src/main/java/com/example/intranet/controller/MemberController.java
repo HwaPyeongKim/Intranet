@@ -1,8 +1,6 @@
 package com.example.intranet.controller;
 
-import com.example.intranet.dto.FileDto;
-import com.example.intranet.dto.MemberAttendanceDto;
-import com.example.intranet.dto.MemberDto;
+import com.example.intranet.dto.*;
 import com.example.intranet.service.BoardService;
 import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
@@ -15,8 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MemberController {
@@ -44,9 +46,26 @@ public class MemberController {
 
     @GetMapping("/main")
     public String main(HttpSession session, Model model) {
+        MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            int midx = loginUser.getMidx();
+            LocalDate today = LocalDate.now();
 
+            //오늘의공지 뭐가져올지...
+            //List<BoardDto> boardList = ms.selectTodayNotice(String.valueOf(today));
 
+            model.addAttribute("today", String.valueOf(today));
 
+            MemberAttendanceDto madto = ms.selectInOutTime(midx, String.valueOf(today));
+            model.addAttribute("madto", madto);
+
+            List<MemberRequestsDto> mrdtoList = ms.selectMyReqList(midx);
+            model.addAttribute("mrdtoList", mrdtoList);
+
+            List<WorkDto> workList = ms.selectMyWorkList(midx);
+            model.addAttribute("workList", workList);
+
+        }
         return "/main";
     }
 
@@ -80,7 +99,7 @@ public class MemberController {
                     if (madto == null) {
                         ms.insertAttendance(mdto.getMidx());
                     }
-                    url = "redirect:/";
+                    url = "redirect:/main";
                 }
 
             }
@@ -199,4 +218,8 @@ public class MemberController {
         }
         return result;
     }
+
+
+
+
 }

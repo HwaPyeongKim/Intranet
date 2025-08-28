@@ -31,8 +31,9 @@
         max-width: 800px;
         margin: 0 auto;
         padding: 40px 50px;
-        background-color: #f9f9f9;
+        background-color: #ffffff;
         border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
 
     .form-title {
@@ -140,7 +141,7 @@
                 <select id="confirm_midx" name="confirm_midx" required>
                     <option value="">선택하세요</option>
                     <c:forEach var="member" items="${memberList}">
-                        <c:if test="${member.level > loginUser.level}">
+                        <c:if test="${member.team == loginUser.team && member.midx != loginUser.midx}">
                             <option value="${member.midx}">
                                 ${member.name}&nbsp;${member.position}
                             </option>

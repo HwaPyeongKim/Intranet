@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/scripts/common.js"></script>
-    <script src="admin/scripts/common.js"></script>
+    <script src="admin/scripts/member.js"></script>
 </head>
 <body>
     <div class="container">
