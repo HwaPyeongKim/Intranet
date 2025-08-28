@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,6 +34,8 @@ public class BoardController {
             model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
             model.addAttribute("sort", result.get("sort"));
+            LocalDate today = LocalDate.now();
+            model.addAttribute("today", today);
             url = "board/list";
         }
 
@@ -169,6 +172,8 @@ public class BoardController {
             model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
             model.addAttribute("sort", result.get("sort"));
+            LocalDate today = LocalDate.now();
+            model.addAttribute("today", today);
             url = "board/download";
         }
 

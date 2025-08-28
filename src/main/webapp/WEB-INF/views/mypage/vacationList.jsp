@@ -3,13 +3,13 @@
 
 <section>
 
+    <h2>연차/반차 신청</h2>
+
     <ul class="submenu">
         <li><a href="workList">나의업무</a></li>
         <li class="on"><a href="vacationList">연차/반차 신청</a></li>
         <li><a href="profile">프로필</a></li>
     </ul>
-
-    <h2>연차/반차</h2>
 
     <div class="boxBtns clearfix">
         <button type="button" onclick="location.href='writeVacationForm'">신청하기</button>
@@ -62,7 +62,10 @@
                             </c:choose>
                         </div>
                         <div class="col title">
-                            <a href="requestsDetail?ridx=${item.ridx}">${item.title}</a>
+                            <a href="requestsDetail?ridx=${item.ridx}">
+                                ${item.title}
+                                <c:if test="${fn:substring(item.writedate, 0, 10) == today}"><span class="new"> New</span></c:if>
+                            </a>
                         </div>
                         <div class="col">${item.cname}</div>
                         <div class="col"><fmt:formatDate value="${item.startdate}" pattern="yyyy-MM-dd" /><br /><fmt:formatDate value="${item.enddate}" pattern="yyyy-MM-dd" /></div>

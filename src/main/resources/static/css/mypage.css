@@ -2,9 +2,11 @@ section#mypage {}
 section#mypage .container {display: flex; justify-content: center;}
 section#mypage #profileForm {width: 100%; max-width: 700px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
 
-.profileInfo {display: flex; border: 1px solid #000; border-radius: 10px;}
+.profileInfo {display: flex; margin: 20px 0; border: 1px solid #000; border-radius: 10px;}
 .profileInfo .imgBox {display: flex; justify-content: center; align-items: center; flex: 1;}
 .profileInfo .imgBox img {display: inline-block; width: 300px; height: 300px; margin-top: 10px; border: 2px solid #50bde2; border-radius: 50%;}
 .profileInfo .profileBox {flex: 2;}
+.summaryInfo {display: flex; margin: 20px 0; padding: 20px; border: 1px solid #000; border-radius: 10px;}
+.summaryInfo .workTable {flex: 1;}
 
 section#writeVacation form {width: 100%; padding: 20px; border: 1px solid #000; border-radius: 10px;}

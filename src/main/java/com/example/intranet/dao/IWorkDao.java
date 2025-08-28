@@ -36,7 +36,10 @@ public interface IWorkDao {
     void deleteComment(int wcidx);
 
     void changeStatus(int widx, int status, int next);
-
+    
     //  일정관리 수정중 추가
     WorkDto getRecentWork(int midx);
+
+    WorkDto myCompleteWork(int midx);
+
 }

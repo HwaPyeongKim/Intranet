@@ -3,13 +3,13 @@
 
 <section>
 
+    <h2>나의 업무</h2>
+
     <ul class="submenu">
         <li class="on"><a href="workList">나의업무</a></li>
         <li><a href="vacationList">연차/반차 신청</a></li>
         <li><a href="profile">프로필</a></li>
     </ul>
-
-    <h2>나의 업무</h2>
 
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
@@ -49,18 +49,22 @@
                     <div class="row">
                         <div class="col">${item.loopnum}</div>
                         <div class="col title">
-                            <a href="workView?widx=${item.widx}" target="_blank">${item.title}</a>
+                            <a href="workView?widx=${item.widx}" target="_blank">
+                                ${item.title}
+                                <c:if test="${fn:substring(item.writedate, 0, 10) == today}"><span class="new"> New</span></c:if>
+                            </a>
                         </div>
                         <div class="col">${item.empname}</div>
                         <div class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col"><fmt:formatDate value="${item.completedate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col">
                             <c:choose>
-                                <c:when test="${item.status == 1}">대기중</c:when>
-                                <c:when test="${item.status == 2}">처리중</c:when>
-                                <c:when test="${item.status == 3}">반려</c:when>
-                                <c:when test="${item.status == 4}">승인</c:when>
-                                <c:otherwise>기타</c:otherwise>
+                                <c:when test='${item.status=="1"}'>대기중</c:when>
+                                <c:when test='${item.status=="2"}'>진행중</c:when>
+                                <c:when test='${item.status=="3"}'>보류</c:when>
+                                <c:when test='${item.status=="4"}'>반려</c:when>
+                                <c:when test='${item.status=="5"}'>검토중</c:when>
+                                <c:otherwise>완료</c:otherwise>
                             </c:choose>
                         </div>
                     </div>

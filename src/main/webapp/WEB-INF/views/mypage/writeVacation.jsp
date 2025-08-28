@@ -12,12 +12,12 @@
         <div class="field">
             <label>분류</label>
             <div>
-                <label for="category1">연차</label>
                 <input type="radio" name="category" id="category1" value="2" <c:if test="${dto.category == 2}"> checked</c:if> <c:if test="${empty dto}"> checked</c:if> />
-                <label for="category2">오전반차</label>
+                <label for="category1">연차</label>
                 <input type="radio" name="category" id="category2" value="3" <c:if test="${dto.category == 3}"> checked</c:if> />
-                <label for="category3">오후반차</label>
+                <label for="category2">오전반차</label>
                 <input type="radio" name="category" id="category3" value="4" <c:if test="${dto.category == 4}"> checked</c:if> />
+                <label for="category3">오후반차</label>
             </div>
         </div>
 

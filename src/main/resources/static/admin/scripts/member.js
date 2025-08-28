@@ -424,22 +424,4 @@ $(function (){
             }
         })
     });
-
-    $("#chkNoTeamAll").on("change", function() {
-        $("#noTeamTableBody input[name=midx]").prop("checked", $(this).prop("checked"));
-    });
-
-    $("#noTeamTableBody input[name=midx]").on("change", function() {
-        var allChecked = $("#noTeamTableBody input[name=midx]").length === $("#noTeamTableBody input[name=midx]:checked").length;
-        $("#chkNoTeamAll").prop("checked", allChecked);
-    });
-
-    $("#chkTeamAll").on("change", function() {
-        $("#teamTableBody input[name=midx]").prop("checked", $(this).prop("checked"));
-    });
-
-    $(document).on("change", "#teamTableBody input[name=midx]", function() {
-        var allChecked = $("#teamTableBody input[name=midx]").length === $("#teamTableBody input[name=midx]:checked").length;
-        $("#chkTeamAll").prop("checked", allChecked);
-    });
 })

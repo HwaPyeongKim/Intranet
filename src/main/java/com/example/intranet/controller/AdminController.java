@@ -200,6 +200,8 @@ public class AdminController {
             model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
             model.addAttribute("sort", result.get("sort"));
+            LocalDate today = LocalDate.now();
+            model.addAttribute("today", today);
             url = "admin/boardList";
         }
         return url;
@@ -217,6 +219,8 @@ public class AdminController {
             model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
             model.addAttribute("sort", result.get("sort"));
+            LocalDate today = LocalDate.now();
+            model.addAttribute("today", today);
             url = "admin/boardDownloadList";
         }
         return url;
