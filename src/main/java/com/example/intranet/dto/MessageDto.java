@@ -14,7 +14,8 @@ public class MessageDto {
     private String readyn;   // 읽음 여부
     private Timestamp readdate;  // 읽은 날짜
     private Timestamp writedate; // 작성일
-    private String deleteyn;     // 삭제 여부
+    private String todeleteyn;     // 삭제 여부 받는메세지
+    private String fromdeleteyn; // 삭제 여부 보내는 메세지
     private int loopnum; // 번호 매기기용
 
     private String toname;

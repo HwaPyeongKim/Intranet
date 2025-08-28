@@ -3,6 +3,7 @@ package com.example.intranet.dto;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 public class MemberDto {
@@ -25,4 +26,5 @@ public class MemberDto {
     private String confirmyn;
     private String deleteyn;
     private int loopnum; // 번호를 위한 변수
+
 }

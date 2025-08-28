@@ -31,7 +31,7 @@
 
     <c:if test="${loginUser != null}">
     <header>
-        <a href="/" id="logo"><img src="/images/logo.png"/></a>
+        <a href="main" id="logo"><img src="/images/logo.png"/></a>
 
         <ul class="nav">
             <c:if test="${loginUser.level > 1}">
