@@ -18,20 +18,20 @@
             <div class="field">
                 <label>분류</label>
                 <div>
-                    <label for="notice">공지사항</label>
                     <input type="radio" name="category" id="notice" value="notice" <c:if test="${item.category == 'notice'}"> checked</c:if> />
-                    <label for="main">일반</label>
+                    <label for="notice">공지사항</label>
                     <input type="radio" name="category" id="main" value="main" <c:if test="${item.category == 'main'}"> checked</c:if> />
+                    <label for="main">일반</label>
                 </div>
             </div>
 
             <div class="field">
                 <label>노출여부</label>
                 <div>
-                    <label for="showyn_y">노출</label>
                     <input type="radio" name="showyn" id="showyn_y" value="Y" <c:if test="${item.showyn == 'Y'}"> checked</c:if> />
-                    <label for="showyh_n">미노출</label>
+                    <label for="showyn_y">노출</label>
                     <input type="radio" name="showyn" id="showyh_n" value="N" <c:if test="${item.showyn == 'N'}"> checked</c:if> />
+                    <label for="showyh_n">미노출</label>
                 </div>
             </div>
             </c:when>

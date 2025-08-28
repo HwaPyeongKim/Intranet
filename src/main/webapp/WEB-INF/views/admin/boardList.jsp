@@ -64,7 +64,7 @@
                         <c:forEach items="${notice}" var="item">
                             <tr class="row notice">
                                 <td><input type="checkbox" name="bidx" value="${item.bidx}" /></td>
-                                <td class="col">공지</td>
+                                <td class="col">공지 <i class="fa-solid fa-bullhorn"></i></td>
                                 <td class="col title">
                                     <a href="viewBoard?bidx=${item.bidx}" target="_blank">
                                         ${item.title}

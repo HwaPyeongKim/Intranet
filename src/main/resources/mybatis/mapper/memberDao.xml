@@ -85,7 +85,7 @@
     </select>
 
     <select id="checkNewMessage" resultType="_int">
-        select count(*) from message where tomidx = #{midx} and readyn = 'N' and deleteyn = 'N'
+        select count(*) from message where tomidx = #{midx} and readyn = 'N' and todeleteyn = 'N' and fromdeleteyn = 'N'
     </select>
 
     <select id="selectMemberAttendances" resultType="com.example.intranet.dto.MemberAttendanceDto">

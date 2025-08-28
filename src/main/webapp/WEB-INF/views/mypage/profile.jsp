@@ -3,13 +3,13 @@
 
 <section>
 
+    <h2>프로필</h2>
+
     <ul class="submenu">
         <li><a href="workList">나의업무</a></li>
         <li><a href="vacationList">연차/반차 신청</a></li>
         <li class="on"><a href="profile">프로필</a></li>
     </ul>
-
-    <h2>프로필</h2>
 
     <div class="boxBtns clearfix">
         <button type="button" onclick="location.href='changePwdForm'">비밀번호 수정</button>
