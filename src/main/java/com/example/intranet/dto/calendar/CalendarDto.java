@@ -3,6 +3,9 @@ package com.example.intranet.dto.calendar;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 @Getter
 @Setter
 public class CalendarDto {
@@ -20,10 +23,6 @@ public class CalendarDto {
         분류별로 다른색상이 나오기 위해 eventColor 추가
      */
 
-    /*
-CalendarDto dto = new CalendarDto(workDto.title, workDto.writedate, workDto.completedate, workDto.midx)
-
-calendarService.calendarSave(dto);*/
     private Long calendarNo;
     private String title;
     private String start1;
@@ -33,33 +32,46 @@ calendarService.calendarSave(dto);*/
     private int category;
     private boolean editable;
     private String eventColor;
-
+    private int widx;
 
     public CalendarDto() {}
 
-    public CalendarDto(String title, String start1, String end, int midx){
+    public CalendarDto(String title, String start1, String end, int midx, String use, int idx){
 
         // 일정관리창 외의 다른 곳에서 일정을 자동생성 하게 할 경우 사용하게될 생성자
 
-        // 일정명, 일정시작일, 일정종료일, 멤버idx 만 입력받고,
-        // 그외 설정은 하루종일일정, 개인일정, 수정불가 설정으로 자동 생성함
+        // 입력해야할것 : 일정명, 일정시작일, 일정종료일, 멤버idx, 사용목적, 사용하고자 하는곳의 idx
+        // 그외 설정은 하루종일x, 개인일정, 수정불가로 자동 생성한 채로 CalendarDto가 만들어짐
+        // CalendarDto만 만들어지면 calendarSave(CalendarDto dto), eventUpdate(CalendarDto dto) 등의 메소드를 사용할수 있습니다
+
+        // 시작일 종료일이 String 형태임에 주의
+        // 시작일의 경우 날짜데이터 대신 "auto" 문자열을 입력하면 현재시간을 자동으로 입력합니다
+
+        if(start1.equals("auto")){
+            this.start1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Timestamp(System.currentTimeMillis()));
+        }else{
+            this.start1 = start1;
+        }
 
         this.title = title;             // 일정명
-        this.start1 = start1;           // 일정시작일
         this.end = end;                 // 일정종료일
         this.midx = midx;               // 멤버idx
 
+        if(use.equals("work")){         // 사용목적에 따라 idx 입력
+            this.widx = idx;            // 사용목적이 work 인 경우 widx 값 추가됨
+        }
 
-        this.allDay = true;             // 하루종일 여부, true로 설정
+        this.setCategory(1);            // 카테고리와 카테고리에 맞는 색상 자동입력
+
+        this.allDay = false;             // 하루종일 여부, false로 설정
         this.editable = false;          // 수정가능 여부, 수정불가
 
-        this.setCategory(1);
     }
 
     public void setCategory(int category) {
         this.category = category;
 
-        // 카테고리를 입력할때 수정가능 여부와 색상을 자동으로 넣습니다.
+        // setCategory 할때 수정가능 여부와 색상을 자동으로 넣습니다.
 
         switch (category) {
             case 1: // 개인: 수정가능, 색상 분홍색

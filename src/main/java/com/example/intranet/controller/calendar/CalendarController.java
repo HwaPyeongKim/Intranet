@@ -36,16 +36,16 @@ public class CalendarController {
 
     @GetMapping("/schedule") // 임시적 링크
     public String calendar(HttpSession session, Model model) {
-        // String url = "member/login";
+        String url = "member/login";
         if (session.getAttribute("loginUser") != null) {
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
             // FileDto fdto = fs.getFile(mdto.getImage());
             model.addAttribute("loginUser", mdto);
             // model.addAttribute("profileImg", fdto.getPath());
-            // url = "calendar/calendar";
+            url = "calendar/calendar";
 
         }
-        return "calendar/calendar";
+        return url;
     }
 
     /**

@@ -3,6 +3,7 @@ package com.example.intranet.dao.calendar;
 import com.example.intranet.dto.calendar.CalendarDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -42,4 +43,6 @@ public interface ICalendarDao {
      * @throws Exception
      */
     void eventUpdate(CalendarDto dto) throws Exception;
+
+    ArrayList<CalendarDto> getEventForWork(int widx);
 }
