@@ -30,7 +30,7 @@
     <input type="submit" value="보내기" />
 
 
-    <input type="button" onclick="location.href='receiveList'" value="목록으로"/>
+    <input type="button" onclick="location.href='receiveList'" value="취소"/>
 
 
 

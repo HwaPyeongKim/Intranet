@@ -43,15 +43,14 @@
 
         <div class="table">
             <div class="row head">
-                <div class="col">번호</div>
-                <div class="col">보낸 사람</div>
-                <div class="col title">제목</div>
-                <div class="col">내용</div>
-                <div class="col">받은 시간</div>
                 <div class="col">
                     <!-- ✅ 전체 선택 체크박스 (맨 뒤) -->
                     <input type="checkbox" id="checkAll">
                 </div>
+                <div class="col">보낸 사람</div>
+                <div class="col">내용</div>
+                <div class="col">받은 시간</div>
+
             </div>
 
             <c:choose>
@@ -63,19 +62,18 @@
                 <c:otherwise>
                     <c:forEach items="${message}" var="msg" varStatus="status">
                         <div class="row">
-                            <div class="col">${status.count}</div>
-                            <div class="col">${msg.fromname}</div>
-                            <div class="col title">
-                                <a href="receiveView?msidx=${msg.msidx}">
-                                        ${msg.title}
-                                </a>
-                            </div>
-                            <div class="col">${msg.content}</div>
-                            <div class="col">
-                                <fmt:formatDate value="${msg.writedate}" pattern="yyyy-MM-dd HH:mm"/>
-                            </div>
                             <div class="col">
                                 <input type="checkbox" name="msidxList" value="${msg.msidx}">
+                            </div>
+<%--                            <div class="col">${status.count}</div>--%>
+                            <div class="col">${msg.fromname}</div>
+                            <div class="col">
+                                <a href="receiveView?msidx=${msg.msidx}">
+                                        ${msg.content}
+                                </a>
+                            </div>
+                            <div class="col">
+                                <fmt:formatDate value="${msg.writedate}" pattern="yyyy-MM-dd HH:mm"/>
                             </div>
                         </div>
                     </c:forEach>
@@ -93,22 +91,31 @@
     });
 
     // 폼 제출 전에 확인 및 선택 여부 검사
-    document.getElementById("multiDeleteForm").addEventListener("submit", function (e) {
+    // document.getElementById("multiDeleteForm").addEventListener("submit", function (e) {
+    //     console.log("테스트");
+    //     const anyChecked = Array.from(document.querySelectorAll("input[name='msidxList']")).some(cb => cb.checked);
+    //     if (!anyChecked) {
+    //         alert("삭제할 메시지를 선택하세요.");
+    //         e.preventDefault();
+    //         return;
+    //     }
+    //     if (!confirm("선택한 메시지를 삭제하시겠습니까?")) {
+    //         e.preventDefault();
+    //     }
+    // });
+
+    function deleteSelected() {
         const anyChecked = Array.from(document.querySelectorAll("input[name='msidxList']")).some(cb => cb.checked);
         if (!anyChecked) {
             alert("삭제할 메시지를 선택하세요.");
-            e.preventDefault();
             return;
         }
         if (!confirm("선택한 메시지를 삭제하시겠습니까?")) {
-            e.preventDefault();
+            return;
         }
-    });
-
-
-    function deleteSelected() {
         document.multiDeleteForm.submit()
     }
+
 </script>
 
 <%@ include file="../footer.jsp" %>
