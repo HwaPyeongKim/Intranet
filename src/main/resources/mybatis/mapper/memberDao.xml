@@ -124,6 +124,10 @@
         from work where worker = #{midx} and status = 1 order by completedate limit 5
     </select>
 
+    <select id="selectMainNotice" resultType="com.example.intranet.dto.BoardDto">
+        select * from board where category = 'notice' order by writedate desc limit 1
+    </select>
+
 
 
 </mapper>

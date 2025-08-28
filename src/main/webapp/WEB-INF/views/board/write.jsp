@@ -3,7 +3,7 @@
 
 <section id="writeBoard">
 
-    <form method="post" action="writeBoard" name="writeBoard" enctype="multipart/form-data" class="form fileForm shadow">
+    <form method="post" action="writeBoard" name="writeBoard" enctype="multipart/form-data" class="form fileForm">
         <input type="hidden" name="fidx" id="fidx" />
         <input type="hidden" name="midx" value="${loginUser.midx}" />
 

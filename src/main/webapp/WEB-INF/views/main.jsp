@@ -25,7 +25,10 @@
                         <div class="time"><fmt:formatDate value="${madto.endtime}" pattern="HH:mm:ss" /></div>
                     </div>
                 </div>
-<%--                <div class="main_btn_out">퇴근하기</div>--%>
+                <div class="main_inout_btnbox">
+                    <button type="button" onclick="location.href='logout'" class="logout">로그아웃</button>
+                    <button type="button" data-midx="${loginUser.midx}" id="workoutBtn" class="out">퇴근하기</button>
+                </div>
             </div>
 
 
@@ -41,8 +44,10 @@
         <div class="main-section">
 
             <div class="announcement">
-                <button class="btn-announcement">오늘의공지</button>
-                <div class="announcement-text"><a>오늘의공지제목들어감</a></div>
+                <button class="btn-announcement" onclick="location.href='viewBoard?bidx=${mainNotice}'">주요 공지</button>
+                <div class="announcement-text">
+                    <a onclick="location.href='viewBoard?bidx=${mainNotice}'">${noticeBoard.title}</a>
+                </div>
             </div>
             <div class="main_widget_box">
                 <a class="widget" onclick="location.href='writeVacationForm'">

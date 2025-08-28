@@ -1,13 +1,28 @@
+
+body {
+    font-family: "Noto Sans", sans-serif !important;
+    font-style: normal;
+}
+
 .clearfix::after {content: ""; display: table; clear: both;}
 
-input[type=button], input[type=submit], button {padding: 5px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold; cursor: pointer;}
+input[type=button], input[type=submit], button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #2973cd;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;}
 
 input[type=text], input[type=password], input[type=email], input[type=date] {padding: 5px; border: 0; border-bottom: 1px solid #000; outline: 0;}
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus {border-bottom: 2px solid #50bde2;}
 textarea:focus {outline: 2px solid #50bde2;}
 
 #wrap {width: 100%; max-width:1200px; margin: 0 auto;}
-h2 {margin: 10px 0 30px; font-size: 2em;}
+h2 {margin: 10px 0 30px; font-size: 2em;text-align: center;
+    font-weight: bold;}
 textarea {padding: 10px;}
 
 .main_color {color: #50bde2;}
@@ -20,19 +35,41 @@ header #logo {height: 60px;}
 header #logo img{height: 100%;}
 header .nav {display: flex;}
 header .nav li {margin-left: 20px;}
-header .nav li.profile img.profileImg {display: inline-block; width: 40px; height: 40px; border: 1px solid #50bde2; border-radius: 50%; vertical-align: middle;}
-header .nav li.profile span {display: inline-block;}
+header .nav li.profile img.profileImg {display: inline-block; width: 40px; height: 40px; border: 1px solid #9e9e9e; border-radius: 50%; vertical-align: middle;}
+header .nav li.profile span {display: inline-block;font-size: 15px;font-weight: normal;}
 header .nav li.profile .messageBox {position: relative; display: inline-block; vertical-align: middle; margin-right: 10px;}
 header .nav li.profile .messageBox img {display: inline-block; width: 25px;}
 header .nav li.profile .messageBox i {display: none; position: absolute; top: -10px; right: -10px; width: 20px; height: 20px; background: #f00; border-radius: 50%; color: #fff; font-size: .9em; text-align: center; line-height: 20px;}
 header .nav li.profile button {}
 
-.submenu {display: flex; justify-content: space-between; margin: 20px 0;}
-.submenu li {width: 50%; line-height: 50px; text-align: center; border: 1px solid #000;}
-.submenu li a {display: block; width: 100%;}
-.submenu li:first-child {border-radius: 5px 0 0 5px;}
-.submenu li:last-child {border-radius: 0 5px 5px 0;}
-.submenu li.on {border: 1px solid #32a2c6; background: #50bde2; color: #fff;}
+header .nav li a {font-size: 18px;font-weight: bold;}
+
+.submenu {}
+.submenu li {display: inline-block;
+    background-color: #8cbad1;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    font-weight: 400;
+    margin-right: 2px;}
+.submenu li a {display: block; padding: 18px 34px;}
+.submenu li:hover {
+    background-color: #3a97b9;
+}
+.submenu li.on {background-color: #2973cd;
+    font-weight: bold;}
+
+body section:first-of-type {
+    border-radius: 0 10px 10px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 50px 50px;
+    min-height: 530px;
+    box-sizing: border-box;
+}
 
 .field {display: flex; margin: 10px 0;}
 .field label {flex: 1; padding: 10px 0;}
@@ -49,13 +86,14 @@ header .nav li.profile button {}
 .btns input, .btns button, .btns a {flex: 1; margin-right: 10px; padding: 25px;}
 .btns input:last-child, .btns button:last-child, .btns a:last-child {margin-right: 0;}
 
-div.table {border: 1px solid #000; margin: 30px 0;}
-div.table > div.row {display: flex; justify-content: space-between; border-bottom: 1px solid #000;}
+div.table {margin: 30px 0;}
+div.table > div.row {display: flex; justify-content: space-between;}
 div.table > div.row:last-child {border-bottom: 0;}
 div.table > div.head.row > div.col {font-weight: bold;}
-div.table > div.row > div.col {flex: 1; text-align: center; border-right: 1px solid #000; padding: 10px 5px;}
+div.table > div.row.head > div.col {padding: 13px 10px;}
+div.table > div.row > div.col {flex: 1; text-align: center; padding: 18px 10px;border-bottom: 1px solid #ccc;}
+div.table > div.row.head > div.col {border-bottom: 2px solid #000;border-top:2px solid #000;}
 div.table > div.row > div.col.title {flex: 4;}
-div.table > div.row > div.col:last-child {border-right: 0;}
 div.table > div.row.empty {line-height: 200px;}
 
 .boxBtns {margin: 20px 0;}
@@ -66,10 +104,14 @@ div.table > div.row.empty {line-height: 200px;}
 .paging a.on {color: #f00;}
 .paging a:hover {color: #000;}
 
-.searchBox {margin-top: 20px;}
-.searchBox select {padding: 5px;}
+.searchBox {}
+.searchBox select {padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;}
 .searchBox > div.input {display: inline-block; width: 70%; vertical-align: middle;}
-.searchBox > div.input input[type=text] {width: 50%;}
+.searchBox > div.input input[type=text] {width: 38%;
+    margin-left: 14px;
+    padding: 7px;}
 .searchBox > select {display: inline-block; float: right;}
 
 .comments {margin: 30px 0;}

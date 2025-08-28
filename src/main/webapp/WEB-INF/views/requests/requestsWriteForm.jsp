@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../header.jsp" %>
+<link rel="stylesheet" type="text/css" href="/css/requests.css">
 
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
@@ -26,102 +27,11 @@
     });
 </script>
 
-<style>
-    .form-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 40px 50px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
 
-    .form-title {
-        text-align: center;
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 30px;
-    }
-
-    .form-box {
-        background: #fff;
-        border: 1px solid #ddd;
-        padding: 24px;
-        margin-bottom: 25px;
-        border-radius: 5px;
-    }
-
-    .form-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 18px;
-    }
-
-    .form-row label {
-        flex: 0 0 120px;
-        font-weight: 600;
-    }
-
-    .form-row input[type="text"],
-    .form-row select {
-        flex: 1;
-        padding: 8px 12px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-    }
-
-    .textbox {
-        width: 100%;
-        min-height: 400px;
-        padding: 12px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        resize: vertical;
-    }
-
-    .form-message {
-        color: #e74c3c;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .form-buttons {
-        text-align: center;
-    }
-
-    .form-buttons button {
-        padding: 10px 20px;
-        margin: 0 10px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        background-color: #3498db;
-        color: #fff;
-        transition: background-color 0.3s;
-    }
-
-    .form-buttons button:hover {
-        background-color: #2980b9;
-    }
-
-    .delete-btn {
-        margin-left: 10px;
-        background-color: #b7b7b7;
-        font-size: 16px;
-        padding: 6px 10px;
-        border: none;
-    }
-</style>
-
-<section class="form-container">
+<section id="form-container" class="section_wrap">
     <form method="post" action="requestsWrite" name="requestsWrite" class="fileForm" enctype="multipart/form-data">
         <input type="hidden" name="fidx" id="fidx">
         <input type="hidden" name="midx" value="${loginUser.midx}">
-        <input type="hidden" name="category" value="1">
 
         <h2 class="form-title">기안 작성</h2>
 
@@ -135,6 +45,19 @@
                 <label for="title">제목</label>
                 <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required />
             </div>
+
+            <div class="form-row">
+                <label>구분</label>
+                <div>
+                    <select name="category">
+                        <option value="1">업무기안</option>
+                        <option value="5">증명서/문서</option>
+                        <option value="6">품의/지출</option>
+                    </select>
+                </div>
+            </div>
+
+
 
             <div class="form-row">
                 <label for="confirm_midx">결재자</label>
