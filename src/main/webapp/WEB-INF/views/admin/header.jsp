@@ -16,6 +16,7 @@
     <%--개별 링크--%>
     <link rel="stylesheet" type="text/css" href="admin/css/member.css">
     <script src="admin/scripts/member.js"></script>
+    <script src="admin/scripts/board.js"></script>
 </head>
 <body>
 

@@ -1,6 +1,7 @@
 package com.example.intranet.service;
 
 import com.example.intranet.dao.IAdminDao;
+import com.example.intranet.dto.MemberAttendanceDto;
 import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.Paging;
 import com.example.intranet.dto.TeamDto;
@@ -37,6 +38,18 @@ public class AdminService {
     public void updatePosition(List<List<String>> datas) {
         for (List<String> data : datas) {
             adao.updatePosition(data.get(0), data.get(1)); // midx, position
+        }
+    }
+
+    public void updateLevel(List<List<String>> datas) {
+        for (List<String> data : datas) {
+            adao.updateLevel(data.get(0), data.get(1)); // midx, level
+        }
+    }
+
+    public void updateAttendance(List<List<String>> datas) {
+        for (List<String> data : datas) {
+            adao.updateAttendance(data.get(0), data.get(1)); // maidx, endtime
         }
     }
 
@@ -128,8 +141,33 @@ public class AdminService {
         adao.insertTeam(name);
     }
 
-    public ArrayList<MemberDto> selectMemberNoTeam() {
-        return adao.selectMemberNoTeam();
+    public HashMap<String, Object> selectMemberNoTeam(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        if (request.getParameter("first") != null) {
+            session.removeAttribute("page");
+            session.removeAttribute("key");
+        }
+
+        String key = "";
+        String type = "";
+        if (request.getParameter("key") != null) {
+            type =  request.getParameter("type");
+            key = request.getParameter("key");
+            session.setAttribute("type", type);
+            session.setAttribute("key", key);
+        } else if (session.getAttribute("key") != null) {
+            type = (String) session.getAttribute("type");
+            key = (String) session.getAttribute("key");
+        }
+
+        HashMap<String, Object> result = new HashMap<>();
+        ArrayList<MemberDto> list = adao.selectMemberNoTeam(type, key);
+        result.put("list", list);
+        result.put("type", type);
+        result.put("key", key);
+
+        return result;
     }
 
     public ArrayList<TeamDto> selectTeams(int tidx) {
@@ -139,5 +177,46 @@ public class AdminService {
 
     public ArrayList<TeamDto> selectTeamList() {
         return adao.selectTeamList();
+    }
+    public ArrayList<TeamDto> addTeamMember(List<List<String>> datas) {
+        int tidx = 0;
+        for (List<String> data : datas) {
+            tidx = Integer.parseInt(data.get(1));
+            adao.addTeamMember(data.get(0), data.get(1)); // midx, tidx
+        }
+        return selectTeams(tidx);
+    }
+
+    public ArrayList<MemberDto> deleteTeamMember(List<List<String>> datas) {
+        for (List<String> data : datas) {
+            adao.addTeamMember(data.get(0), "0"); // midx, tidx
+        }
+
+        return adao.selectMemberNoTeam();
+    }
+
+    public String getTeamName(int tidx) {
+        return adao.getTeamName(tidx);
+    }
+    public ArrayList<MemberAttendanceDto> getMemberAttendances(String maidxes) {
+        ArrayList<MemberAttendanceDto> list = new ArrayList<>();
+        String [] maidx = maidxes.split(",");
+        for (int i=0; i<maidx.length; i++) {
+            MemberAttendanceDto mdto = adao.getMemberAttendances(Integer.parseInt(maidx[i]));
+            list.add(mdto);
+        }
+        return list;
+    }
+
+    public void deleteBoard(List<String> datas) {
+        for (String bidx : datas) {
+            adao.deleteBoard(bidx);
+        }
+    }
+
+    public void showBoard(List<List<String>> datas) {
+        for (List<String> data : datas) {
+            adao.showBoard(data.get(0), data.get(1)); // bidx, showyn
+        }
     }
 }

@@ -24,6 +24,16 @@
                     <input type="radio" name="category" id="main" value="main" <c:if test="${item.category == 'main'}"> checked</c:if> />
                 </div>
             </div>
+
+            <div class="field">
+                <label>노출여부</label>
+                <div>
+                    <label for="showyn_y">노출</label>
+                    <input type="radio" name="showyn" id="showyn_y" value="Y" <c:if test="${item.showyn == 'Y'}"> checked</c:if> />
+                    <label for="showyh_n">미노출</label>
+                    <input type="radio" name="showyn" id="showyh_n" value="N" <c:if test="${item.showyn == 'N'}"> checked</c:if> />
+                </div>
+            </div>
             </c:when>
             <c:otherwise>
             <input type="hidden" name="category" value="main" />

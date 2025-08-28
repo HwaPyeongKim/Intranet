@@ -22,7 +22,15 @@
         </div>
     </form>
 
-    <form method="post" name="adminBoardDownloadInfo" id="adminBoardDownloadInfo">
+    <form method="post" name="adminBoardInfo" id="adminBoardInfo">
+        <c:if test="${loginUser.level > 2}">
+            <div class="boxBtns clearfix">
+                <button type="button" onclick="deleteBoard()">삭제</button>
+                <button type="button" onclick="showBoard('N')">미노출로 변경</button>
+                <button type="button" onclick="showBoard('Y')">노출로 변경</button>
+            </div>
+        </c:if>
+
         <table>
             <thead>
                 <tr>
@@ -58,7 +66,7 @@
                                 <td><input type="checkbox" name="bidx" value="${item.bidx}" /></td>
                                 <td class="col">${item.loopnum}</td>
                                 <td class="col title">
-                                    <a href="adminViewBoard?bidx=${item.bidx}">
+                                    <a href="viewBoard?bidx=${item.bidx}" target="_blank">
                                         ${item.title}
                                         <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
                                     </a>

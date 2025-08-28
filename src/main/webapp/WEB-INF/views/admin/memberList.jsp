@@ -27,8 +27,9 @@
         <c:if test="${loginUser.level > 2}">
         <div class="boxBtns clearfix">
             <button type="button" onclick="confirmJoin()">가입승인</button>
-            <button type="button" onclick="checkLeave()">퇴사처리</button>
-            <button type="button" onclick="setPosition()">직급설정</button>
+            <button type="button" onclick="setMember('leave')">퇴사처리</button>
+            <button type="button" onclick="setMember('position')">직급설정</button>
+            <button type="button" onclick="setMember('level')">권한설정</button>
         </div>
         </c:if>
 
