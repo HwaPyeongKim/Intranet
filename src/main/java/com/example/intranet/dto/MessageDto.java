@@ -22,6 +22,8 @@ public class MessageDto {
     private String touserid;
     private String fromname;
     private String fromuserid;
+    private String fromposition;
+    private String toposition;
 
 }
 

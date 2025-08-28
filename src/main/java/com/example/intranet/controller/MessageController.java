@@ -67,6 +67,7 @@ public class MessageController {
     @GetMapping("/receiveView")
     public String receiveView(@RequestParam int msidx, Model model) {
         MessageDto message = mgs.getMessageReceiveView(msidx);
+        mgs.updateReadyn(msidx);
         model.addAttribute("message", message);
         model.addAttribute("activeTab", "receive");
         return "message/view";

@@ -5,9 +5,9 @@
 
 <mapper namespace="com.example.intranet.dao.IMessageDao">
 
-    <insert id="insertMessage" parameterType="com.example.intranet.dto.MessageDto">
-        INSERT INTO message (frommidx, tomidx, title, content, readyn, todeleteyn, fromdeleteyn, writedate)
-        VALUES (#{frommidx}, #{tomidx}, #{title}, #{content}, 'N', 'N', 'N', NOW())
+    <insert id="sendMessage" parameterType="com.example.intranet.dto.MessageDto">
+        INSERT INTO message (frommidx, tomidx, content, readyn, todeleteyn, fromdeleteyn, writedate)
+        VALUES (#{frommidx}, #{tomidx}, #{content}, 'N', 'N', 'N', NOW())
     </insert>
 
     <select id="getMessageByUser" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
@@ -21,7 +21,7 @@
         SELECT * FROM msg_view WHERE msidx = #{msidx}
     </select>
 
-    <update id="updateReadStatus" parameterType="int">
+    <update id="updateReadyn" parameterType="int">
         UPDATE message SET readyn = 'Y', readdate = NOW() WHERE msidx = #{msidx}
     </update>
 
@@ -53,7 +53,7 @@
 
 
     <select id="getMessageReceiveView" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
-        SELECT m.msidx, m.frommidx, m.tomidx, m.title, m.content, m.writedate,
+        SELECT m.msidx, m.frommidx, m.tomidx, m.content, m.writedate, m.readyn, m.readdate,
                sender.name AS fromName, receiver.name AS toName
         FROM message m
                  JOIN member sender ON m.frommidx = sender.midx
@@ -63,7 +63,7 @@
 
 
     <select id="getMessageSentView" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
-        SELECT m.msidx, m.frommidx, m.tomidx, m.title, m.content, m.writedate,
+        SELECT m.msidx, m.frommidx, m.tomidx, m.content, m.writedate, m.readyn, m.readdate,
                sender.name AS fromName, receiver.name AS toName
         FROM message m
                  JOIN member sender ON m.frommidx = sender.midx
@@ -96,18 +96,15 @@
     </update>
 
     <select id="selectReceive" resultType="com.example.intranet.dto.MessageDto">
-        select ms.*, mf.name as fromname
+        select ms.*, mf.name as fromname, mf.position as fromposition
         from message ms
         left join member mt on mt.midx = ms.tomidx
         left join member mf on mf.midx = ms.frommidx
         <where>
             ms.todeleteyn = 'N'
             and ms.tomidx = #{midx}
-            <if test="type == 'title'">
-                and ms.title like concat('%', #{key}, '%')
-            </if>
             <if test="type == 'titleContent'">
-                and (ms.title like concat('%', #{key}, '%') OR ms.content like concat('%', #{key}, '%'))
+                and ms.content like concat('%', #{key}, '%')
             </if>
             <if test="type == 'name'">
                 and mf.name like concat('%', #{key}, '%')
@@ -125,18 +122,15 @@
     </select>
 
     <select id="selectSent" resultType="com.example.intranet.dto.MessageDto">
-        select ms.*, mt.name as toname
+        select ms.*, mt.name as toname, mt.position as toposition
         from message ms
         left join member mt on mt.midx = ms.tomidx
         left join member mf on mf.midx = ms.frommidx
         <where>
             ms.fromdeleteyn = 'N'
             and ms.frommidx = #{midx}
-            <if test="type == 'title'">
-                and ms.title like concat('%', #{key}, '%')
-            </if>
             <if test="type == 'titleContent'">
-                and (ms.title like concat('%', #{key}, '%') OR ms.content like concat('%', #{key}, '%'))
+                and ms.content like concat('%', #{key}, '%')
             </if>
             <if test="type == 'name'">
                 and mt.name like concat('%', #{key}, '%')
@@ -152,5 +146,7 @@
             </when>
         </choose>
     </select>
+
+
 
 </mapper>
