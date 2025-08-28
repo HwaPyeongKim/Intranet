@@ -1,5 +1,6 @@
 package com.example.intranet.dao.calendar;
 
+import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.calendar.CalendarDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,7 +22,7 @@ public interface ICalendarDao {
      * @return
      * @throws Exception
      */
-    List<CalendarDto> calendarList(int midx) throws Exception;
+    List<CalendarDto> calendarList(MemberDto mdto) throws Exception;
 
     /**
      * 캘린더 일정 저장하기

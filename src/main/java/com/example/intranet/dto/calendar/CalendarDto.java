@@ -23,16 +23,17 @@ public class CalendarDto {
         분류별로 다른색상이 나오기 위해 eventColor 추가
      */
 
-    private Long calendarNo;
-    private String title;
-    private String start1;
-    private String end;
-    private boolean allDay;
-    private int midx;
-    private int category;
-    private boolean editable;
-    private String eventColor;
-    private int widx;
+    private Long calendarNo;        // 일정 번호
+    private String title;           // 일정 제목
+    private String start1;          // 일정 시작시간
+    private String end;             // 일정 종료시간
+    private boolean allDay;         // 하루종일 일정인지?
+    private int midx;               // 일정을 만든 유저
+    private int category;           // 일정의 카테고리, 1: 개인, 2: 부서, 3: 회사
+    private boolean editable;       // 일정을 수정할수 있는지?
+    private String eventColor;      // 일정의 색깔
+    private int widx;               // 업무와 관련된 일정인지
+    private int tidx;               // 부서와 관련된 일정인지
 
     public CalendarDto() {}
 
