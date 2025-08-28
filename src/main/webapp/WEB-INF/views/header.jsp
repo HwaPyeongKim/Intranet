@@ -52,8 +52,6 @@
                     <img src="/images/message.png" />
                     <i>0</i>
                 </a>
-                <button type="button" onclick="location.href='logout'">로그아웃</button>
-                <button type="button" data-midx="${loginUser.midx}" id="workoutBtn">퇴근</button>
             </li>
         </ul>
 

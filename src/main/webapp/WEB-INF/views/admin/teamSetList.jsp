@@ -17,6 +17,10 @@
         </div>
     </form>
 
+    <div class="boxBtns clearfix">
+        <button type="button" onclick="location.href='adminTeamList?first=Y'">뒤로가기</button>
+    </div>
+
     <div class="separator">
         <form method="post" name="adminNoTeam" id="adminNoTeam" class="shadow">
             <div class="boxBtns">

@@ -10,7 +10,10 @@
     </insert>
 
     <select id="getMember" resultType="com.example.intranet.dto.MemberDto">
-        select * from member where userid = #{userid}
+        select m.*, t.name as teamname
+        from member m
+        left join team t on t.tidx = m.team
+        where m.userid = #{userid}
     </select>
 
     <select id="selectMember" resultType="com.example.intranet.dto.MemberDto">

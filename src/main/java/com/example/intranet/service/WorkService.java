@@ -290,4 +290,8 @@ public class WorkService {
     public void deleteComment(int wcidx) {wdao.deleteComment(wcidx);}
 
     public void changeStatus(int widx, int status, int next) { wdao.changeStatus(widx, status, next); }
+
+    public WorkDto myCompleteWork(int midx) {
+        return wdao.myCompleteWork(midx);
+    }
 }

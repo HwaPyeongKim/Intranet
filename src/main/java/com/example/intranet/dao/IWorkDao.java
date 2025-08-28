@@ -36,4 +36,6 @@ public interface IWorkDao {
     void deleteComment(int wcidx);
 
     void changeStatus(int widx, int status, int next);
+
+    WorkDto myCompleteWork(int midx);
 }

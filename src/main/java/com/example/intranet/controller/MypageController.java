@@ -156,6 +156,8 @@ public class MypageController {
         if (loginUser != null) {
             String filePath = fs.getFile(loginUser.getImage()).getPath();
             model.addAttribute("filePath", filePath);
+            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx());
+            model.addAttribute("work", wdto);
             url = "mypage/profile";
         }
         return url;

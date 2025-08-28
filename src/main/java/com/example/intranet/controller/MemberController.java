@@ -47,6 +47,7 @@ public class MemberController {
     @GetMapping("/main")
     public String main(HttpSession session, Model model) {
         MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+        String url = "member/login";
         if (loginUser != null) {
             int midx = loginUser.getMidx();
             LocalDate today = LocalDate.now();
@@ -64,9 +65,9 @@ public class MemberController {
 
             List<WorkDto> workList = ms.selectMyWorkList(midx);
             model.addAttribute("workList", workList);
-
+            url = "main";
         }
-        return "/main";
+        return url;
     }
 
     @GetMapping("/loginForm")
