@@ -1,5 +1,6 @@
 package com.example.intranet.service.calendar;
 
+import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.calendar.CalendarDto;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface CalendarService {
      * @return
      * @throws Exception
      */
-    List<CalendarDto> calendarList(int midx) throws Exception;
+    List<CalendarDto> calendarList(MemberDto mdto) throws Exception;
 
     /**
      * 캘린더 일정 저장하기

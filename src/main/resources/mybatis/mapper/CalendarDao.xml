@@ -22,7 +22,7 @@
         카테고리기능 추가, 카테고리별 수정가능여부, 색상 추가
         부서일정의 경우 해당 부서 직원만 부서일정이 보이게?
     -->
-    <select id="calendarList" resultType="com.example.intranet.dto.calendar.CalendarDto">
+    <select id="calendarList" resultType="com.example.intranet.dto.calendar.CalendarDto" parameterType="com.example.intranet.dto.MemberDto">
         SELECT CALENDAR_NO                                      AS calendarNo,
                CALENDAR_TITLE                                   AS TITLE,
                DATE_FORMAT(CALENDAR_START, '%Y-%m-%d %H:%i:%s') AS START1,
@@ -32,7 +32,7 @@
             editable,
             eventColor
         FROM CALENDAR
-        WHERE midx = #{midx} OR category=3 OR category=2
+        WHERE midx = #{midx} OR category=3 OR (category=2 AND tidx = #{team})    -- 유저의 개인일정, 또는 부서나 회사의 전체일정을 가져옵니다
     </select>
 
     <!-- 일정 저장하기 -->
@@ -52,7 +52,9 @@
                              MIDX,              -- 일정 작성자
                              category,          -- 개인 or 부서 or 회사 일정
                              editable,          -- 일정 수정 가능여부
-                             eventColor         -- 일정 카테고리에 따른 일정 색깔
+                             eventColor,        -- 일정 카테고리에 따른 일정 색깔
+                             widx,              -- 업무와 연결되는 경우 업무 idx 입력
+                             tidx               -- 부서일정인 경우 부서 idx 입력 
         )
         values (#{title},
                 DATE_FORMAT(#{start1}, '%Y-%m-%d %H:%i:%s'),
@@ -61,7 +63,9 @@
                 #{midx},
                 #{category},
                 #{editable},
-                #{eventColor})
+                #{eventColor},
+                #{widx},
+                #{tidx})
     </insert>
 
     <!-- 일정 삭제하기 -->
@@ -85,4 +89,17 @@
             ALL_DAY        = #{allDay}
         WHERE CALENDAR_NO = #{calendarNo}
     </update>
+
+    <!--  업무와 연결된 일정 가져오기  -->
+    <select id="getEventForWork" resultType="com.example.intranet.dto.calendar.CalendarDto">
+        SELECT CALENDAR_NO                                      AS calendarNo,
+               CALENDAR_TITLE                                   AS TITLE,
+               DATE_FORMAT(CALENDAR_START, '%Y-%m-%d %H:%i:%s') AS START1,
+               DATE_FORMAT(CALENDAR_END, '%Y-%m-%d %H:%i:%s') AS END,
+            ALL_DAY AS allDay,
+            category,
+            editable,
+            eventColor
+        from calendar where widx = #{widx}
+    </select>
 </mapper>

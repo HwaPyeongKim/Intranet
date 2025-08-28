@@ -36,16 +36,16 @@ public class CalendarController {
 
     @GetMapping("/schedule") // 임시적 링크
     public String calendar(HttpSession session, Model model) {
-        // String url = "member/login";
+        String url = "member/login";
         if (session.getAttribute("loginUser") != null) {
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
             // FileDto fdto = fs.getFile(mdto.getImage());
             model.addAttribute("loginUser", mdto);
             // model.addAttribute("profileImg", fdto.getPath());
-            // url = "calendar/calendar";
+            url = "calendar/calendar";
 
         }
-        return "calendar/calendar";
+        return url;
     }
 
     /**
@@ -58,12 +58,12 @@ public class CalendarController {
     @RequestMapping("/calendarList")
     public List<CalendarDto> calendarList(HttpSession session) throws Exception {
         // 로그인 유저의 midx로 select
-        List<CalendarDto> dto = null;
+        List<CalendarDto> cdto = null;
         if (session.getAttribute("loginUser") != null) {
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-            dto = calendarService.calendarList(mdto.getMidx());
+            cdto = calendarService.calendarList(mdto);
         }
-        return dto;
+        return cdto;
     }
 
     /**
@@ -77,20 +77,22 @@ public class CalendarController {
     @PostMapping("/calendarSave")
     public CalendarDto calendarSave(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
 
-        CalendarDto dto = null;
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        CalendarDto cdto = null;
         // 비로그인시 null이 리턴, if문에서 분기가 갈리게 됨
-        if (session.getAttribute("loginUser") != null) {
-            dto = new CalendarDto();
-            dto.setTitle((String) map.get("title"));
+        if (mdto != null) {
+            cdto = new CalendarDto();
+            cdto.setTitle((String) map.get("title"));
 
             // 카테고리 1:개인, 2:부서, 3:회사
-            // Dto 설정으로 카테고리를 입력할때 수정가능 여부와 색깔이 자동 입력됩니다.
+            // cdto 설정으로 카테고리를 입력할때 수정가능 여부와 색깔이 자동 입력됩니다.
             int category = Integer.parseInt((String) map.get("category"));
-            dto.setCategory(category);
+            cdto.setCategory(category);
 
             // 일정 DB에 로그인 유저의 midx를 같이 insert
-            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-            dto.setMidx(mdto.getMidx());
+            // 부서일정일 경우 로그인 유저의 team도 입력
+            cdto.setMidx(mdto.getMidx());
+            if (category == 2 ) cdto.setTidx(mdto.getTeam());
 
             // UTC 시간을 LocalDateTime으로 변환
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
@@ -98,16 +100,16 @@ public class CalendarController {
             ZonedDateTime endUTC = map.get("end") != null ? ZonedDateTime.parse((String) map.get("end"), formatter).withZoneSameInstant(ZoneId.of("Asia/Seoul")) : null;
 
             // 한국 시간으로 변환하여 저장
-            dto.setStart1(startUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            dto.setEnd(endUTC != null ? endUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : null);
-            dto.setAllDay((Boolean) map.get("allDay"));
+            cdto.setStart1(startUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            cdto.setEnd(endUTC != null ? endUTC.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : null);
+            cdto.setAllDay((Boolean) map.get("allDay"));
 
 
-            calendarService.calendarSave(dto);
+            calendarService.calendarSave(cdto);
         }
 
         // 저장한 일정의 key 값을 포함한 데이터를 다시 반환
-        return dto;
+        return cdto;
     }
 
     /**
@@ -141,17 +143,17 @@ public class CalendarController {
     @PutMapping("/eventUpdate/{no}")
     public String eventUpdate(@PathVariable String no, @RequestBody Map<String, Object> map) {
 
-        CalendarDto dto = new CalendarDto();
-        dto.setCalendarNo(Long.valueOf(no));
-        dto.setTitle((String) map.get("title"));
-        dto.setStart1(map.get("start1").toString().substring(0, 19));
+        CalendarDto cdto = new CalendarDto();
+        cdto.setCalendarNo(Long.valueOf(no));
+        cdto.setTitle((String) map.get("title"));
+        cdto.setStart1(map.get("start1").toString().substring(0, 19));
         if (map.get("end") != null) {
-            dto.setEnd(map.get("end").toString().substring(0, 19));
+            cdto.setEnd(map.get("end").toString().substring(0, 19));
         }
-        dto.setAllDay((Boolean) map.get("allDay"));
+        cdto.setAllDay((Boolean) map.get("allDay"));
 
         try {
-            calendarService.eventUpdate(dto);
+            calendarService.eventUpdate(cdto);
             return "success";
         } catch (Exception e) {
             e.printStackTrace();
