@@ -3,12 +3,12 @@
 
 <section>
 
+    <h2>게시판</h2>
+
     <ul class="submenu">
         <li class="on"><a href="board">메인게시판</a></li>
         <li><a href="download">자료실</a></li>
     </ul>
-
-    <h2>게시판</h2>
 
     <div class="boxBtns clearfix">
         <button type="button" onclick="location.href='writeBoardForm?category=main'">글쓰기</button>
@@ -49,11 +49,12 @@
             <c:otherwise>
                 <c:forEach items="${notice}" var="item">
                     <div class="row notice">
-                        <div class="col">공지</div>
+                        <div class="col">공지 <i class="fa-solid fa-bullhorn"></i></div>
                         <div class="col title">
                             <a href="viewBoard?bidx=${item.bidx}">
                                 ${item.title}
                                 <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
+                                <c:if test="${fn:substring(item.writedate, 0, 10) == today}"><span class="new"> New</span></c:if>
                             </a>
                         </div>
                         <div class="col">${item.name}</div>
@@ -68,6 +69,7 @@
                             <a href="viewBoard?bidx=${item.bidx}">
                                 ${item.title}
                                 <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
+                                <c:if test="${fn:substring(item.writedate, 0, 10) == today}"><span class="new"> New</span></c:if>
                             </a>
                         </div>
                         <div class="col">${item.name}</div>

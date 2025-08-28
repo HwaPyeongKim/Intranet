@@ -36,7 +36,7 @@
         <table>
             <thead>
                 <tr>
-                    <th></th>
+                    <th><input type="checkbox" /></th>
                     <th>번호</th>
                     <th>아이디</th>
                     <th>직급</th>

@@ -27,4 +27,5 @@ public class MemberDto {
     private String deleteyn;
     private int loopnum; // 번호를 위한 변수
 
+    private String teamname; // team 테이블 조인
 }

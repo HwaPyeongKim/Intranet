@@ -29,4 +29,7 @@ public class WorkDto {
     private String path; // file 테이블 조인
     private int comment_count; // board_comment 조인
     private String cdate;
+
+    private int totalCount;
+    private int completeCount;
 }

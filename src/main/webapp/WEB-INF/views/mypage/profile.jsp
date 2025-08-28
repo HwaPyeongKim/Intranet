@@ -3,13 +3,13 @@
 
 <section>
 
+    <h2>프로필</h2>
+
     <ul class="submenu">
         <li><a href="workList">나의업무</a></li>
         <li><a href="vacationList">연차/반차 신청</a></li>
         <li class="on"><a href="profile">프로필</a></li>
     </ul>
-
-    <h2>프로필</h2>
 
     <div class="boxBtns clearfix">
         <button type="button" onclick="location.href='changePwdForm'">비밀번호 수정</button>
@@ -49,7 +49,9 @@
 
                 <div class="field">
                     <label>부서</label>
-                    <div>${loginUser.team}</div>
+                    <div>
+                        <c:if test="${loginUser.teamname != null}">${loginUser.teamname}</c:if>
+                    </div>
                 </div>
 
                 <div class="field">
@@ -60,6 +62,21 @@
                 <div class="field">
                     <label>주소</label>
                     <div>(${loginUser.postcode}) ${loginUser.address1} ${loginUser.address2}</div>
+                </div>
+            </div>
+        </div>
+        <div class="summaryInfo">
+            <div class="table workTable">
+                <div class="row head">
+                    <div class="col">받은 업무</div>
+                    <div class="col">완료한 업무</div>
+                    <div class="col">업무 완료율</div>
+                </div>
+
+                <div class="row">
+                    <div class="col">${work.totalCount}</div>
+                    <div class="col">${work.completeCount}</div>
+                    <div class="col">${fn:substring(work.completeCount / work.totalCount * 100, 0, 5)}%</div>
                 </div>
             </div>
         </div>
