@@ -30,13 +30,17 @@
             </if>
         </where>
 
+        order by
         <choose>
-            <when test="sort == 'desc'">
-                order by b.writedate desc
-            </when>
-            <when test="sort == 'asc'">
-                order by b.writedate asc
-            </when>
+            <when test="sort == 'title'">b.title</when>
+            <when test="sort == 'name'">m.name</when>
+            <when test="sort == 'readcount'">b.readcount</when>
+            <when test="sort == 'showyn'">b.showyn</when>
+            <otherwise>b.writedate</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">asc</when>
+            <otherwise>desc</otherwise>
         </choose>
     </select>
 

@@ -39,9 +39,9 @@ public class CalendarDto {
 
     public CalendarDto() {}
 
+    // 일정관리창 외의 다른 곳에서 일정을 자동생성 하게 할 경우 사용하게될 생성자
     public CalendarDto(String title, String start1, String end, MemberDto mdto, String use, int idx){
 
-        // 일정관리창 외의 다른 곳에서 일정을 자동생성 하게 할 경우 사용하게될 생성자
 
         // 입력해야할것 : 일정명, 일정시작일, 일정종료일, 멤버dto, 사용목적, 사용하고자 하는곳의 idx
         // 사용목적에 따라 일정의 카테고리가 결정, 사용목적에 맞는 idx가 입력
@@ -56,7 +56,7 @@ public class CalendarDto {
             this.setCategory(1);        // 개인일정으로 생성됨
 
         }else if(use.equals("vacation")){
-            this.widx = idx;            // 사용목적이 vacation 인 경우 widx 값 추가되고
+            this.ridx = idx;            // 사용목적이 vacation 인 경우 ridx 값 추가되고
             this.setCategory(2);        // 부서일정으로 생성됨
             this.tidx = mdto.getTeam(); // 부서 추가
         }else{
@@ -74,10 +74,9 @@ public class CalendarDto {
 
     }
 
+    // setCategory 할때 수정가능 여부와 색상을 자동으로 넣습니다.
     public void setCategory(int category) {
         this.category = category;
-
-        // setCategory 할때 수정가능 여부와 색상을 자동으로 넣습니다.
 
         switch (category) {
             case 1: // 개인: 수정가능, 색상 분홍색

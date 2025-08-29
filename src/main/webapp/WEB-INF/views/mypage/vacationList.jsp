@@ -5,10 +5,8 @@
     <li class="on"><a href="vacationList">연차/반차 신청</a></li>
     <li><a href="profile">프로필</a></li>
 </ul>
-<section>
-    <div class="boxBtns clearfix">
-        <button type="button" onclick="location.href='writeVacationForm'">신청하기</button>
-    </div>
+<section
+
 
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
@@ -21,22 +19,36 @@
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>
-            </select>
+            <div class="boxBtns clearfix">
+                <button type="button" onclick="location.href='writeVacationForm'">신청하기</button>
+            </div>
         </div>
     </form>
 
     <div class="table">
         <div class="row head">
             <div class="col">번호</div>
-            <div class="col">종류</div>
-            <div class="col title">제목</div>
-            <div class="col">결재자</div>
-            <div class="col">시작/종료일</div>
-            <div class="col">작성일</div>
-            <div class="col">처리상태</div>
+            <div class="col">
+                <span data-sort="category">구분<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'category', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col title">
+                <span data-sort="title">제목<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'title', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="cname">결재자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'cname', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="startdate">시작일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'startdate', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="enddate">종료일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'enddate', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="writedate">작성일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="status">처리상태<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'status', 'writedate', 'desc')}"></i></span>
+            </div>
         </div>
         <c:choose>
             <c:when test="${empty list}">
@@ -63,7 +75,8 @@
                             </a>
                         </div>
                         <div class="col">${item.cname}</div>
-                        <div class="col"><fmt:formatDate value="${item.startdate}" pattern="yyyy-MM-dd" /><br /><fmt:formatDate value="${item.enddate}" pattern="yyyy-MM-dd" /></div>
+                        <div class="col"><fmt:formatDate value="${item.startdate}" pattern="yyyy-MM-dd" /></div>
+                        <div class="col"><fmt:formatDate value="${item.enddate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></div>
                         <div class="col">
                             <c:choose>

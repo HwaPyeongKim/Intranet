@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 @Mapper
 public interface IMypageDao {
-    ArrayList<WorkDto> selectWork(String type, String key, String sort, int midx);
-    ArrayList<MemberRequestsDto> selectRequests(String type, String key, String sort, int midx);
+    ArrayList<WorkDto> selectWork(String type, String key, String sort, String dir, int midx);
+    ArrayList<MemberRequestsDto> selectRequests(String type, String key, String sort, String dir, int midx);
     void insertRequests(MemberRequestsDto mrdto);
     ArrayList<MemberDto> selectConfirm(int midx);
 }

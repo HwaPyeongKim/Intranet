@@ -15,23 +15,18 @@
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort">
-                <option value="joindesc" <c:if test="${sort == 'joindesc'}"> selected</c:if>>입사일 최근순</option>
-                <option value="joinasc" <c:if test="${sort == 'joinasc'}"> selected</c:if>>입사일 오래된순</option>
-                <option value="nameasc" <c:if test="${sort == 'nameasc'}"> selected</c:if>>이름 가나다순</option>
-            </select>
+            <c:if test="${loginUser.level > 2}">
+                <div class="boxBtns clearfix">
+                    <button type="button" onclick="confirmJoin()">가입승인</button>
+                    <button type="button" onclick="setMember('leave')">퇴사처리</button>
+                    <button type="button" onclick="setMember('position')">직급설정</button>
+                    <button type="button" onclick="setMember('level')">권한설정</button>
+                </div>
+            </c:if>
         </div>
     </form>
 
     <form method="post" name="adminMemberInfo" id="adminMemberInfo">
-        <c:if test="${loginUser.level > 2}">
-        <div class="boxBtns clearfix">
-            <button type="button" onclick="confirmJoin()">가입승인</button>
-            <button type="button" onclick="setMember('leave')">퇴사처리</button>
-            <button type="button" onclick="setMember('position')">직급설정</button>
-            <button type="button" onclick="setMember('level')">권한설정</button>
-        </div>
-        </c:if>
 
         <table>
             <thead>
@@ -39,16 +34,26 @@
                     <th><input type="checkbox" /></th>
                     <th>번호</th>
                     <th>아이디</th>
-                    <th>직급</th>
-                    <th>이름</th>
+                    <th>
+                        <span data-sort="position">직급<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'position', 'joindate', 'desc')}"></i></span>
+                    </th>
+                    <th>
+                        <span data-sort="name">이름<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'name', 'joindate', 'desc')}"></i></span>
+                    </th>
                     <th>주민등록번호</th>
                     <th>이메일</th>
                     <th>휴대전화번호</th>
                     <th>주소</th>
-                    <th>입사일</th>
-                    <th>퇴사일</th>
+                    <th>
+                        <span data-sort="joindate">입사일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'joindate', 'joindate', 'desc')}"></i></span>
+                    </th>
+                    <th>
+                        <span data-sort="leavedate">퇴사일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'leavedate', 'joindate', 'desc')}"></i></span>
+                    </th>
                     <c:if test="${loginUser.level > 2}">
-                    <th>가입승인여부</th>
+                    <th>
+                        <span data-sort="confirmyn">가입승인여부<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'confirmyn', 'joindate', 'desc')}"></i></span>
+                    </th>
                     <th>정보수정</th>
                     </c:if>
                 </tr>

@@ -41,4 +41,6 @@ public interface CalendarService {
      * @throws Exception
      */
     void eventUpdate(CalendarDto vo) throws Exception;
+
+    void deleteOldEvent();
 }

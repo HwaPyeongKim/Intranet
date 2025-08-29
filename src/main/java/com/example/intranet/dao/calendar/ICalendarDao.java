@@ -46,4 +46,6 @@ public interface ICalendarDao {
     void eventUpdate(CalendarDto dto) throws Exception;
 
     ArrayList<CalendarDto> getEventForWork(int widx);
+
+    void deleteOldEvent();
 }

@@ -49,15 +49,7 @@
             </if>
         </where>
 
-        <choose>
-            <when test="sort == 'desc'">
-                order by t.writedate desc, m.level, m.name desc
-            </when>
-            <when test="sort == 'asc'">
-                order by t.writedate asc, m.level, m.name desc
-            </when>
-        </choose>
-
+        order by t.writedate desc, m.level, m.name desc
     </select>
 
     <select id="checkTeamName" resultType="com.example.intranet.dto.TeamDto">

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sort" uri="http://example.com/sort" %>
 <html>
 <head>
     <title>Grouping</title>
@@ -47,7 +48,6 @@
             <li><a href="schedule" class="scheduleMenu">일정관리</a></li>
             <li><a href="work" class="workMenu">업무관리</a></li>
             <li><a href="requests" class="requestsMenu">전자결제</a></li>
-            <li><a href="receiveList" class="messageMenu">메세지</a></li>
             <li><a href="workList" class="mypageMenu">마이페이지</a></li>
 
             <li class="profile">

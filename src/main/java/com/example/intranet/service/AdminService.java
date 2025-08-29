@@ -81,13 +81,8 @@ public class AdminService {
             key = (String) session.getAttribute("key");
         }
 
-        String sort = "desc";
-        if (request.getParameter("sort") != null) {
-            sort = request.getParameter("sort");
-        }
-
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<TeamDto> lists = adao.selectTeamMembers(type, key, sort, midx, level);
+        ArrayList<TeamDto> lists = adao.selectTeamMembers(type, key, midx, level);
         ArrayList<TeamDto> list = new ArrayList<>();
 
         Paging paging = new Paging();
@@ -130,7 +125,6 @@ public class AdminService {
         result.put("paging", paging);
         result.put("type", type);
         result.put("key", key);
-        result.put("sort", sort);
 
         return result;
     }
