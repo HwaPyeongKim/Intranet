@@ -55,9 +55,11 @@ public class MemberController {
             System.out.println(today);
 
             BoardDto noticeBoard = ms.selectMainNotice();
-            int mainNotice = noticeBoard.getBidx();
-            model.addAttribute("mainNotice", mainNotice);
-            model.addAttribute("noticeBoard", noticeBoard);
+            if (noticeBoard != null) {
+                int mainNotice = noticeBoard.getBidx();
+                model.addAttribute("mainNotice", mainNotice);
+                model.addAttribute("noticeBoard", noticeBoard);
+            }
 
             MemberAttendanceDto madto = ms.selectInOutTime(midx, String.valueOf(today));
             model.addAttribute("madto", madto);

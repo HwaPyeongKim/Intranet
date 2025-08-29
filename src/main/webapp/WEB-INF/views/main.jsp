@@ -44,10 +44,20 @@
         <div class="main-section">
 
             <div class="announcement">
-                <button class="btn-announcement" onclick="location.href='viewBoard?bidx=${mainNotice}'">주요 공지</button>
-                <div class="announcement-text">
-                    <a onclick="location.href='viewBoard?bidx=${mainNotice}'">${noticeBoard.title}</a>
-                </div>
+                <c:choose>
+                    <c:when test="${not empty mainNotice && not empty noticeBoard}">
+                        <button class="btn-announcement" onclick="location.href='viewBoard?bidx=${mainNotice}'">주요 공지</button>
+                        <div class="announcement-text">
+                            <a onclick="location.href='viewBoard?bidx=${mainNotice}'">${noticeBoard.title}</a>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <button class="btn-announcement">주요 공지</button>
+                        <div class="announcement-text">
+                            <a>주요 공지 없음</a>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="main_widget_box">
                 <a class="widget" onclick="location.href='writeVacationForm'">
@@ -96,7 +106,9 @@
                 </div>
             </div>
             <div class="main_cal_week">
-<%--                뭐넣을지고민..--%>
+                <div id='calendar-container' style="height: 200px;"><%--  여기에 캘린더 스타일 적용(가로크기 등) --%>
+                    <div id="calendar"></div>
+                </div>
             </div>
         </div>
     </div>

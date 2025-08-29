@@ -1,5 +1,4 @@
 body {
-    font-family: 'Arial', sans-serif;
     background-color: #f9f9f9;
     margin: 0;
 }
@@ -78,8 +77,8 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.calendar-section #calendar-container .calendar {
-    cursor: pointer;
+.calendar-section #calendar-container{
+
 }
 .calendar-section #calendar-container thead{display: none;}
 .calendar-section #calendar-container .fc .fc-toolbar.fc-header-toolbar{
@@ -89,7 +88,7 @@ body {
     font-size: 20px;
 }
 .calendar-section #calendar-container .fc-theme-standard td, .fc-theme-standard th{
-    border: none;
+    border: none;cursor: pointer;
 }
 .calendar-section #calendar-container .fc-theme-standard .fc-scrollgrid {
     border: none;
@@ -152,6 +151,14 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     cursor: pointer;
     font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.widget:hover {
+    background-color: #2973cd;
+    box-shadow: 0 4px 10px rgb(67 83 102 / 20%);
+    transform: translateY(-2px);
+    color: #fff;
 }
 
 .main_apwork_wrap{
@@ -172,8 +179,10 @@ body {
     border-radius: 10px;
     margin-bottom: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    height: 226px;
+    height: 302px;
+    box-sizing: border-box;
 }
+div.main_cal_week {margin-bottom: 0;}
 
 .approval-docs ul {
     list-style: none;
@@ -182,10 +191,17 @@ body {
 
 .approval-docs li, .work-status li {
     font-size: 14px;
-    padding: 10px;
+    padding: 12px 22px;
     position: relative;
+    transition: 0.2s;
 }
-.approval-docs li:hover, .work-status li:hover{background-color: rgb(215 231 241 / 50%);border-radius: 12px;transition: 0.2s;}
+.approval-docs li:hover, .work-status li:hover{
+    background-color: rgb(215 231 241 / 50%);
+    border-radius: 44px;
+    transform: translateY(-2px);
+    font-weight: 600;
+}
+
 
 .approval-docs li a, .work-list li a{
     font-size: 16px;
@@ -193,13 +209,13 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 308px;
+    width: 290px;
 }
-.work-list li a .worktitle {}
+.approval-docs .approval-list li a {width: 335px;}
 
 .work-status .enddate{position: absolute;
-    right: 13px;
-    top: 10px;}
+    right: 16px;
+    top: 12px;}
 
 .dot {
     display: inline-block;
@@ -207,7 +223,7 @@ body {
     height: 10px;
     border-radius: 50%;
     margin-right: 8px;
-    vertical-align: text-top;
+    vertical-align: bottom;
 }
 
 .dot.blue { border: 3px solid #42a5f5; }

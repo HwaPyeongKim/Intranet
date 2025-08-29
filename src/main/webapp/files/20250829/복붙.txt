@@ -1,0 +1,51 @@
+implementation group: 'org.glassfish.web', name: 'jakarta.servlet.jsp.jstl', version: '2.0.0'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+
+ implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+implementation group: 'com.google.code.gson', name:'gson', version:'2.11.0'
+
+implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+application.properties 에 적용
+
+
+implementation group: 'com.google.cdoe.gson', name:'gson', version:'2.' (??)
+    implementation 'com.google.code.gson:gson:2.9.0' (예전)
+
+# Server port
+server.port = 8070
+
+# about JSP
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+# My SQL
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/scott
+spring.datasource.username=root
+spring.datasource.password=adminuser
+
+# mybatis
+mybatis.mapper-locations=classpath:mybatis/mapper/**/**.xml
+
+spring.servlet.multipart.max-file-size=10MB
+spring.servlet.multipart.max-request-size=10MB
+
+# S3
+cloud.aws.s3.bucket=boardbucketdg
+cloud.aws.credentials.access-key=AKIAWYVILJLH5OXXCAOT
+cloud.aws.credentials.secret-key=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
+cloud.aws.region.static=ap-northeast-2
+cloud.aws.region.auto=false
+cloud.aws.stack.auto=false
+
+프로젝트 생성시
+web
+lombok
+validation
+JDBC API
+MySQL Driver
+mybatis
+
+카카오 REST API 키
+1679e81a933903562f4dff53ac3e2b5c
