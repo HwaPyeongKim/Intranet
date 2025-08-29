@@ -7,6 +7,7 @@ import com.example.intranet.service.MessageService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -194,8 +195,38 @@ public class MessageController {
     }
 
 
+    @GetMapping("/writeMessage")
+    public String writeMessage(HttpSession session, Model  model) {
+        String url = "member/login";
 
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        if (mdto != null) {
+            // 로그인 사용자 정보
+            model.addAttribute("userMidx", mdto.getMidx());
+            model.addAttribute("userName", mdto.getName());
+            model.addAttribute("userPosition", mdto.getPosition());
 
+            // 전체 회원 리스트 조회 (본인 제외해서 JSP에서 필터링)
+            List<MemberDto> memberList = mbs.getAllMembers();
+            model.addAttribute("memberList", memberList);
+
+            return "message/writeMessage"; // -> writeMessage.jsp
+        }
+            return url;
+    }
+
+    // 메시지 전송
+    @PostMapping("/sendMessage")
+    public String sendMessage(MessageDto message, HttpSession session) {
+        // 보낸사람 ID 세션에서 가져오기
+        int frommidx = ((com.example.intranet.dto.MemberDto)session.getAttribute("loginUser")).getMidx();
+        message.setFrommidx(frommidx);
+
+        mgs.sendMessage(message);
+
+        // 팝업창에서 다시 JSP 열 때 result=success 전달 → alert + close
+        return "redirect:/writeMessage?result=success";
+    }
 
 
 }
