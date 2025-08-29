@@ -1,7 +1,5 @@
-
-body {
+body, input, button, select, textarea {
     font-family: "Noto Sans", sans-serif !important;
-    font-style: normal;
 }
 
 .clearfix::after {content: ""; display: table; clear: both;}
@@ -14,21 +12,24 @@ input[type=button], input[type=submit], button {
     color: #fff;
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;}
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
+input[type=button]:hover, input[type=submit]:hover, button:hover{background :#64b5f6;}
 input[type=text], input[type=password], input[type=email], input[type=date] {padding: 5px; background: #fff; border: 0; border-bottom: 1px solid #000; outline: 0;}
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus {border-bottom: 2px solid #50bde2;}
 textarea:focus {outline: 2px solid #50bde2;}
 
 #wrap {width: 100%; max-width:1200px; margin: 0 auto;}
 
-h2 {margin: 10px 0 30px; font-size: 2em;}
-textarea {padding: 10px; background: #f9f9f9;}
+h2 {margin: 10px 0 30px; font-size: 2em;text-align: center; font-weight: bold;}
+textarea {padding: 10px;}
 
 .main_color {color: #50bde2;}
 .sub_color {color: #fff;}
 p.notice {color: #f00;}
-.shadow {box-shadow: 3px 3px 10px #999;}
+.shadow {box-shadow: none;}
 
 header {display: flex; justify-content: space-between; line-height: 60px;margin: 20px 0 40px;}
 header #logo {height: 60px;}
@@ -52,22 +53,26 @@ header .nav li a {font-size: 18px;font-weight: bold;}
     border: none;
     border-radius: 6px 6px 0 0;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.2s ease, transform 0.3s ease;
     font-weight: 400;
-    margin-right: 2px;}
-.submenu li a {display: block; padding: 18px 34px;}
-.submenu li:hover {
-    background-color: #3a97b9;
+    margin-right: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+.submenu li a {display: block; padding: 12px 34px;}
+.submenu li:hover {background-color: #3a97b9;padding-top: 10px;box-shadow: none;}
+.submenu li:hover a {transform: translateY(-6px);font-size: 18px;}
 .submenu li.on {background-color: #2973cd;
-    font-weight: bold;}
+    font-weight: bold;
+    padding-top: 10px;
+    box-shadow: none;
+}
+.submenu li.on a {transform: translateY(-6px);font-size: 18px;}
 
 body section:first-of-type {
     border-radius: 0 10px 10px;
     background: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 50px 50px;
-    min-height: 530px;
     box-sizing: border-box;
 }
 
@@ -76,7 +81,13 @@ body section:first-of-type {
 .field div {flex: 5; padding: 10px 0;}
 .field div label {margin-right: 30px;}
 .field div input[type=text], .field div input[type=password], .field div input[type=email] {width: 100%; height: 40px;}
-.field div select {height: 40px;}
+.field div select {
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+}
 .field div textarea {width: 100%; height: 400px; resize: none; padding: 10px;}
 .field div.prevFile {}
 .field div.prevFile a {display: block; margin-bottom: 10px;}
@@ -88,14 +99,23 @@ body section:first-of-type {
 .btns input:last-child, .btns button:last-child, .btns a:last-child {margin-right: 0;}
 
 div.table {margin: 30px 0;}
-div.table > div.row {display: flex; justify-content: space-between; border-bottom: 1px solid #ccc;}
+div.table > div.row {display: flex; justify-content: space-between;}
 div.table > div.row:last-child {border-bottom: 0;}
-div.table > div.head.row > div.col {font-weight: bold; padding: 13px 10px; border-bottom: 2px solid #000; border-top:2px solid #000;}
-div.table > div.head.row > div.col > span {cursor: pointer;}
-div.table > div.row > div.col {flex: 1; text-align: center; padding: 18px 10px; border-bottom: 1px solid #ccc;}
+div.table > div.head.row > div.col {font-weight: bold;}
+div.table > div.row.head > div.col {padding: 13px 10px;}
+div.table > div.row > div.col {flex: 1; text-align: center; padding: 18px 10px;border-bottom: 1px solid #ccc;}
+div.table > div.row.head > div.col {border-bottom: 2px solid #000;border-top:2px solid #000;}
 div.table > div.row > div.col.title {flex: 4;}
 div.table > div.row > div.col span.new {font-weight: bold; color: #f00;}
 div.table > div.row.empty {line-height: 200px;}
+
+div.table > div.row.tbody:hover{background-color: #f9f9f9;}
+div.table > div.row.tbody > div.col.title{text-align: left;}
+div.table > div.row.tbody > div.col.title:hover{color: #007BFF;
+    text-decoration: underline;}
+
+.boxBtns {}
+.boxBtns button {float: right; margin-left: 10px;}
 
 .paging {text-align: center;}
 .paging a {margin:0 5px; font-size: 1.1em; font-weight: bold;}
@@ -103,12 +123,41 @@ div.table > div.row.empty {line-height: 200px;}
 .paging a:hover {color: #000;}
 
 .searchBox {display: flex; justify-content: space-between;}
-.searchBox select {padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px;}
-.searchBox > div.input {display: inline-block; width: 70%; vertical-align: middle;}
-.searchBox > div.input input[type=text] {width: 38%; margin-left: 14px; padding: 7px;}
+.searchBox select {padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;}
+.searchBox > div.input {display: inline-block;vertical-align: middle;position: relative;}
+.searchBox > div.input input[type=text] {
+    width: 300px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 9px 40px 9px 15px;
+}
+
 .searchBox > select {display: inline-block; float: right;}
 .boxBtns {}
 .boxBtns button {float: right; margin-left: 10px;}
+
+#searchForm button {
+    all: unset;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    font-size: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#searchForm button::before {
+    content: "\f002";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 16px;
+    color: #4c4c4c;
+}
 
 .comments {margin: 30px 0;}
 .comments h3 {margin-bottom: 10px;}
