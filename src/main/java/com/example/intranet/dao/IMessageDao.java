@@ -11,7 +11,7 @@ import java.util.List;
 public interface IMessageDao {
     // 메시지 작성
 
-    void insertMessage(MessageDto message);
+    void sendMessage(MessageDto message);
 
     // 특정 회원이 받은/보낸 메시지 목록
 //    ArrayList<MessageDto> getMessageByUser(int userId);
@@ -45,6 +45,8 @@ public interface IMessageDao {
 
     ArrayList<MessageDto> selectSent(int midx, String type, String key, String sort);
     ArrayList<MessageDto> selectReceive(int midx, String type, String key, String sort);
+
+    void updateReadyn(int msidx);
 }
 
 

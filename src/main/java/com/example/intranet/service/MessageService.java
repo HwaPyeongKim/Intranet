@@ -21,7 +21,7 @@ public class MessageService {
     IMessageDao msdao;
 
     public void sendMessage(MessageDto message) {
-        msdao.insertMessage(message);
+        msdao.sendMessage(message);
     }
 
     public void deleteMessage(int msidx, String activeTab) {
@@ -47,6 +47,7 @@ public class MessageService {
 //    }
 
     public MessageDto getMessageReceiveView(int msidx) {
+
         return msdao.getMessageReceiveView(msidx);
     }
 
@@ -212,4 +213,6 @@ public class MessageService {
         return result;
 
     }
+
+    public void updateReadyn(int msidx) {  msdao.updateReadyn(msidx);}
 }

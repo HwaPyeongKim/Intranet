@@ -23,8 +23,7 @@
         <div class="searchBox">
             <div class="input">
                 <select name="type">
-                    <option value="title"<c:if test="${type == 'title'}"> selected</c:if>>제목</option>
-                    <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>제목+내용</option>
+                    <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>내용</option>
                     <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>받은사람</option>
                 </select>
                 <input type="text" name="key" value="${key}"/>
@@ -50,7 +49,8 @@
                 </div>
                 <div class="col">받은 사람</div>
                 <div class="col">내용</div>
-                <div class="col">받은 시간</div>
+                <div class="col">보낸 시간</div>
+                <div class="col">수신 확인</div>
             </div>
 
             <c:choose>
@@ -66,7 +66,7 @@
                                 <input type="checkbox" name="msidxList" value="${msg.msidx}">
                             </div>
 <%--                            <div class="col">${status.count}</div>--%>
-                            <div class="col">${msg.toname}</div>
+                            <div class="col">${msg.toname}&nbsp;${msg.toposition}</div>
                             <div class="col">
                                 <a href="sentView?msidx=${msg.msidx}">
                                         ${msg.content}
@@ -75,10 +75,35 @@
                             <div class="col">
                                 <fmt:formatDate value="${msg.writedate}" pattern="yyyy-MM-dd HH:mm"/>
                             </div>
+                            <div class="col">
+                                <c:choose>
+                                <c:when test="${msg.readyn=='Y'}" >
+                                    <div class="col" style="color: grey">${msg.readyn}</div>
+                                </c:when>
+                                <c:otherwise>
+                                     <div class="col">
+                                     <span style="background-color: rgba(103, 195, 225, 0.2); padding: 2px 6px; border-radius: 4px; ">${msg.readyn}</span>
+                                     </div>
+                                </c:otherwise>
+                                </c:choose>
+                            </div>
                         </div>
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
+                <c:if test="${not empty message}">
+                <div class="paging" style="height: 50px; line-height: 50px">
+                    <c:if test="${paging.prev}"><a href="sentList?page=${paging.beginPage-1}">Prev</a></c:if>
+
+                    <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+                        <a href="sentList?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
+                    </c:forEach>
+
+                    <c:if test="${paging.next}"><a href="sentList?page=${paging.endPage+1}">Next</a></c:if>
+                </div>
+                </c:if>
+
+
         </div>
     </form>
 </section>
