@@ -32,7 +32,7 @@
             editable,
             eventColor
         FROM CALENDAR
-        WHERE midx = #{midx} OR category=3 OR (category=2 AND tidx = #{team})    -- 유저의 개인일정, 또는 부서나 회사의 전체일정을 가져옵니다
+        WHERE (category=1 AND midx = #{midx}) OR (category=2 AND tidx = #{team}) OR category=3  -- 유저의 개인일정, 부서일정, 회사전체일정을 가져옵니다
     </select>
 
     <!-- 일정 저장하기 -->
@@ -54,7 +54,8 @@
                              editable,          -- 일정 수정 가능여부
                              eventColor,        -- 일정 카테고리에 따른 일정 색깔
                              widx,              -- 업무와 연결되는 경우 업무 idx 입력
-                             tidx               -- 부서일정인 경우 부서 idx 입력 
+                             tidx,              -- 부서일정인 경우 부서 idx 입력
+                             ridx               -- 휴가인 경우 결재서류 idx 입력
         )
         values (#{title},
                 DATE_FORMAT(#{start1}, '%Y-%m-%d %H:%i:%s'),
@@ -65,7 +66,8 @@
                 #{editable},
                 #{eventColor},
                 #{widx},
-                #{tidx})
+                #{tidx},
+                #{ridx})
     </insert>
 
     <!-- 일정 삭제하기 -->

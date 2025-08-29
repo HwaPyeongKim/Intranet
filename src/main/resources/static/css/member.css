@@ -1,5 +1,13 @@
-section#login {display: flex; align-items: center; justify-content: center; height: 100vh;}
-section#login form {width: 100%; max-width: 400px; padding: 20px; border: 1px solid #000; border-radius: 10px;}
+section#login {display: flex; align-items: center; justify-content: center; height: 100vh;background: #f9f9f9;
+    box-shadow: none;}
+section#login .logo {width: 180px;margin: 0 auto;}
+section#login .logo img {width: 100%;margin-bottom: 10px;}
+section#login form {
+    width: 100%;
+    max-width: 400px;
+    padding: 48px;
+    border-radius: 10px;
+    background: #fff;}
 
 section#join {display: flex; justify-content: center; margin-top: 50px;}
 section#join form {width: 100%; max-width: 700px; padding: 20px; border: 1px solid #000; border-radius: 10px;}

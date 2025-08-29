@@ -3,7 +3,9 @@
 
 <section id="login">
     <form method="post" action="login" class="form shadow">
-        <h2>로그인</h2>
+        <div class="logo">
+            <img src="/images/logo.png">
+        </div>
         <div class="field">
             <div>
                 <input type="text" name="userid" id="userid" value="${dto.userid}" placeholder="아이디" />

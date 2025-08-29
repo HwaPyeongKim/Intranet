@@ -1,15 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../header.jsp" %>
-
+<ul class="submenu">
+    <li><a href="board">메인게시판</a></li>
+    <li class="on"><a href="download">자료실</a></li>
+</ul>
 <section>
-
-    <h2>자료실</h2>
-
-    <ul class="submenu">
-        <li><a href="board">메인게시판</a></li>
-        <li class="on"><a href="download">자료실</a></li>
-    </ul>
-
     <c:if test="${loginUser.level >= 3}">
         <div class="boxBtns clearfix">
             <button type="button" onclick="location.href='writeBoardForm?category=download'">글쓰기</button>
@@ -49,6 +44,20 @@
                 </div>
             </c:when>
             <c:otherwise>
+                <c:forEach items="${notice}" var="item">
+                    <div class="row notice">
+                        <div class="col">공지</div>
+                        <div class="col title" style="text-align: left">
+                            <a href="viewBoard?bidx=${item.bidx}">
+                                ${item.title}
+                                <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
+                            </a>
+                        </div>
+                        <div class="col">${item.name}</div>
+                        <div class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></div>
+                        <div class="col"><fmt:formatNumber value="${item.readcount}" /></div>
+                    </div>
+                </c:forEach>
                 <c:forEach items="${list}" var="item">
                     <div class="row">
                         <div class="col">${item.loopnum}</div>
