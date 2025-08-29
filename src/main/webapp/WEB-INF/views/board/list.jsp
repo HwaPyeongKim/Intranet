@@ -47,7 +47,7 @@
             <c:otherwise>
                 <c:forEach items="${notice}" var="item">
                     <div class="row tbody notice">
-                        <div class="col">공지 <i class="fa-solid fa-bullhorn"></div>
+                        <div class="col">공지 <i class="fa-solid fa-bullhorn"></i></div>
                         <div class="col title" style="text-align: left">
                             <a href="viewBoard?bidx=${item.bidx}">
                                 ${item.title}
