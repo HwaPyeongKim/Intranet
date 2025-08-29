@@ -5,7 +5,6 @@
     <li><a href="download">자료실</a></li>
 </ul>
 <section>
-
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
             <div class="input">
@@ -48,7 +47,7 @@
             <c:otherwise>
                 <c:forEach items="${notice}" var="item">
                     <div class="row tbody notice">
-                        <div class="col">공지</div>
+                        <div class="col">공지 <i class="fa-solid fa-bullhorn"></div>
                         <div class="col title" style="text-align: left">
                             <a href="viewBoard?bidx=${item.bidx}">
                                 ${item.title}
