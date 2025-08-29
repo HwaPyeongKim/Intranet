@@ -6,6 +6,22 @@
     <li><a href="profile">프로필</a></li>
 </ul>
 <section>
+
+    <ul class="workSummaryInfo">
+        <li>
+            <p>받은 업무</p>
+            <span>${work.totalCount}</span>
+        </li>
+        <li>
+            <p>완료한 업무</p>
+            <span>${work.completeCount}</span>
+        </li>
+        <li>
+            <p>업무 완료율</p>
+            <span>${fn:substring(work.completeCount / work.totalCount * 100, 0, 5)}<small> %</small></span>
+        </li>
+    </ul>
+
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
             <div class="input">
