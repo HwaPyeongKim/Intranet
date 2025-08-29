@@ -105,10 +105,14 @@
         from calendar where widx = #{widx}
     </select>
 
-    <!--  자동생성 일정중 오래된것 자동삭제하기  -->
+    <!--  오래된 자동생성일정, 완료된 자동생성일정 자동삭제하기  -->
     <delete id="deleteOldEvent">
-        delete from calendar where CALENDAR_END &lt; now() AND (ridx>=1 OR widx>=1 )
-        -- ridx나 widx가 있는 일정중 일정 종료일이 현재시간 이전인 것들을 삭제
+        delete c
+        from calendar c, work w
+        where (c.CALENDAR_END &lt; now() AND (c.ridx>=1 OR c.widx>=1 ))
+        OR (c.widx=w.widx AND w.status=6);
+        -- ridx나 widx가 있는 일정중 일정 종료일이 현재시간 이전인 것들
+        -- 완료된 업무의 자동생성 일정을 삭제
         -- &lt; : 부등호 왼쪽이 작다 기호, 에러걸려서 바꿈
     </delete>
 </mapper>
