@@ -27,7 +27,7 @@
 
     <div class="field">
         <label>내용</label>
-        <div><pre>${item.content}</pre></div>
+        <div id="viewer"><c:out value="${item.content}" escapeXml="false" /></div>
     </div>
 
     <c:if test="${item.fidx > 0}">

@@ -54,7 +54,7 @@
 
     <select id="getMessageReceiveView" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
         SELECT m.msidx, m.frommidx, m.tomidx, m.content, m.writedate, m.readyn, m.readdate,
-               sender.name AS fromName, receiver.name AS toName
+               sender.name AS fromName, receiver.name AS toName, sender.position as fromposition, receiver.position as toposition
         FROM message m
                  JOIN member sender ON m.frommidx = sender.midx
                  JOIN member receiver ON m.tomidx = receiver.midx
@@ -64,7 +64,7 @@
 
     <select id="getMessageSentView" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
         SELECT m.msidx, m.frommidx, m.tomidx, m.content, m.writedate, m.readyn, m.readdate,
-               sender.name AS fromName, receiver.name AS toName
+               sender.name AS fromName, receiver.name AS toName, sender.position as fromposition, receiver.position as toposition
         FROM message m
                  JOIN member sender ON m.frommidx = sender.midx
                  JOIN member receiver ON m.tomidx = receiver.midx

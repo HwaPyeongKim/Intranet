@@ -193,10 +193,9 @@
                 calendar.unselect()
             },
             eventClick: function (arg) {
-                console.log(arg.event);
                 // 일정 클릭 시
-                if(!arg.event.startEditable){
-                    return; // 수정 불가능한 일정이면 동작하지 않음
+                if(!arg.event.startEditable && ${loginUser.level<2}){
+                    return; // 수정 불가능한 일정이면 삭제할 수 없으나, 관리자는 삭제할수 있음
                 }
                 if (confirm("선택한 일정을 삭제하시겠습니까?")) {
                     $.ajax({

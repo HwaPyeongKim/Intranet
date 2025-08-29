@@ -1,6 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../header.jsp" %>
 <link rel="stylesheet" type="text/css" href="/css/requests.css">
 
@@ -14,7 +12,7 @@
         </c:choose>
     </h2>
 
-    <section class="request-info-box">
+    <div class="request-info-box">
         <div class="info-row"><span class="label">작성자</span> ${rdto.mname} ${rdto.mposition}</div>
         <div class="info-row"><span class="label">제목</span> ${rdto.title}</div>
 
@@ -44,11 +42,11 @@
         <c:if test="${rdto.status == '3' || rdto.status == '4'}">
             <div class="info-row"><span class="label">처리일자</span> ${rdto.confirmdate}</div>
         </c:if>
-    </section>
+    </div>
 
-    <section class="request-content-box">
+    <div class="request-content-box">
         <pre class="request-content">${rdto.content}</pre>
-    </section>
+    </div>
 
     <c:if test="${rdto.fidx > 0}">
         <section class="request-file-box">
@@ -57,7 +55,7 @@
         </section>
     </c:if>
 
-    <section class="button-group">
+    <div class="button-group">
         <c:choose>
             <c:when test="${rdto.status == '1' || rdto.status == '2'}">
                 <button type="button" class="btn btn-reject" onclick="openConfirmModal('${rdto.ridx}', 3)">반려</button>
@@ -67,7 +65,7 @@
                 <button type="button" class="btn btn-list" onclick="location.href='/getList'">목록으로</button>
             </c:otherwise>
         </c:choose>
-    </section>
+    </div>
 
     <!-- 확인 모달 -->
     <div id="confirmModal" class="modal">
