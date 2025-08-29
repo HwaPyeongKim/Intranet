@@ -22,10 +22,10 @@
                 <input type="text" name="key" value="${key}"/>
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>최신순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성순</option>
-            </select>
+<%--            <select name="sort" id="sort">--%>
+<%--                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>최신순</option>--%>
+<%--                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성순</option>--%>
+<%--            </select>--%>
         </div>
     </form>
 
@@ -36,10 +36,21 @@
                 <div style="width: 50px; display: flex; justify-content: space-around">
                     <input type="checkbox" id="checkAll">
                 </div>
-                <div class="col">수신자</div>
-                <div class="col">내용</div>
-                <div class="col">보낸 시간</div>
-                <div class="col">수신 확인</div>
+            <div class="col">
+                <span data-sort="toname">수신자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'toname', 'writedate', 'desc')}"></i></span>
+            </div>
+
+            <div class="col">
+                <span data-sort="content">내용<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'content', 'writedate', 'desc')}"></i></span>
+            </div>
+
+            <div class="col">
+                <span data-sort="writedate">보낸시간<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span>
+            </div>
+
+            <div class="col">
+                <span data-sort="readyn">수신확인<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'readyn', 'writedate', 'desc')}"></i></span>
+            </div>
             </div>
 
             <c:choose>
