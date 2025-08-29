@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,7 +48,10 @@ public class WorkController {
             model.addAttribute("paging", result.get("paging"));
             model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
-            model.addAttribute("sort", result.get("sort"));
+            LocalDate today = LocalDate.now();
+            model.addAttribute("today", today);
+            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx());
+            model.addAttribute("work", wdto);
 
             url = "work/mywork";
         }
@@ -87,7 +91,10 @@ public class WorkController {
             model.addAttribute("paging", result.get("paging"));
             model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
-            model.addAttribute("sort", result.get("sort"));
+            LocalDate today = LocalDate.now();
+            model.addAttribute("today", today);
+            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx());
+            model.addAttribute("work", wdto);
 
             url = "work/youwork";
         }
