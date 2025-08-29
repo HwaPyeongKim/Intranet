@@ -1,6 +1,7 @@
 package com.example.intranet.service.calendar;
 
 import com.example.intranet.dao.calendar.ICalendarDao;
+import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.calendar.CalendarDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class CalendarServiceImpl implements CalendarService {
     private ICalendarDao calendarMapper;
 
     @Override
-    public List<CalendarDto> calendarList(int midx) throws Exception {
-        return calendarMapper.calendarList(midx);
+    public List<CalendarDto> calendarList(MemberDto mdto) throws Exception {
+        return calendarMapper.calendarList(mdto);
     }
 
     @Override

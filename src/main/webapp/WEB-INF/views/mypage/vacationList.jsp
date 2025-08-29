@@ -57,7 +57,10 @@
                             </c:choose>
                         </div>
                         <div class="col title">
-                            <a href="requestsDetail?ridx=${item.ridx}">${item.title}</a>
+                            <a href="requestsDetail?ridx=${item.ridx}">
+                                ${item.title}
+                                <c:if test="${fn:substring(item.writedate, 0, 10) == today}"><span class="new"> New</span></c:if>
+                            </a>
                         </div>
                         <div class="col">${item.cname}</div>
                         <div class="col"><fmt:formatDate value="${item.startdate}" pattern="yyyy-MM-dd" /><br /><fmt:formatDate value="${item.enddate}" pattern="yyyy-MM-dd" /></div>

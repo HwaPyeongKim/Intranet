@@ -124,5 +124,16 @@
         update work set status = #{next} where widx = #{widx}
     </update>
 
+    <!--  일정관리 수정중에 추가, 유저의 가장 최근 업무를 가져옴   -->
+    <select id="getRecentWork" resultType="com.example.intranet.dto.WorkDto">
+        select * from work where midx = #{midx} and widx=(
+            select MAX(widx) from work
+            )
+    </select>
+
+    <select id="myCompleteWork" resultType="com.example.intranet.dto.WorkDto">
+        select count(*) as totalCount, (select count(*) from work where midx = #{midx} and deleteyn= 'N' and completedate is not null and status = 6) as completeCount
+
+    </select>
 
 </mapper>

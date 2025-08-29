@@ -2,6 +2,15 @@ $(function(){
    $(".gnb > li > span").click(function(){
         $(this).closest("li").find("ul").slideToggle();
    });
+
+   $("table thead input[type=checkbox]").change(function(){
+       $(this).closest("table").find("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+   });
+
+    $(document).on("change", "tbody input[type=checkbox]", function() {
+        var allChecked = $(this).closest("tbody").find("input[type=checkbox]").length === $(this).closest("tbody").find("input[type=checkbox]:checked").length;
+        $(this).closest("table").find("thead input[type=checkbox]").prop("checked", allChecked);
+    });
 });
 
 $(document).ready(function() {

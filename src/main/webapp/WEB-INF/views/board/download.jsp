@@ -38,26 +38,12 @@
             <div class="col">조회수</div>
         </div>
         <c:choose>
-            <c:when test="${empty list && empty notice}">
+            <c:when test="${empty list}">
                 <div class="row empty">
                     <div class="col">게시물이 존재하지 않습니다.</div>
                 </div>
             </c:when>
             <c:otherwise>
-                <c:forEach items="${notice}" var="item">
-                    <div class="row notice">
-                        <div class="col">공지</div>
-                        <div class="col title" style="text-align: left">
-                            <a href="viewBoard?bidx=${item.bidx}">
-                                ${item.title}
-                                <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
-                            </a>
-                        </div>
-                        <div class="col">${item.name}</div>
-                        <div class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></div>
-                        <div class="col"><fmt:formatNumber value="${item.readcount}" /></div>
-                    </div>
-                </c:forEach>
                 <c:forEach items="${list}" var="item">
                     <div class="row">
                         <div class="col">${item.loopnum}</div>
@@ -65,6 +51,7 @@
                             <a href="viewBoard?bidx=${item.bidx}">
                                 ${item.title}
                                 <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
+                                <c:if test="${fn:substring(item.writedate, 0, 10) == today}"><span class="new"> New</span></c:if>
                             </a>
                         </div>
                         <div class="col">${item.name}</div>
