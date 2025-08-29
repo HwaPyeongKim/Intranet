@@ -24,6 +24,8 @@ public class BoardService {
         if (request.getParameter("first") != null) {
             session.removeAttribute("page");
             session.removeAttribute("key");
+            session.removeAttribute("sort");
+            session.removeAttribute("dir");
         }
 
         int page = 1;
@@ -46,14 +48,19 @@ public class BoardService {
             key = (String) session.getAttribute("key");
         }
 
-        String sort = "desc";
+        String sort = "writedate";
         if (request.getParameter("sort") != null) {
             sort = request.getParameter("sort");
         }
 
+        String dir = "desc";
+        if (request.getParameter("dir") != null) {
+            dir = request.getParameter("dir");
+        }
+
         HashMap<String, Object> result = new HashMap<>();
         ArrayList<BoardDto> notice = bdao.selectNotice();
-        ArrayList<BoardDto> lists = bdao.select(category, type, key, sort);
+        ArrayList<BoardDto> lists = bdao.select(category, type, key, sort, dir);
         ArrayList<BoardDto> list = new ArrayList<>();
 
         Paging paging = new Paging();

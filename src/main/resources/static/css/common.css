@@ -16,7 +16,7 @@ input[type=button], input[type=submit], button {
     font-weight: bold;
     cursor: pointer;}
 
-input[type=text], input[type=password], input[type=email], input[type=date] {padding: 5px; background: #f9f9f9; border: 0; border-bottom: 1px solid #000; outline: 0;}
+input[type=text], input[type=password], input[type=email], input[type=date] {padding: 5px; background: #fff; border: 0; border-bottom: 1px solid #000; outline: 0;}
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus {border-bottom: 2px solid #50bde2;}
 textarea:focus {outline: 2px solid #50bde2;}
 
@@ -90,31 +90,25 @@ body section:first-of-type {
 div.table {margin: 30px 0;}
 div.table > div.row {display: flex; justify-content: space-between;}
 div.table > div.row:last-child {border-bottom: 0;}
-div.table > div.head.row > div.col {font-weight: bold;}
-div.table > div.row.head > div.col {padding: 13px 10px;}
+div.table > div.head.row > div.col {font-weight: bold; padding: 13px 10px; border-bottom: 2px solid #000; border-top:2px solid #000;}
+div.table > div.head.row > div.col > span {cursor: pointer;}
 div.table > div.row > div.col {flex: 1; text-align: center; padding: 18px 10px;border-bottom: 1px solid #ccc;}
-div.table > div.row.head > div.col {border-bottom: 2px solid #000;border-top:2px solid #000;}
 div.table > div.row > div.col.title {flex: 4;}
 div.table > div.row > div.col span.new {font-weight: bold; color: #f00;}
 div.table > div.row.empty {line-height: 200px;}
-
-.boxBtns {margin: 20px 0;}
-.boxBtns button {float: right; margin-left: 10px;}
 
 .paging {text-align: center;}
 .paging a {margin:0 5px; font-size: 1.1em; font-weight: bold;}
 .paging a.on {color: #f00;}
 .paging a:hover {color: #000;}
 
-.searchBox {}
-.searchBox select {padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;}
+.searchBox {display: flex; justify-content: space-between;}
+.searchBox select {padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px;}
 .searchBox > div.input {display: inline-block; width: 70%; vertical-align: middle;}
-.searchBox > div.input input[type=text] {width: 38%;
-    margin-left: 14px;
-    padding: 7px;}
+.searchBox > div.input input[type=text] {width: 38%; margin-left: 14px; padding: 7px;}
 .searchBox > select {display: inline-block; float: right;}
+.boxBtns {}
+.boxBtns button {float: right; margin-left: 10px;}
 
 .comments {margin: 30px 0;}
 .comments h3 {margin-bottom: 10px;}

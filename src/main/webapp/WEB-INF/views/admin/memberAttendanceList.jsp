@@ -15,24 +15,32 @@
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
             </div>
+            <c:if test="${loginUser.level > 2}">
+                <div class="boxBtns clearfix">
+                    <button type="button" onclick="setMember('attendance')">퇴근처리</button>
+                </div>
+            </c:if>
         </div>
     </form>
 
     <form method="post" name="adminMemberAttendanceInfo" id="adminMemberAttendanceInfo">
-        <c:if test="${loginUser.level > 2}">
-        <div class="boxBtns clearfix">
-            <button type="button" onclick="setMember('attendance')">퇴근처리</button>
-        </div>
-        </c:if>
 
         <table>
             <thead>
                 <tr>
                     <th><input type="checkbox" /></th>
-                    <th>날짜</th>
-                    <th>이름</th>
-                    <th>출근시간</th>
-                    <th>퇴근시간</th>
+                    <th class="col">
+                        <span data-sort="date">날짜<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'date', 'date', 'desc')}"></i></span>
+                    </th>
+                    <th class="col">
+                        <span data-sort="name">이름<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'name', 'date', 'desc')}"></i></span>
+                    </th>
+                    <th class="col">
+                        <span data-sort="starttime">출근시간<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'starttime', 'date', 'desc')}"></i></span>
+                    </th>
+                    <th class="col">
+                        <span data-sort="endtime">퇴근시간<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'endtime', 'date', 'desc')}"></i></span>
+                    </th>
                 </tr>
             </thead>
 

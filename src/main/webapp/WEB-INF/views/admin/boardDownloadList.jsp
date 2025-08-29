@@ -15,31 +15,35 @@
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>
-            </select>
+            <c:if test="${loginUser.level > 2}">
+                <div class="boxBtns clearfix">
+                    <button type="button" onclick="deleteBoard()">삭제</button>
+                    <button type="button" onclick="showBoard('N')">미노출로 변경</button>
+                    <button type="button" onclick="showBoard('Y')">노출로 변경</button>
+                </div>
+            </c:if>
         </div>
     </form>
 
     <form method="post" name="adminBoardInfo" id="adminBoardInfo">
-        <c:if test="${loginUser.level > 2}">
-            <div class="boxBtns clearfix">
-                <button type="button" onclick="deleteBoard()">삭제</button>
-                <button type="button" onclick="showBoard('N')">미노출로 변경</button>
-                <button type="button" onclick="showBoard('Y')">노출로 변경</button>
-            </div>
-        </c:if>
 
         <table>
             <thead>
                 <tr>
                     <th><input type="checkbox" /></th>
                     <th class="col">번호</th>
-                    <th class="col title">제목</th>
-                    <th class="col">작성자</th>
-                    <th class="col">작성일</th>
-                    <th class="col">조회수</th>
+                    <th class="col">
+                        <span data-sort="title">제목<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'title', 'writedate', 'desc')}"></i></span>
+                    </th>
+                    <th class="col">
+                        <span data-sort="name">작성자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'name', 'writedate', 'desc')}"></i></span>
+                    </th>
+                    <th class="col">
+                        <span data-sort="writedate">작성일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span>
+                    </th>
+                    <th class="col">
+                        <span data-sort="readcount">조회수<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'readcount', 'writedate', 'desc')}"></i></span>
+                    </th>
                     <c:if test="${loginUser.level > 2}">
                     <th>노출여부</th>
                     </c:if>

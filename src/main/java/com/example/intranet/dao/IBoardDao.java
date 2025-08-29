@@ -15,7 +15,7 @@ public interface IBoardDao {
     void delete(int bidx);
     BoardDto checkBoardPwd(int bidx, String pwd);
     ArrayList<BoardDto> selectNotice();
-    ArrayList<BoardDto> select(String category, String type, String key, String sort);
+    ArrayList<BoardDto> select(String category, String type, String key, String sort, String dir);
     void update(BoardDto boarddto);
     ArrayList<BoardCommentDto> selectComments(int bidx);
     void insertComment(int bidx, int midx, String content);

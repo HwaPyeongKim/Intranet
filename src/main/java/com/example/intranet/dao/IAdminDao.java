@@ -15,7 +15,7 @@ public interface IAdminDao {
     void updatePosition(String midx, String position);
     void updateLevel(String midx, String level);
     void updateAttendance(String maidx, String endtime);
-    ArrayList<TeamDto> selectTeamMembers(String type, String key, String sort, int midx, int level);
+    ArrayList<TeamDto> selectTeamMembers(String type, String key, int midx, int level);
     TeamDto checkTeamName(String name);
     void insertTeam(String name);
     ArrayList<MemberDto> selectMemberNoTeam();

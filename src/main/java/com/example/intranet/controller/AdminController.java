@@ -288,7 +288,6 @@ public class AdminController {
                 model.addAttribute("paging", result.get("paging"));
                 model.addAttribute("type", result.get("type"));
                 model.addAttribute("key", result.get("key"));
-                model.addAttribute("sort", result.get("sort"));
                 url = "admin/teamList";
             }
         }
