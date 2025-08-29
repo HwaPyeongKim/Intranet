@@ -238,4 +238,8 @@ public class MemberService {
     public List<WorkDto> selectMyWorkList(int midx) {
         return mdao.selectMyWorkList(midx);
     }
+
+    public BoardDto selectMainNotice() {
+        return mdao.selectMainNotice();
+    }
 }

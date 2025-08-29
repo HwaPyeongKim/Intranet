@@ -39,8 +39,6 @@ function openDeleteModal(ridx) {
     };
 }
 
-
-
 function closeConfirmModal() {
     document.getElementById("confirmModal").style.display = "none";
 }

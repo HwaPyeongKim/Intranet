@@ -1,16 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../header.jsp" %>
-
+<ul class="submenu">
+    <li><a href="workList">나의업무</a></li>
+    <li class="on"><a href="vacationList">연차/반차 신청</a></li>
+    <li><a href="profile">프로필</a></li>
+</ul>
 <section>
-
-    <h2>연차/반차 신청</h2>
-
-    <ul class="submenu">
-        <li><a href="workList">나의업무</a></li>
-        <li class="on"><a href="vacationList">연차/반차 신청</a></li>
-        <li><a href="profile">프로필</a></li>
-    </ul>
-
     <div class="boxBtns clearfix">
         <button type="button" onclick="location.href='writeVacationForm'">신청하기</button>
     </div>

@@ -1,9 +1,6 @@
 package com.example.intranet.dao;
 
-import com.example.intranet.dto.MemberAttendanceDto;
-import com.example.intranet.dto.MemberDto;
-import com.example.intranet.dto.MemberRequestsDto;
-import com.example.intranet.dto.WorkDto;
+import com.example.intranet.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -34,4 +31,7 @@ public interface IMemberDao {
     List<MemberRequestsDto> selectMyReqList(int midx);
 
     List<WorkDto> selectMyWorkList(int midx);
+
+
+    BoardDto selectMainNotice();
 }

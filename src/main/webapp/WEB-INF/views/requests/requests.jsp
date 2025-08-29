@@ -2,76 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../header.jsp" %>
-<%@ include file="sub_menu.jsp" %>
-<style>
+<link rel="stylesheet" type="text/css" href="/css/requests.css">
 
-    table.tb {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: Arial, sans-serif;
-    }
+<ul id="sub_menu" style="display: flex;">
+    <li class="sub-menu-btn active"><a href="requests">결재발신함</a></li>
+    <li class="sub-menu-btn"><a href="getList">결재수신함</a></li>
+</ul>
 
-    table.tb thead tr.row_title {
-        background-color: #f2f2f2;
-    }
-
-    table.tb th, table.tb td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-    }
-
-    table.tb tbody tr:hover {
-        background-color: #f9f9f9;
-    }
-
-    table.tb tbody tr.empty td {
-        text-align: center;
-        font-style: italic;
-        color: #888;
-    }
-
-    table.tb td a {
-        color: #007bff;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    table.tb td a:hover {
-        text-decoration: underline;
-    }
-
-    tfoot td {
-        font-weight: bold;
-        font-size: 1.2em;
-        padding: 10px 0;
-    }
-
-    /* 페이징 링크 스타일 */
-    tfoot td a {
-        margin: 0 5px;
-        /*color: #007bff;*/
-        text-decoration: none;
-    }
-
-    tfoot td a:hover {
-        text-decoration: underline;
-    }
-
-    tfoot td span {
-        color: red;
-    }
-
-    .searchBox {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-</style>
-
-<section id="requests">
-    <h3>발신 결재 목록</h3>
+<section id="requests" class="section_wrap">
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
             <div class="input">
@@ -95,7 +33,15 @@
 
 
     <form method="get" name="requests" class="">
-        <table class="tb">
+        <table class="tb table_default">
+            <colgroup>
+                <col style="width: 10%;">
+                <col style="width: 15%;">
+                <col style="">
+                <col style="width: 15%;">
+                <col style="width: 15%;">
+                <col style="width: 15%;">
+            </colgroup>
             <thead>
             <tr class="row_title">
                 <th>번호</th>
@@ -119,11 +65,13 @@
                             <td>${requests.loopnum}</td>
                             <td>
                                 <c:choose>
-                                    <c:when test='${requests.category=="1"}'>업무</c:when>
-                                    <c:otherwise>연차/반차</c:otherwise>
+                                    <c:when test='${requests.category=="1"}'>업무기안</c:when>
+                                    <c:when test='${requests.category=="5"}'>증명서/문서</c:when>
+                                    <c:when test='${requests.category=="6"}'>품의/지출</c:when>
+                                    <c:otherwise>휴가신청</c:otherwise>
                                 </c:choose>
                             </td>
-                            <td style="cursor:pointer">
+                            <td style="cursor:pointer; text-align: left">
                                 <a href="requestsDetail?ridx=${requests.ridx}">${requests.title}</a>
                             </td>
                             <td><fmt:formatDate value="${requests.writedate}" pattern="yyyy-MM-dd"/></td>

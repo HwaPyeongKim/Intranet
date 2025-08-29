@@ -51,11 +51,13 @@ public class MemberController {
         if (loginUser != null) {
             int midx = loginUser.getMidx();
             LocalDate today = LocalDate.now();
-
-            //오늘의공지 뭐가져올지...
-            //List<BoardDto> boardList = ms.selectTodayNotice(String.valueOf(today));
-
             model.addAttribute("today", String.valueOf(today));
+            System.out.println(today);
+
+            BoardDto noticeBoard = ms.selectMainNotice();
+            int mainNotice = noticeBoard.getBidx();
+            model.addAttribute("mainNotice", mainNotice);
+            model.addAttribute("noticeBoard", noticeBoard);
 
             MemberAttendanceDto madto = ms.selectInOutTime(midx, String.valueOf(today));
             model.addAttribute("madto", madto);

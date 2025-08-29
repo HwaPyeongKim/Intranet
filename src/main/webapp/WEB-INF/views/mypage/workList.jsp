@@ -1,16 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../header.jsp" %>
-
+<ul class="submenu">
+    <li class="on"><a href="workList">나의업무</a></li>
+    <li><a href="vacationList">연차/반차 신청</a></li>
+    <li><a href="profile">프로필</a></li>
+</ul>
 <section>
-
-    <h2>나의 업무</h2>
-
-    <ul class="submenu">
-        <li class="on"><a href="workList">나의업무</a></li>
-        <li><a href="vacationList">연차/반차 신청</a></li>
-        <li><a href="profile">프로필</a></li>
-    </ul>
-
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
             <div class="input">
