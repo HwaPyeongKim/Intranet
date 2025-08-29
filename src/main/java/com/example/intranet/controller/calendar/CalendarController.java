@@ -37,8 +37,8 @@ public class CalendarController {
     @GetMapping("/schedule") // 임시적 링크
     public String calendar(HttpSession session, Model model) {
         String url = "member/login";
-        if (session.getAttribute("loginUser") != null) {
-            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        if (mdto != null) {
             model.addAttribute("loginUser", mdto);
             url = "calendar/calendar";
 

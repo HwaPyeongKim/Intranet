@@ -142,19 +142,21 @@
                 // 프롬프트 두개로 일정과 분류를 입력받음
 
                 let title = prompt('일정과 분류를 입력하세요.\n\n일정 입력');
-                if(!title){
-                    return; // 일정 제목을 입력하지 않으면 취소
-                }
-                let category = prompt('일정과 분류를 입력하세요.\n\n분류 입력, 1:개인, 2:부서, 3:회사');
+                if(!title) return; // 일정 제목을 입력하지 않으면 취소
 
-                // 일정은 1, 2, 3중에 입력
-                // 부서일정, 전체일정은 개인이 수정할수 없음 (editable 속성)
+                let categoryMsg = '일정과 분류를 입력하세요.\n\n분류 입력, 1:개인, 2:부서'; // 일정은 1, 2, 3중에 입력
+                if(${loginUser.level>=2}) categoryMsg += ', 3:회사'; // 관리자 권한이 있으면 회사일정을 생성할 수 있음
+                let category = prompt(categoryMsg);
+
+                // 부서일정, 회사일정은 개인이 수정할수 없음 (CalendarContoller의 calendarSave 참고)
 
                 if(!(category==1||category==2||category==3)){
                     alert('일정의 분류가 잘못 입력되었습니다.');
                     return;
-                }
-                if (title) {
+                }else if(category==3 && ${loginUser.level<2}){
+                    alert('권한이 없습니다.');
+                    return;
+                }else if (title) {
                     let newData = {
                         title: title,
                         start: arg.start,
