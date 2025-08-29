@@ -1,37 +1,4 @@
-.sub-menu-btn {
-    display: inline-block;
-    background-color: #8cbad1;
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 6px 6px 0 0;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    font-weight: 400;
-    margin-right: 2px;
-}
-.sub-menu-btn a {display: block;padding: 18px 34px;}
 
-.sub-menu-btn:hover {
-    background-color: #3a97b9;
-}
-
-.sub-menu-btn:active {
-    transform: scale(0.97);
-
-}
-.sub-menu-btn.active {
-    background-color: #2973cd;
-    font-weight: bold;
-}
-
-.section_wrap {
-    border-radius: 0 10px 10px;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 26px;
-    min-height: 530px;
-}
 .table_default {
     width: 100%; table-layout: fixed;
 }
