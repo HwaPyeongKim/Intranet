@@ -104,4 +104,11 @@
             eventColor
         from calendar where widx = #{widx}
     </select>
+
+    <!--  자동생성 일정중 오래된것 자동삭제하기  -->
+    <delete id="deleteOldEvent">
+        delete from calendar where CALENDAR_END &lt; now() AND (ridx>=1 OR widx>=1 )
+        -- ridx나 widx가 있는 일정중 일정 종료일이 현재시간 이전인 것들을 삭제
+        -- &lt; : 부등호 왼쪽이 작다 기호, 에러걸려서 바꿈
+    </delete>
 </mapper>
