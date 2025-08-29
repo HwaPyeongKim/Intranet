@@ -117,36 +117,57 @@
 </style>
 
 <section class="form-container">
+    <form action="writemsg" method="post">
+    <input type="hidden" name="frommidx" value="${loginUser.midx}" />
+        <c:choose>
+            <c:when test="${activeTab eq 'receive'}">
+                <h2 class="form-title">받은 메세지</h2>
+            </c:when>
+            <c:otherwise>
+                <h2 class="form-title">보낸 메세지</h2>
+            </c:otherwise>
+        </c:choose>
 
-        <h2 class="form-title">메세지</h2>
 
         <div class="form-box">
             <div class="form-row">
-                <label>보낸 사람</label>
-                <div>${message.fromname}</div>
+                <label>발신자</label>
+                <div>${message.fromname}&nbsp;${message.fromposition}</div>
+                <input type="hidden" name="tomidx" id="tomidx" value="${message.frommidx}">
             </div>
             <div class="form-row">
-                <label>받은 사람</label>
-                <div>${message.toname}</div>
+                <label>수신자</label>
+                <div>${message.toname}&nbsp;${message.toposition}</div>
             </div>
             <div class="form-row">
                 <label>보낸 시간</label>
                 <div>${message.writedate}</div>
             </div>
-            <div class="form-row">
+            <c:choose>
+            <c:when test="${activeTab eq 'receive'}">
+                <div class="form-row">
                 <div class="textbox1">${message.content}</div>
-            </div>
-            <div class="form-row" style="justify-content: end">
-                <textarea id="content" class="textbox2" name="content" placeholder="내용을 입력하세요" required></textarea>
-            </div>
-            <div class="form-row" style="justify-content: end">
-                <button type="button" onclick="">답장</button>
-            </div>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="form-row" style="display: flex; justify-content: end">
+                <div class="textbox1">${message.content}</div>
+                </div>
+            </c:otherwise>
+            </c:choose>
+            <c:if test="${activeTab eq 'receive'}">
+                <div class="form-row" style="justify-content: end">
+                    <textarea id="content" class="textbox2" name="content" placeholder="내용을 입력하세요" required></textarea>
+                </div>
+            </c:if>
+            <c:if test="${activeTab eq 'receive'}">
+                <div class="form-row" style="justify-content: end">
+                    <button type="submit" onclick="">보내기</button>
+                </div>
+            </c:if>
         </div>
 
-
-
-
+    </form>
 
         <div class="form-buttons" style="display: flex; justify-content: end">
             <c:choose>
@@ -164,6 +185,4 @@
             </form>
         </div>
 </section>
-
-
 <%@ include file="../footer.jsp" %>
