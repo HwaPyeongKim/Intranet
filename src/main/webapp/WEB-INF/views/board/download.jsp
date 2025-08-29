@@ -45,7 +45,7 @@
             </c:when>
             <c:otherwise>
                 <c:forEach items="${list}" var="item">
-                    <div class="row">
+                    <div class="row tbody">
                         <div class="col">${item.loopnum}</div>
                         <div class="col title">
                             <a href="viewBoard?bidx=${item.bidx}">

@@ -44,7 +44,7 @@
             </c:when>
             <c:otherwise>
                 <c:forEach items="${notice}" var="item">
-                    <div class="row notice">
+                    <div class="row notice tbody">
                         <div class="col">공지 <i class="fa-solid fa-bullhorn"></i></div>
                         <div class="col title">
                             <a href="viewBoard?bidx=${item.bidx}">
@@ -59,7 +59,7 @@
                     </div>
                 </c:forEach>
                 <c:forEach items="${list}" var="item">
-                    <div class="row">
+                    <div class="row tbody">
                         <div class="col">${item.loopnum}</div>
                         <div class="col title" style="text-align: left">
                             <a href="viewBoard?bidx=${item.bidx}">

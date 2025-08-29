@@ -6,6 +6,7 @@
     <li class="on"><a href="profile">프로필 수정</a></li>
 </ul>
 <section id="mypage">
+    <h2>비밀번호 수정</h2>
     <div class="container">
         <div id="profileForm" class="">
             <form method="post" action="changePwd" class="form">

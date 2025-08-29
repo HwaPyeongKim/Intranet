@@ -128,7 +128,7 @@
     </select>
 
     <select id="selectMainNotice" resultType="com.example.intranet.dto.BoardDto">
-        select * from board where category = 'notice' order by writedate desc limit 1
+        select * from board where category = 'notice' and showyn = 'Y' order by writedate desc limit 1
     </select>
 
 

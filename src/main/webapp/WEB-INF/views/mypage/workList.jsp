@@ -6,6 +6,7 @@
     <li><a href="profile">프로필</a></li>
 </ul>
 <section>
+    <div></div>
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
             <div class="input">
@@ -41,7 +42,7 @@
             </c:when>
             <c:otherwise>
                 <c:forEach items="${list}" var="item">
-                    <div class="row">
+                    <div class="row tbody">
                         <div class="col">${item.loopnum}</div>
                         <div class="col title">
                             <a href="workView?widx=${item.widx}" target="_blank">
