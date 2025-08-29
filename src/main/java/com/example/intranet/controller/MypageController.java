@@ -55,9 +55,10 @@ public class MypageController {
             model.addAttribute("paging", result.get("paging"));
             model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
-            model.addAttribute("sort", result.get("sort"));
             LocalDate today = LocalDate.now();
             model.addAttribute("today", today);
+            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx());
+            model.addAttribute("work", wdto);
 
             url = "mypage/workList";
         }
@@ -156,8 +157,6 @@ public class MypageController {
         if (loginUser != null) {
             String filePath = fs.getFile(loginUser.getImage()).getPath();
             model.addAttribute("filePath", filePath);
-            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx());
-            model.addAttribute("work", wdto);
             url = "mypage/profile";
         }
         return url;

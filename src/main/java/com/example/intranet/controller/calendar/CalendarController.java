@@ -37,11 +37,9 @@ public class CalendarController {
     @GetMapping("/schedule") // 임시적 링크
     public String calendar(HttpSession session, Model model) {
         String url = "member/login";
-        if (session.getAttribute("loginUser") != null) {
-            MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
-            // FileDto fdto = fs.getFile(mdto.getImage());
+        MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
+        if (mdto != null) {
             model.addAttribute("loginUser", mdto);
-            // model.addAttribute("profileImg", fdto.getPath());
             url = "calendar/calendar";
 
         }
@@ -57,9 +55,11 @@ public class CalendarController {
     @ResponseBody
     @RequestMapping("/calendarList")
     public List<CalendarDto> calendarList(HttpSession session) throws Exception {
-        // 로그인 유저의 midx로 select
+        // 조회전 기간이 끝난 업무나 휴가관련 일정을 모두 삭제
+        calendarService.deleteOldEvent();
         List<CalendarDto> cdto = null;
         if (session.getAttribute("loginUser") != null) {
+            // 로그인 유저의 midx로 select
             MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
             cdto = calendarService.calendarList(mdto);
         }

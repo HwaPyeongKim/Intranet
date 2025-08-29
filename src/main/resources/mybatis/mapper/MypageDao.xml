@@ -28,18 +28,22 @@
             </choose>
         </where>
 
+        order by
         <choose>
-            <when test="sort == 'desc'">
-                order by w.writedate desc
-            </when>
-            <when test="sort == 'asc'">
-                order by w.writedate asc
-            </when>
+            <when test="sort == 'title'">w.title</when>
+            <when test="sort == 'empname'">mf.name</when>
+            <when test="sort == 'completedate'">w.completedate</when>
+            <when test="sort == 'status'">w.status</when>
+            <otherwise>w.writedate</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">asc</when>
+            <otherwise>desc</otherwise>
         </choose>
     </select>
 
     <select id="selectRequests" resultType="com.example.intranet.dto.MemberRequestsDto">
-        select *, m.name, cm.name as cname
+        select mr.*, m.name, cm.name as cname
         from member_requests mr
         left join member m on m.midx = mr.midx
         left join member cm on cm.midx = mr.confirm_midx
@@ -59,13 +63,19 @@
             </choose>
         </where>
 
+        order by
         <choose>
-            <when test="sort == 'desc'">
-                order by mr.writedate desc
-            </when>
-            <when test="sort == 'asc'">
-                order by mr.writedate asc
-            </when>
+            <when test="sort == 'category'">mr.category</when>
+            <when test="sort == 'title'">mr.title</when>
+            <when test="sort == 'cname'">cm.name</when>
+            <when test="sort == 'startdate'">mr.startdate</when>
+            <when test="sort == 'enddate'">mr.enddate</when>
+            <when test="sort == 'status'">mr.status</when>
+            <otherwise>mr.writedate</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">asc</when>
+            <otherwise>desc</otherwise>
         </choose>
     </select>
 

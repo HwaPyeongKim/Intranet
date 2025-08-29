@@ -60,21 +60,6 @@
                 </div>
             </div>
         </div>
-        <div class="summaryInfo">
-            <div class="table workTable">
-                <div class="row head">
-                    <div class="col">받은 업무</div>
-                    <div class="col">완료한 업무</div>
-                    <div class="col">업무 완료율</div>
-                </div>
-
-                <div class="row">
-                    <div class="col">${work.totalCount}</div>
-                    <div class="col">${work.completeCount}</div>
-                    <div class="col">${fn:substring(work.completeCount / work.totalCount * 100, 0, 5)}%</div>
-                </div>
-            </div>
-        </div>
     </div>
 
 </section>

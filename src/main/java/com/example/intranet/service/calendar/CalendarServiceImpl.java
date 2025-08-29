@@ -35,4 +35,9 @@ public class CalendarServiceImpl implements CalendarService {
     public void eventUpdate(CalendarDto dto) throws Exception {
         calendarMapper.eventUpdate(dto);
     }
+
+    @Override
+    public void deleteOldEvent(){
+        calendarMapper.deleteOldEvent();
+    };
 }

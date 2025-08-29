@@ -132,8 +132,8 @@
     </select>
 
     <select id="myCompleteWork" resultType="com.example.intranet.dto.WorkDto">
-        select count(*) as totalCount, (select count(*) from work where midx = #{midx} and deleteyn= 'N' and completedate is not null and status = 6) as completeCount
-
+        select count(*) as totalCount, (select count(*) from work where worker = #{midx} and deleteyn= 'N' and completedate is not null and status = 6) as completeCount
+        from work where worker = #{midx}
     </select>
 
 </mapper>

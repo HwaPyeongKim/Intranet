@@ -5,11 +5,6 @@
     <li class="on"><a href="download">자료실</a></li>
 </ul>
 <section>
-    <c:if test="${loginUser.level >= 3}">
-        <div class="boxBtns clearfix">
-            <button type="button" onclick="location.href='writeBoardForm?category=download'">글쓰기</button>
-        </div>
-    </c:if>
 
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
@@ -22,20 +17,29 @@
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>
-            </select>
+            <c:if test="${loginUser.level >= 3}">
+                <div class="boxBtns clearfix">
+                    <button type="button" onclick="location.href='writeBoardForm?category=download'">글쓰기</button>
+                </div>
+            </c:if>
         </div>
     </form>
 
     <div class="table">
         <div class="row head">
             <div class="col">번호</div>
-            <div class="col title">제목</div>
-            <div class="col">작성자</div>
-            <div class="col">작성일</div>
-            <div class="col">조회수</div>
+            <div class="col title">
+                <span data-sort="title">제목<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'title', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="name">작성자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'name', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="writedate">작성일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="readcount">조회수<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'readcount', 'writedate', 'desc')}"></i></span>
+            </div>
         </div>
         <c:choose>
             <c:when test="${empty list}">
@@ -44,22 +48,8 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <c:forEach items="${notice}" var="item">
-                    <div class="row notice">
-                        <div class="col">공지</div>
-                        <div class="col title" style="text-align: left">
-                            <a href="viewBoard?bidx=${item.bidx}">
-                                ${item.title}
-                                <span class="main_color"><c:if test="${item.comment_count > 0}">[<fmt:formatNumber value="${item.comment_count}" />]</c:if></span>
-                            </a>
-                        </div>
-                        <div class="col">${item.name}</div>
-                        <div class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></div>
-                        <div class="col"><fmt:formatNumber value="${item.readcount}" /></div>
-                    </div>
-                </c:forEach>
                 <c:forEach items="${list}" var="item">
-                    <div class="row">
+                    <div class="row tbody">
                         <div class="col">${item.loopnum}</div>
                         <div class="col title">
                             <a href="viewBoard?bidx=${item.bidx}">

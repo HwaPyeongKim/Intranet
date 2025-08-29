@@ -25,6 +25,8 @@ public class MypageService {
         if (request.getParameter("first") != null) {
             session.removeAttribute("page");
             session.removeAttribute("key");
+            session.removeAttribute("sort");
+            session.removeAttribute("dir");
         }
 
         int page = 1;
@@ -47,13 +49,20 @@ public class MypageService {
             key = (String) session.getAttribute("key");
         }
 
-        String sort = "desc";
+        String sort = "writedate";
         if (request.getParameter("sort") != null) {
             sort = request.getParameter("sort");
+            session.setAttribute("sort", sort);
+        }
+
+        String dir = "desc";
+        if (request.getParameter("dir") != null) {
+            dir = request.getParameter("dir");
+            session.setAttribute("dir", dir);
         }
 
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<WorkDto> lists = mdao.selectWork(type, key, sort, midx);
+        ArrayList<WorkDto> lists = mdao.selectWork(type, key, sort, dir, midx);
         ArrayList<WorkDto> list = new ArrayList<>();
 
         Paging paging = new Paging();
@@ -95,6 +104,8 @@ public class MypageService {
         if (request.getParameter("first") != null) {
             session.removeAttribute("page");
             session.removeAttribute("key");
+            session.removeAttribute("sort");
+            session.removeAttribute("dir");
         }
 
         int page = 1;
@@ -117,13 +128,20 @@ public class MypageService {
             key = (String) session.getAttribute("key");
         }
 
-        String sort = "desc";
+        String sort = "writedate";
         if (request.getParameter("sort") != null) {
             sort = request.getParameter("sort");
+            session.setAttribute("sort", sort);
+        }
+
+        String dir = "desc";
+        if (request.getParameter("dir") != null) {
+            dir = request.getParameter("dir");
+            session.setAttribute("dir", dir);
         }
 
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<MemberRequestsDto> lists = mdao.selectRequests(type, key, sort, midx);
+        ArrayList<MemberRequestsDto> lists = mdao.selectRequests(type, key, sort, dir, midx);
         ArrayList<MemberRequestsDto> list = new ArrayList<>();
 
         Paging paging = new Paging();

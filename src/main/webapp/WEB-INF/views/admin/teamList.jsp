@@ -16,20 +16,16 @@
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>생성일 최근순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>생성일 오래된순</option>
-            </select>
+            <c:if test="${loginUser.level > 2}">
+                <div class="boxBtns clearfix">
+                    <button type="button" onclick="createTeamForm()">팀 생성</button>
+                    <button type="button" onclick="location.href='setTeamMemberForm'">팀 편성</button>
+                </div>
+            </c:if>
         </div>
     </form>
 
     <form method="post" name="adminTeamInfo" id="adminTeamInfo">
-        <c:if test="${loginUser.level > 2}">
-        <div class="boxBtns clearfix">
-            <button type="button" onclick="createTeamForm()">팀 생성</button>
-            <button type="button" onclick="location.href='setTeamMemberForm'">팀 편성</button>
-        </div>
-        </c:if>
 
         <table>
             <thead>

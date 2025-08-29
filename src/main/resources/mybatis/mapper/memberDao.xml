@@ -74,16 +74,17 @@
             </choose>
         </where>
 
+        order by
         <choose>
-            <when test="sort == 'joindesc'">
-                order by m.joindate desc
-            </when>
-            <when test="sort == 'joinasc'">
-                order by m.joindate asc
-            </when>
-            <when test="sort == 'nameasc'">
-                order by m.name asc
-            </when>
+            <when test="sort == 'position'">m.position</when>
+            <when test="sort == 'name'">m.name</when>
+            <when test="sort == 'leavedate'">m.leavedate</when>
+            <when test="sort == 'confirmyn'">m.confirmyn</when>
+            <otherwise>m.joindate</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">asc</when>
+            <otherwise>desc</otherwise>
         </choose>
     </select>
 
@@ -102,13 +103,24 @@
                 and m.team = (select team from member where midx = #{midx})
             </if>
 
+
             <choose>
                 <when test="type == 'name'">
                     and m.name like concat('%', #{key}, '%')
                 </when>
             </choose>
 
-            order by ma.date, ma.starttime desc
+            order by
+            <choose>
+                <when test="sort == 'name'">m.name</when>
+                <when test="sort == 'starttime'">ma.starttime</when>
+                <when test="sort == 'endtime'">ma.endtime</when>
+                <otherwise>ma.date</otherwise>
+            </choose>
+            <choose>
+                <when test="dir == 'asc'">asc</when>
+                <otherwise>desc</otherwise>
+            </choose>
         </where>
     </select>
 
