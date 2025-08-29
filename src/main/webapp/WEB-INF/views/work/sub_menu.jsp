@@ -1,32 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<style>
-    #search {}
-    #work .row{
-        border: 1px solid #ccc;
-        display: flex;
-        justify-content: space-around;
-        padding: 13px 0;}
-    #work .coltitle{font-weight: bold;
-        display: flex;
-        justify-content: space-around;
-        flex:1; }
+<ul class="submenu">
+    <li><a href="work?first=y">요청받은 업무</a></li>
+    <li><a href="yourwork?first=y">요청한 업무</a></li>
+</ul>
 
-    #work .col{
-        display: flex;
-        justify-content: space-around;
-        flex:1 }
-
-</style>
-
-<section id="work">
-
-
-    <h2>업무관리</h2>
-
-    <ul class="submenu">
-        <li><a href="work?first=y">요청받은 업무</a></li>
-        <li><a href="yourwork?first=y">요청한 업무</a></li>
-    </ul>
+<section>
 
     <script>
         // 서브메뉴 어느곳에 불들어올지 설정
