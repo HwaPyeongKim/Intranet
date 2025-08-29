@@ -51,11 +51,13 @@ public class BoardService {
         String sort = "writedate";
         if (request.getParameter("sort") != null) {
             sort = request.getParameter("sort");
+            session.setAttribute("sort", sort);
         }
 
         String dir = "desc";
         if (request.getParameter("dir") != null) {
             dir = request.getParameter("dir");
+            session.setAttribute("dir", dir);
         }
 
         HashMap<String, Object> result = new HashMap<>();

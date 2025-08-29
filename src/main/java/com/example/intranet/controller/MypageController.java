@@ -55,7 +55,6 @@ public class MypageController {
             model.addAttribute("paging", result.get("paging"));
             model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
-            model.addAttribute("sort", result.get("sort"));
             LocalDate today = LocalDate.now();
             model.addAttribute("today", today);
             WorkDto wdto = ws.myCompleteWork(loginUser.getMidx());
