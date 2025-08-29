@@ -1,5 +1,6 @@
 package com.example.intranet.service;
 
+import com.example.intranet.dao.IMemberDao;
 import com.example.intranet.dao.IWorkDao;
 import com.example.intranet.dao.calendar.ICalendarDao;
 import com.example.intranet.dto.*;
@@ -24,6 +25,9 @@ public class WorkService {
 
     @Autowired
     ICalendarDao cdao;
+
+    @Autowired
+    IMemberDao mdao;
 
     public HashMap<String, Object> selectWork(HttpServletRequest request, int midx) {
         HttpSession session = request.getSession();
@@ -288,13 +292,14 @@ public class WorkService {
         // 일정에 insert
         String title = "(업무) " + workdto.getTitle();
 
-        // 시작일, 종료일은 Timestamp형 시간을 String으로 변환한 뒤
+        // 시작일, 종료일은 Timestamp형 시간을 String으로 변환
         String writedate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(workdto.getWritedate());
         String completedate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(workdto.getCompletedate());
 
-        // CalendarDto 객체 생성하고 DB에 추가
-        CalendarDto calendardto1 =  new CalendarDto(title, writedate, completedate, workdto.getMidx(), "work", workdto.getWidx());
-        CalendarDto calendardto2 =  new CalendarDto(title, writedate, completedate, workdto.getWorker(), "work", workdto.getWidx());
+        // 요청자와 수신자 양쪽 모두 CalendarDto 객체 생성하고 DB에 추가
+        // new CalendarDto( 일정제목, 일정시작일, 일정종료일, 멤버dto, 사용용도, 용도에 맞는 idx );
+        CalendarDto calendardto1 =  new CalendarDto(title, writedate, completedate, mdao.selectMember(workdto.getMidx()), "work", workdto.getWidx());
+        CalendarDto calendardto2 =  new CalendarDto(title, writedate, completedate, mdao.selectMember(workdto.getWorker()), "work", workdto.getWidx());
 
         try {
             // 요청자와 수신자 양쪽 모두에 일정이 생성됩니다

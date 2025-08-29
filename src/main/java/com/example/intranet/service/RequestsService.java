@@ -2,15 +2,19 @@ package com.example.intranet.service;
 
 import com.example.intranet.dao.IMemberDao;
 import com.example.intranet.dao.IRequestsDao;
+import com.example.intranet.dao.calendar.ICalendarDao;
 import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.MemberRequestsDto;
 import com.example.intranet.dto.Paging;
+import com.example.intranet.dto.calendar.CalendarDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +27,9 @@ public class RequestsService {
 
     @Autowired
     IMemberDao mdao;
+
+    @Autowired
+    ICalendarDao cdao;
 
     public HashMap<String, Object> selectRequestsList(HttpServletRequest request, int midx) {
         HttpSession session = request.getSession();
@@ -200,8 +207,32 @@ public class RequestsService {
         return rdao.selectGetDetail(ridx);
     }
 
+    // 휴가 승인시 일정 자동생성을 위해 수정되었음
     @Transactional
     public int updateChangeStatus(int status, int ridx) {
+
+        // category를 가져오기 위해 requestsdto를 가져옴
+        MemberRequestsDto requestsdto = rdao.selectRequestsDetail(ridx);
+        int category = requestsdto.getCategory();
+
+        // 휴가(requestsdto.getCategory()==2,3,4)가 승인(status==4)되는 경우 일정 생성
+        if( status==4 && ( category == 2 || category == 3 ||  category == 4 ) ) {
+            // startdate, enddate를 String 형변환 후 CalendarDto 객체생성
+            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String startdate = transFormat.format(requestsdto.getStartdate());
+            String enddate = transFormat.format(requestsdto.getEnddate());
+
+            // new CalendarDto( 일정제목, 일정시작일, 일정종료일, 멤버dto, 사용용도, 용도에 맞는 idx );
+            // 현재 추가될 일정 제목 : (휴가) 결제서류명 , 다른 제목으로 생성되는것도 괜찮을것 같아요
+            CalendarDto cdto = new CalendarDto("(휴가) "+requestsdto.getTitle(), startdate, enddate, mdao.selectMember(requestsdto.getMidx()), "vacation", ridx);
+
+            try {
+                // 이후 cdao.calendarSave(cdto) 로 일정생성
+                cdao.calendarSave(cdto);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         return rdao.updateChangeStatus(status, ridx);
     }
 
