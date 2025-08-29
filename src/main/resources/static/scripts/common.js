@@ -65,19 +65,6 @@ $(function(){
         })
     });
 
-    // 검색 정렬 select
-    // $("#searchForm #sort").change(function (){
-    //     var searchbox = $(this).closest(".searchBox");
-    //     var type = searchbox.find("select[name=type]").val();
-    //     var key = searchbox.find("input[name=key]").val();
-    //     var sort = $(this).val();
-    //     url = new URL(window.location.href);
-    //     url.searchParams.set("type", type);
-    //     url.searchParams.set("key", key);
-    //     url.searchParams.set("sort", sort);
-    //     location.href = url;
-    // })
-
     $("div.table div.head span[data-sort]").click(function(){
         var searchBox = $(".searchBox");
         var type = searchBox.find("select[name=type]").val();

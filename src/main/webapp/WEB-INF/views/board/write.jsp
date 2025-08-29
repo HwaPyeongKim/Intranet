@@ -56,10 +56,9 @@
             </div>
         </div>
         <div class="field">
-            <label for="content">내용</label>
-            <div>
-                <textarea name="content" id="content">${dto.content}</textarea>
-            </div>
+            <label>내용</label>
+            <textarea name="content" id="content"></textarea>
+            <div id="editor"></div>
         </div>
         <div class="field">
             <label for="fileBtn">첨부파일</label>
