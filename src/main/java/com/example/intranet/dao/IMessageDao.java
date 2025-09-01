@@ -1,6 +1,5 @@
 package com.example.intranet.dao;
 
-import com.example.intranet.dto.MemberDto;
 import com.example.intranet.dto.MessageDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -43,8 +42,8 @@ public interface IMessageDao {
 
     void fromdeleteMessages(List<Integer> msidxList);
 
-    ArrayList<MessageDto> selectSent(int midx, String type, String key, String sort);
-    ArrayList<MessageDto> selectReceive(int midx, String type, String key, String sort);
+    ArrayList<MessageDto> selectSent(int midx, String type, String key, String sort, String dir);
+    ArrayList<MessageDto> selectReceive(int midx, String type, String key, String sort, String dir);
 
     void updateReadyn(int msidx);
 }
