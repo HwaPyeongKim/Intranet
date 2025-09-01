@@ -42,4 +42,5 @@ public interface IWorkDao {
 
     WorkDto myCompleteWork(int midx, LocalDate today);
 
+    void updateCompletedate(int widx);
 }

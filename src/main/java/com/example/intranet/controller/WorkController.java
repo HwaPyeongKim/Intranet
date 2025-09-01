@@ -127,10 +127,10 @@ public class WorkController {
 
     @PostMapping("/insertWork")
     public String insertWork(@ModelAttribute("dto") @Valid WorkDto workdto, BindingResult result, Model model,
-                             @RequestParam String completedate) {
+                             @RequestParam String deadline) {
         ArrayList<MemberDto> members = ms.getAllMembers();
         model.addAttribute("members", members);
-        model.addAttribute("completedate", completedate);
+        model.addAttribute("deadline", deadline);
 
 
         String url = "work/insertWork";
@@ -138,19 +138,19 @@ public class WorkController {
             model.addAttribute("msg", result.getFieldError("title").getDefaultMessage() );
         else if(result.hasFieldErrors("worker"))
             model.addAttribute("msg", "수신자를 선택하세요" );
-        else if(completedate.equals(""))
+        else if(deadline.equals(""))
             model.addAttribute("msg", "마감기한을 선택하세요" );
         else if(result.hasFieldErrors("content"))
             model.addAttribute("msg", result.getFieldError("content").getDefaultMessage() );
         else {
             url = "redirect:/yourwork";
-            System.out.println(completedate);
+            System.out.println(deadline);
             // String now = "2009-03-20 10:20:30.0"; // 형식을 지켜야 함
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
 
             try {
-                Date date = df.parse(completedate);
-                workdto.setCompletedate(new Timestamp(date.getTime()));
+                Date date = df.parse(deadline);
+                workdto.setDeadline(new Timestamp(date.getTime()));
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
@@ -205,16 +205,16 @@ public class WorkController {
     public String updateWorkForm(@RequestParam("widx") int widx, HttpSession session, Model model) {
         WorkDto wdto = ws.selectOne(widx);
         model.addAttribute("workitem", wdto);
-        model.addAttribute("completedate", wdto.getCompletedate());
+        model.addAttribute("deadline", wdto.getDeadline());
         return "work/updateWork";
     }
 
     @PostMapping("/updateWork")
     public String updateWork(@ModelAttribute("workitem") @Valid WorkDto workdto, BindingResult result, Model model,
-                             @RequestParam String completedate) {
+                             @RequestParam String deadline) {
         String url = "work/updateWork";
 
-        model.addAttribute("completedate", completedate);
+        model.addAttribute("deadline", deadline);
 
         System.out.println("dd"+workdto.getTitle());
         System.out.println("ddd"+workdto.getTitle().equals(""));
@@ -225,13 +225,13 @@ public class WorkController {
         } else if (workdto.getContent() == null || workdto.getContent().equals("")) {
             model.addAttribute("msg", "내용을 입력하세요");
         } else {
-            System.out.println(completedate);
+            System.out.println(deadline);
             // String now = "2009-03-20 10:20:30.0"; // 형식을 지켜야 함
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
 
             try {
-                Date date = df.parse(completedate);
-                workdto.setCompletedate(new Timestamp(date.getTime()));
+                Date date = df.parse(deadline);
+                workdto.setDeadline(new Timestamp(date.getTime()));
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
