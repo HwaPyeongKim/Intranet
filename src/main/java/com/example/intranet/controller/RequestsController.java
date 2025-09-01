@@ -7,6 +7,7 @@ import com.example.intranet.service.RequestsService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +54,7 @@ public class RequestsController {
     public String requestsWriteForm(@ModelAttribute("dto") MemberRequestsDto requestsdto, HttpSession session, Model model) {
         String url = "member/login";
         MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+
         if(loginUser != null){
             // 1. 현재 날짜와 시간을 가져와서 SimpleDateFormat으로 포맷팅
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -75,12 +77,16 @@ public class RequestsController {
     public String requestsWrite(
             @ModelAttribute("dto") @Valid MemberRequestsDto requestsdto, HttpSession session, BindingResult result, Model model) {
         String url = "requests/requestsWriteForm";
+        String plainText = Jsoup.parse(requestsdto.getContent()).text().trim();
+
+        List<MemberDto> memberList = rs.getAllMembers();
+        model.addAttribute("memberList", memberList);
 
         if(result.hasFieldErrors("title")) {
             model.addAttribute("message","제목을 입력하세요");
         }else if(result.hasFieldErrors("confirm_midx")){
             model.addAttribute("message","승인자를 선택하세요");
-        }else if(result.hasFieldErrors("content")){
+        }else if(plainText.equals("")){
             model.addAttribute("message","내용을 입력하세요");
         }else{
             // 레코드를 리퀘스트 테이블에 추가

@@ -1,12 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../header.jsp" %>
 <link rel="stylesheet" type="text/css" href="/css/requests.css">
-
 <ul class="submenu">
     <li><a href="requests">결재발신함</a></li>
     <li class="on"><a href="getList">결재수신함</a></li>
 </ul>
-
 <section id="getList" class="section_wrap">
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
@@ -90,24 +88,36 @@
         </tbody>
 
     </table>
-        <div class="paging"> <!-- 페이지의 시작 -->
-            <div class="col" style="font-size: 120%; font-weight: bold;">
-              <c:if test="${paging.prev}">
-                <a href="getList?page=${paging.beginPage-1}&key=${key}">PREV</a>&nbsp;
-              </c:if>
-              <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-                <c:if test="${index!=paging.page}">
-                  <a href="getList?page=${index}&key=${key}">${index}</a>&nbsp;
-                </c:if>
-                <c:if test="${index==paging.page}">
-                  <span style="color:red">${index}&nbsp;</span>
-                </c:if>
-              </c:forEach>
-              <c:if test="${paging.next}">
-                <a href="getList?page=${paging.endPage+1}&key=${key}">NEXT</a>&nbsp;
-              </c:if>
-            </div>
-        </div> <!-- 페이지의 끝 -->
+    <div class="paging"> <!-- 페이지의 시작 -->
+        <div class="col" style="font-size: 120%; font-weight: bold;">
+          <c:if test="${paging.prev}">
+          &type=${type}&key=${key}&sort=${sort}&dir=${dir}
+            <a href="getList?page=${paging.beginPage-1}&type=${type}&key=${key}&sort=${sort}&dir=${dir}">PREV</a>&nbsp;
+          </c:if>
+          <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+            <c:if test="${index!=paging.page}">
+              <a href="getList?page=${index}&type=${type}&key=${key}&sort=${sort}&dir=${dir}">${index}</a>&nbsp;
+            </c:if>
+            <c:if test="${index==paging.page}">
+              <span style="color:red">${index}&nbsp;</span>
+            </c:if>
+          </c:forEach>
+          <c:if test="${paging.next}">
+            <a href="getList?page=${paging.endPage+1}&type=${type}&key=${key}&sort=${sort}&dir=${dir}">NEXT</a>&nbsp;
+          </c:if>
+        </div>
+    </div> <!-- 페이지의 끝 -->
+<%--        <c:if test="${not empty getList}">--%>
+<%--            <div class="paging">--%>
+<%--                <c:if test="${paging.prev}"><a href="getList?page=${paging.beginPage-1}&type=${type}&key=${key}&sort=${sort}&dir=${dir}">Prev</a></c:if>--%>
+
+<%--                <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">--%>
+<%--                    <a href="getList?page=${index}"<c:if test="${index == paging.page}&type=${type}&key=${key}&sort=${sort}&dir=${dir}"> style="color: red;"</c:if>>${index}</a>--%>
+<%--                </c:forEach>--%>
+
+<%--                <c:if test="${paging.next}"><a href="getList?page=${paging.endPage+1}&type=${type}&key=${key}&sort=${sort}&dir=${dir}">Next</a></c:if>--%>
+<%--            </div>--%>
+<%--        </c:if>--%>
 </form>
 </section>
 
