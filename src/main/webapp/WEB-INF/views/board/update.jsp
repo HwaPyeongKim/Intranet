@@ -3,7 +3,7 @@
 
 <section id="writeBoard">
 
-    <form method="post" action="updateBoard" name="updateBoard" enctype="multipart/form-data" class="form fileForm shadow">
+    <form method="post" action="updateBoard" name="updateBoard" enctype="multipart/form-data" class="form fileForm">
         <input type="hidden" name="fidx" id="fidx" value="${item.fidx}" />
         <input type="hidden" name="bidx" value="${item.bidx}" />
         <input type="hidden" name="midx" value="${item.midx}" />
@@ -50,12 +50,13 @@
                 <input type="text" name="title" value="${item.title}" placeholder="제목" />
             </div>
         </div>
+
         <div class="field">
-            <label for="content">내용</label>
-            <div>
-                <textarea name="content" id="content">${item.content}</textarea>
-            </div>
+            <label>내용</label>
+            <textarea name="content" id="content"></textarea>
+            <div id="editor">${item.content}</div>
         </div>
+
         <div class="field">
             <label for="fileBtn">첨부파일</label>
             <div class="prevFile">

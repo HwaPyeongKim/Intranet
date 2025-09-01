@@ -54,7 +54,7 @@
 
     <select id="getMessageReceiveView" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
         SELECT m.msidx, m.frommidx, m.tomidx, m.content, m.writedate, m.readyn, m.readdate,
-               sender.name AS fromName, receiver.name AS toName
+               sender.name AS fromName, receiver.name AS toName, sender.position as fromposition, receiver.position as toposition
         FROM message m
                  JOIN member sender ON m.frommidx = sender.midx
                  JOIN member receiver ON m.tomidx = receiver.midx
@@ -64,7 +64,7 @@
 
     <select id="getMessageSentView" parameterType="int" resultType="com.example.intranet.dto.MessageDto">
         SELECT m.msidx, m.frommidx, m.tomidx, m.content, m.writedate, m.readyn, m.readdate,
-               sender.name AS fromName, receiver.name AS toName
+               sender.name AS fromName, receiver.name AS toName, sender.position as fromposition, receiver.position as toposition
         FROM message m
                  JOIN member sender ON m.frommidx = sender.midx
                  JOIN member receiver ON m.tomidx = receiver.midx
@@ -111,13 +111,15 @@
             </if>
         </where>
 
+        order by
         <choose>
-            <when test="sort == 'desc'">
-                order by ms.writedate desc
-            </when>
-            <when test="sort == 'asc'">
-                order by ms.writedate asc
-            </when>
+            <when test="sort == 'fromname'">mf.name</when>
+            <when test="sort == 'content'">ms.content</when>
+            <otherwise>ms.writedate</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">asc</when>
+            <otherwise>desc</otherwise>
         </choose>
     </select>
 
@@ -137,13 +139,17 @@
             </if>
         </where>
 
+        order by
         <choose>
-            <when test="sort == 'desc'">
-                order by ms.writedate desc
-            </when>
-            <when test="sort == 'asc'">
-                order by ms.writedate asc
-            </when>
+            <when test="sort == 'toname'">mt.name</when>
+            <when test="sort == 'content'">ms.content</when>
+            <when test="sort == 'readyn'">ms.readyn</when>
+            <otherwise>ms.writedate</otherwise>
+        </choose>
+
+        <choose>
+            <when test="dir == 'asc'">asc</when>
+            <otherwise>desc</otherwise>
         </choose>
     </select>
 

@@ -5,10 +5,12 @@
 <%@ taglib prefix="sort" uri="http://example.com/sort" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Grouping</title>
     <%--초기화 및 공통 css, javascript--%>
     <link rel="stylesheet" type="text/css" href="/css/reset.css">
     <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
     <%--노토산스 폰트--%>
     <link rel="preconnect" href="https://fonts.googleapis.com">

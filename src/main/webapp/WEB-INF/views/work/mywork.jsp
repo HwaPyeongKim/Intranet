@@ -3,22 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../header.jsp" %>
 <%@ include file="sub_menu.jsp" %>
-
-<form method="get" name="search" class="form shadow" id="searchForm">
-    <div class="tb">
-        <div class="tb_top" style="display: flex; align-items: center; justify-content: end; ">
-<%--            <div class="col" style="display: flex; align-items: center; justify-content: start">--%>
-<%--                &nbsp;업무명&nbsp; <input type="text" name="key" value="${key}"/>&nbsp;&nbsp;--%>
-<%--                <input type="button" name="btn_search" value="검색" onclick="go_search('work')"/>--%>
-<%--            </div>--%>
-            <div class="searchBox">
-                <input type="button" name="btn_search" value="업무요청" onclick="location.href='insertWorkForm'"/>&nbsp;
-            </div>
-        </div>
-
-        <div class="searchBox" style="margin-bottom: 20px">
+    <form method="get" name="search" id="searchForm">
+        <div class="searchBox">
             <div class="input">
-                &nbsp;&nbsp;<select name="type">
+                <select name="type">
                     <option value="title"<c:if test="${type == 'title'}"> selected</c:if>>업무명</option>
                     <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>업무명+내용</option>
                     <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>요청자</option>
@@ -26,21 +14,36 @@
                 <input type="text" name="key" value="${key}" />
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort" style="margin-right: 10px">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>
-            </select>
+            <div class="boxBtns clearfix" style="display: flex; align-items: center; justify-content: end">
+                <input type="button" name="btn_search" value="업무요청" onclick="location.href='insertWorkForm'"/>
+            </div>
+<%--            <select name="sort" id="sort" style="margin-right: 10px">--%>
+<%--                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>--%>
+<%--                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>--%>
+<%--            </select>--%>
         </div>
+    </form>
 
-        <div class="row row_title">
-            <div class="coltitle">번호</div>
-            <div class="coltitle">업무명</div>
-            <div class="coltitle">요청자</div>
-            <div class="coltitle">등록일</div>
-            <div class="coltitle">마감일</div>
-            <div class="coltitle">진행상태</div>
+    <div class="table">
+        <div class="row head">
+            <div class="col">번호</div>
+
+            <div class="col title">
+                <span data-sort="title">제목<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'title', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="empname">요청자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'empname', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="writedate">등록일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="completedate">마감일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'completedate', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="status">진행상태<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'status', 'writedate', 'desc')}"></i></span>
+            </div>
         </div>
-
         <c:choose>
             <c:when test="${empty list}">
                 <div class="row empty">
@@ -51,7 +54,7 @@
                 <c:forEach items="${list}" var="item" varStatus="status">
                     <div class="row" style="cursor:pointer; " onclick="location.href='workView?widx=${item.widx}'">
                         <div class="col">${item.loopnum}</div>
-                        <div class="col" style="cursor:pointer">
+                        <div class="col title" style="cursor:pointer">
                             <a href="workView?widx=${item.widx}" style="text-decoration:none">
                                     ${item.title}
                                 <c:if test="${item.status==1}">
@@ -79,8 +82,8 @@
                 </c:forEach>
             </c:otherwise>
         </c:choose>
-
-         <c:if test="${not empty list}">
+    </div>
+    <c:if test="${not empty list}">
         <div class="paging" style="height: 50px; line-height: 50px">
             <c:if test="${paging.prev}"><a href="work?page=${paging.beginPage-1}">Prev</a></c:if>
 
@@ -91,8 +94,6 @@
             <c:if test="${paging.next}"><a href="work?page=${paging.endPage+1}">Next</a></c:if>
         </div>
     </c:if>
-    </div>
-</form>
 </section>
 
 <%@ include file="../footer.jsp" %>

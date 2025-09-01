@@ -2,55 +2,55 @@
 <%@ include file="../header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
+<ul class="submenu">
+    <li><a href="receiveList">받은메시지</a></li>
+    <li class="on"><a href="sentList">보낸메시지</a></li>
+</ul>
 <section>
-    <h2>메세지</h2>
-
-    <ul class="submenu">
-        <li><a href="receiveList?first=y">받은메시지</a></li>
-        <li class="on"><a href="sentList?first=y">보낸메시지</a></li>
-    </ul>
-
     <div class="boxBtns clearfix">
         <!-- 삭제 버튼과 작성 버튼 간격 -->
         <button type="button" id="deleteSelected" style="margin-right:10px;" onclick="deleteSelected()">삭제</button>
-        <button type="button" onclick="location.href='writemsg'">메시지 작성</button>
+         <button type="button" onclick="window.open('writeMessage', 'msgWrite', 'width=600,height=700');">메세지 작성</button>
     </div>
-
-
     <form method="get" name="search" id="searchForm">
         <div class="searchBox">
             <div class="input">
                 <select name="type">
                     <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>내용</option>
-                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>받은사람</option>
+                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>수신자</option>
                 </select>
                 <input type="text" name="key" value="${key}"/>
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>최신순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성순</option>
-            </select>
+<%--            <select name="sort" id="sort">--%>
+<%--                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>최신순</option>--%>
+<%--                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성순</option>--%>
+<%--            </select>--%>
         </div>
     </form>
 
-    <!-- ✅ 전체 삭제용 form -->
     <form id="multiDeleteForm" action="deletemsgMulti" method="post" name="multiDeleteForm">
-
         <input type="hidden" name="activeTab" value="sent">
-
         <div class="table">
             <div class="row head">
-                <div class="col">
-                    <!-- ✅ 전체 선택 체크박스 (맨 뒤) -->
+                <div style="width: 50px; display: flex; justify-content: space-around">
                     <input type="checkbox" id="checkAll">
                 </div>
-                <div class="col">받은 사람</div>
-                <div class="col">내용</div>
-                <div class="col">보낸 시간</div>
-                <div class="col">수신 확인</div>
+            <div class="col">
+                <span data-sort="toname">수신자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'toname', 'writedate', 'desc')}"></i></span>
+            </div>
+
+            <div class="col">
+                <span data-sort="content">내용<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'content', 'writedate', 'desc')}"></i></span>
+            </div>
+
+            <div class="col">
+                <span data-sort="writedate">보낸시간<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span>
+            </div>
+
+            <div class="col">
+                <span data-sort="readyn">수신확인<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'readyn', 'writedate', 'desc')}"></i></span>
+            </div>
             </div>
 
             <c:choose>
@@ -62,7 +62,7 @@
                 <c:otherwise>
                     <c:forEach items="${message}" var="msg" varStatus="status">
                         <div class="row">
-                            <div class="col">
+                            <div style="width: 50px; display: flex; justify-content: space-around" >
                                 <input type="checkbox" name="msidxList" value="${msg.msidx}">
                             </div>
 <%--                            <div class="col">${status.count}</div>--%>
@@ -91,21 +91,20 @@
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
-                <c:if test="${not empty message}">
-                <div class="paging" style="height: 50px; line-height: 50px">
-                    <c:if test="${paging.prev}"><a href="sentList?page=${paging.beginPage-1}">Prev</a></c:if>
-
-                    <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-                        <a href="sentList?page=${index}"<c:if test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
-                    </c:forEach>
-
-                    <c:if test="${paging.next}"><a href="sentList?page=${paging.endPage+1}">Next</a></c:if>
-                </div>
-                </c:if>
-
-
         </div>
     </form>
+    <c:if test="${not empty message}">
+        <div class="paging" style="height: 50px; line-height: 50px">
+            <c:if test="${paging.prev}"><a href="sentList?page=${paging.beginPage-1}">Prev</a></c:if>
+
+            <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+                <a href="sentList?page=${index}"<c:if
+                        test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
+            </c:forEach>
+
+            <c:if test="${paging.next}"><a href="sentList?page=${paging.endPage+1}">Next</a></c:if>
+        </div>
+    </c:if>
 </section>
 
 <script>
