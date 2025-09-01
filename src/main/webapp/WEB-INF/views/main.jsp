@@ -73,7 +73,8 @@
                     <i class="far fa-file-alt"></i>
                     업무요청
                 </a>
-                <a class="widget" onclick="location.href='writemsg'">
+                <a class="widget" href="javascript:void(0);"
+                   onclick="window.open('writeMessage', 'msgPopup', 'width=600,height=700,scrollbars=yes,resizable=yes');">
                     <i class="far fa-envelope"></i>
                     메세지작성
                 </a>
