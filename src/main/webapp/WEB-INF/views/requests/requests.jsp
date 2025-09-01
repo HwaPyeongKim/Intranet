@@ -14,7 +14,7 @@
                 <select name="type">
                     <option value="title"<c:if test="${type == 'title'}"> selected</c:if>>제목</option>
                     <option value="titleContent"<c:if test="${type == 'titleContent'}"> selected</c:if>>제목+내용</option>
-                    <option value="name"<c:if test="${type == 'comfirm_midx'}"> selected</c:if>>결재자</option>
+                    <option value="name"<c:if test="${type == 'name'}"> selected</c:if>>결재자</option>
                 </select>
                 <input type="text" name="key" value="${key}"/>
                 <button>검색</button>
@@ -22,13 +22,8 @@
             <div class="boxBtns clearfix" style="display: flex; align-items: center; justify-content: end">
                 <input type="button" name="btn_search" value="기안작성" onclick="location.href='requestsWriteForm'"/>&nbsp;
             </div>
-            <%--            <select name="sort" id="sort">--%>
-            <%--                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>작성일 최근순</option>--%>
-            <%--                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성일 오래된순</option>--%>
-            <%--            </select>--%>
         </div>
     </form>
-
 
     <form method="get" name="requests" class="">
         <table class="tb table_default">
@@ -43,11 +38,11 @@
             <thead>
             <tr class="row_title">
                 <th>번호</th>
-                <th>구분</th>
-                <th>제목</th>
-                <th>작성일자</th>
-                <th>결재자</th>
-                <th>진행상태</th>
+                <th><span data-sort="category">구분<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'category', 'writedate', 'desc')}"></i></span></th>
+                <th><span data-sort="title">제목<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'title', 'writedate', 'desc')}"></i></span></th>
+                <th><span data-sort="writedate">작성일자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span></th>
+                <th><span data-sort="confirm_midx">결재자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'confirm_midx', 'writedate', 'desc')}"></i></span></th>
+                <th><span data-sort="status">진행상태<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'status', 'writedate', 'desc')}"></i></span></th>
             </tr>
             </thead>
             <tbody>

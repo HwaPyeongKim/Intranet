@@ -114,6 +114,8 @@ div.table > div.row.tbody > div.col.title{text-align: left;}
 div.table > div.row.tbody > div.col.title:hover{color: #007BFF;
     text-decoration: underline;}
 
+div.table > .row.head > .col > span{cursor: pointer;}
+
 .boxBtns {}
 .boxBtns button {float: right; margin-left: 10px;}
 
@@ -122,7 +124,7 @@ div.table > div.row.tbody > div.col.title:hover{color: #007BFF;
 .paging a.on {color: #f00;}
 .paging a:hover {color: #000;}
 
-.searchBox {display: flex; justify-content: space-between;}
+.searchBox {display: flex; justify-content: space-between;align-items: center;}
 .searchBox select {padding: 8px 10px;
     border: 1px solid #ccc;
     border-radius: 6px;}

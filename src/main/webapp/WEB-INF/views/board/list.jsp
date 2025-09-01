@@ -17,7 +17,7 @@
                 <button>검색</button>
             </div>
             <div class="boxBtns clearfix">
-                <button type="button" onclick="location.href='writeBoardForm?category=main'">글쓰기</button>
+                <input type="button" onclick="location.href='writeBoardForm?category=main'" value="글쓰기" />
             </div>
         </div>
     </form>

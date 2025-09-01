@@ -2,6 +2,7 @@
 <%@ include file="header.jsp" %>
 
 <%@ include file="calendar/main_calendar.jsp" %>
+
 <main>
 
     <div class="dashboard-container">
@@ -106,9 +107,7 @@
                 </div>
             </div>
             <div class="main_cal_week">
-                <div id='calendar-container' style="height: 200px;"><%--  여기에 캘린더 스타일 적용(가로크기 등) --%>
-                    <div id="calendar"></div>
-                </div>
+
             </div>
         </div>
     </div>
