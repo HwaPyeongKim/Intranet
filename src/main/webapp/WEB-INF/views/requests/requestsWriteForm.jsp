@@ -82,7 +82,7 @@
         </div>
 
         <div class="form-box" style="display: flex;justify-content: space-between;">
-            <div>
+            <div class="file_box">
                 <label for="fileBtn">파일 첨부</label>
                 <input type="file" name="file" id="fileBtn">
             </div>

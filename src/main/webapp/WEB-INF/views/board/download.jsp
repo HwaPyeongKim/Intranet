@@ -19,7 +19,7 @@
             </div>
             <c:if test="${loginUser.level >= 3}">
                 <div class="boxBtns clearfix">
-                    <button type="button" onclick="location.href='writeBoardForm?category=download'">글쓰기</button>
+                    <input type="button" onclick="location.href='writeBoardForm?category=download'" value="글쓰기"/>
                 </div>
             </c:if>
         </div>

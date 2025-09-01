@@ -14,54 +14,29 @@
         from member_requests mr
                  left join member m on m.midx = mr.midx
                  left join member m2 on m2.midx = mr.confirm_midx
-        where mr.midx=#{midx}
-        order by ridx desc
-    </select>
-
-    <!--발신목록 제목검색-->
-    <select id="selectRequestsListTitle" parameterType="com.example.intranet.dto.MemberRequestsDto">
-        select
-            mr.*
-             , m.name as mname, m.position as mposition
-             , m2.name as cname, m2.position as cposition
-        from member_requests mr
-                 left join member m on m.midx = mr.midx
-                 left join member m2 on m2.midx = mr.confirm_midx
-        where mr.midx=#{midx}
-          AND title LIKE CONCAT('%', #{key}, '%')
-        order by ridx desc
-    </select>
-
-    <!--발신목록 제목내용검색-->
-    <select id="selectRequestsListTitleContent" parameterType="com.example.intranet.dto.MemberRequestsDto">
-        SELECT
-        mr.*,
-        m.name AS mname,
-        m.position AS mposition,
-        m2.name AS cname,
-        m2.position AS cposition
-        FROM member_requests mr
-        LEFT JOIN member m ON m.midx = mr.midx
-        LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
-        where mr.midx=#{midx}
-        AND (mr.title LIKE CONCAT('%', #{key}, '%') OR mr.content LIKE CONCAT('%', #{key}, '%'))
-        ORDER BY mr.ridx DESC
-    </select>
-
-    <!--발신목록 결재자이름검색-->
-    <select id="selectRequestsListName" parameterType="com.example.intranet.dto.MemberRequestsDto">
-        SELECT
-        mr.*,
-        m.name AS mname,
-        m.position AS mposition,
-        m2.name AS cname,
-        m2.position AS cposition
-        FROM member_requests mr
-        LEFT JOIN member m ON m.midx = mr.midx
-        LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
-        where mr.midx=#{midx}
-        AND m2.name LIKE CONCAT('%', #{key}, '%')
-        ORDER BY mr.ridx DESC
+        where
+            mr.midx=#{midx}
+            <if test="type == 'title'">
+                and mr.title like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'titleContent'">
+                and (mr.title like concat('%', #{key}, '%') OR mr.content like concat('%', #{key}, '%'))
+            </if>
+            <if test="type == 'name'">
+                and m2.name like concat('%', #{key}, '%')
+            </if>
+        order by
+            <choose>
+                <when test="sort == 'category'">mr.category</when>
+                <when test="sort == 'title'">mr.title</when>
+                <when test="sort == 'confirm_midx'">m2.name</when>
+                <when test="sort == 'status'">mr.status</when>
+                <otherwise>mr.writedate</otherwise>
+            </choose>
+            <choose>
+                <when test="dir == 'asc'">asc</when>
+                <otherwise>desc</otherwise>
+            </choose>
     </select>
 
     <!--기안서작성폼-->
@@ -101,56 +76,29 @@
         FROM member_requests mr
         LEFT JOIN member m ON m.midx = mr.midx
         LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
-        where mr.confirm_midx=#{midx}
-        ORDER BY mr.ridx DESC
-    </select>
-
-    <!--수신목록 제목검색-->
-    <select id="searchGetListTitle" parameterType="com.example.intranet.dto.MemberRequestsDto">
-        SELECT
-            mr.*,
-            m.name AS mname,
-            m.position AS mposition,
-            m2.name AS cname,
-            m2.position AS cposition
-        FROM member_requests mr
-                 LEFT JOIN member m ON m.midx = mr.midx
-                 LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
-        where mr.confirm_midx=#{midx}
-          AND mr.title LIKE CONCAT('%', #{key}, '%')
-        ORDER BY mr.ridx DESC
-    </select>
-
-    <!--수신목록 제목내용검색-->
-    <select id="searchGetListTitleContent" parameterType="com.example.intranet.dto.MemberRequestsDto">
-        SELECT
-            mr.*,
-            m.name AS mname,
-            m.position AS mposition,
-            m2.name AS cname,
-            m2.position AS cposition
-        FROM member_requests mr
-                 LEFT JOIN member m ON m.midx = mr.midx
-                 LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
-        where mr.confirm_midx=#{midx}
-          AND (mr.title LIKE CONCAT('%', #{key}, '%') OR mr.content LIKE CONCAT('%', #{key}, '%'))
-        ORDER BY mr.ridx DESC
-    </select>
-
-    <!--수신목록 작성자이름검색-->
-    <select id="searchGetListName" parameterType="com.example.intranet.dto.MemberRequestsDto">
-        SELECT
-        mr.*,
-        m.name AS mname,
-        m.position AS mposition,
-        m2.name AS cname,
-        m2.position AS cposition
-        FROM member_requests mr
-        LEFT JOIN member m ON m.midx = mr.midx
-        LEFT JOIN member m2 ON m2.midx = mr.confirm_midx
-        where mr.confirm_midx=#{midx}
-        AND m.name LIKE CONCAT('%', #{key}, '%')
-        ORDER BY mr.ridx DESC
+        where
+            mr.confirm_midx=#{midx}
+            <if test="type == 'title'">
+                and mr.title like concat('%', #{key}, '%')
+            </if>
+            <if test="type == 'titleContent'">
+                and (mr.title like concat('%', #{key}, '%') OR mr.content like concat('%', #{key}, '%'))
+            </if>
+            <if test="type == 'name'">
+                and m2.name like concat('%', #{key}, '%')
+            </if>
+        order by
+            <choose>
+                <when test="sort == 'category'">mr.category</when>
+                <when test="sort == 'title'">mr.title</when>
+                <when test="sort == 'midx'">m.name</when>
+                <when test="sort == 'status'">mr.status</when>
+                <otherwise>mr.writedate</otherwise>
+            </choose>
+            <choose>
+                <when test="dir == 'asc'">asc</when>
+                <otherwise>desc</otherwise>
+            </choose>
     </select>
 
     <!--수신목록 상세보기-->

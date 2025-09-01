@@ -34,6 +34,13 @@ public class RequestsService {
     public HashMap<String, Object> selectRequestsList(HttpServletRequest request, int midx) {
         HttpSession session = request.getSession();
 
+        if (request.getParameter("first") != null) {
+            session.removeAttribute("page");
+            session.removeAttribute("key");
+            session.removeAttribute("sort");
+            session.removeAttribute("dir");
+        }
+
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
@@ -54,27 +61,20 @@ public class RequestsService {
             key = (String) session.getAttribute("key");
         }
 
-        String sort = "desc";
+        String sort = "writedate";
         if (request.getParameter("sort") != null) {
             sort = request.getParameter("sort");
+            session.setAttribute("sort", sort);
         }
 
-
-        System.out.println("Query String: " + request.getQueryString());
+        String dir = "desc";
+        if (request.getParameter("dir") != null) {
+            dir = request.getParameter("dir");
+            session.setAttribute("dir", dir);
+        }
 
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<MemberRequestsDto> lists = new ArrayList<>();
-        if ("title".equals(type)) {
-            lists = rdao.selectRequestsListTitle(midx, type, key, sort);
-        } else if ("titleContent".equals(type)) {
-            lists = rdao.selectRequestsListTitleContent(midx, type, key, sort);
-        } else if ("name".equals(type)) {
-            lists = rdao.selectRequestsListName(midx, type, key, sort);
-        } else {
-            lists = rdao.selectRequestsList(midx, type, key, sort);
-        }
-
-
+        ArrayList<MemberRequestsDto> lists = rdao.selectRequestsList(midx, type, key, sort, dir);
         ArrayList<MemberRequestsDto> list = new ArrayList<>();
 
         Paging paging = new Paging();
@@ -93,9 +93,9 @@ public class RequestsService {
 
         if (lists.size() > 0) {
             for (int i=paging.getStartNum(); i<lists.size(); i++) {
-                MemberRequestsDto bdto = lists.get(i);
-                bdto.setLoopnum(i+1);
-                list.add(bdto);
+                MemberRequestsDto mrdto = lists.get(i);
+                mrdto.setLoopnum(i+1);
+                list.add(mrdto);
                 if (i == paging.getStartNum() + paging.getDisplayRow() - 1) {
                     break;
                 }
@@ -104,7 +104,10 @@ public class RequestsService {
 
         result.put("requestsList", list);
         result.put("paging", paging);
+        result.put("type", type);
         result.put("key", key);
+        result.put("sort", sort);
+
         return result;
 
     }
@@ -131,6 +134,13 @@ public class RequestsService {
     public HashMap<String, Object> selectGetList(HttpServletRequest request, int midx) {
         HttpSession session = request.getSession();
 
+        if (request.getParameter("first") != null) {
+            session.removeAttribute("page");
+            session.removeAttribute("key");
+            session.removeAttribute("sort");
+            session.removeAttribute("dir");
+        }
+
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
@@ -151,25 +161,20 @@ public class RequestsService {
             key = (String) session.getAttribute("key");
         }
 
-        String sort = "desc";
+        String sort = "writedate";
         if (request.getParameter("sort") != null) {
             sort = request.getParameter("sort");
+            session.setAttribute("sort", sort);
+        }
+
+        String dir = "desc";
+        if (request.getParameter("dir") != null) {
+            dir = request.getParameter("dir");
+            session.setAttribute("dir", dir);
         }
 
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<MemberRequestsDto> lists = new ArrayList<>();
-
-        if ("title".equals(type)) {
-            lists = rdao.searchGetListTitle(midx, type, key, sort);
-        } else if ("titleContent".equals(type)) {
-            lists = rdao.searchGetListContent(midx, type, key, sort);
-        } else if ("name".equals(type)) {
-            lists = rdao.searchGetListName(midx, type, key, sort);
-        } else {
-            lists = rdao.selectGetList(midx, type, key, sort);
-        }
-
-
+        ArrayList<MemberRequestsDto> lists = rdao.selectGetList(midx, type, key, sort, dir);
         ArrayList<MemberRequestsDto> list = new ArrayList<>();
 
         Paging paging = new Paging();
@@ -199,7 +204,10 @@ public class RequestsService {
 
         result.put("getList", list);
         result.put("paging", paging);
+        result.put("type", type);
         result.put("key", key);
+        result.put("sort", sort);
+
         return result;
     }
 

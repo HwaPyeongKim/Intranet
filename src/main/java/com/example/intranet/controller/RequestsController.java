@@ -40,7 +40,9 @@ public class RequestsController {
             HashMap<String, Object> result = rs.selectRequestsList(request, loginUser.getMidx());
             model.addAttribute("requestsList", result.get("requestsList"));
             model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
         }
         return "requests/requests";
 
@@ -114,7 +116,9 @@ public class RequestsController {
             HashMap<String, Object> result = rs.selectGetList(request, loginUser.getMidx());
             model.addAttribute("getList", result.get("getList"));
             model.addAttribute("paging", result.get("paging"));
+            model.addAttribute("type", result.get("type"));
             model.addAttribute("key", result.get("key"));
+            model.addAttribute("sort", result.get("sort"));
         }
         return "requests/getList";
     }

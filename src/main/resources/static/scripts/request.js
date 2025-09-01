@@ -42,3 +42,29 @@ function openDeleteModal(ridx) {
 function closeConfirmModal() {
     document.getElementById("confirmModal").style.display = "none";
 }
+
+$(document).ready(function() {
+    $(".table_default .row_title span[data-sort]").click(function () {
+        var searchBox = $(".searchBox");
+        var type = searchBox.find("select[name=type]").val();
+        var key = searchBox.find("input[name=key]").val();
+        var sort = $(this).attr("data-sort");
+        var dir = "desc";
+        var status = $(this).find("i").hasClass("fa-arrow-down");
+        $("table .row_title span[data-sort] i").removeClass("fa-arrow-down fa-arrow-up");
+        if (status) {
+            dir = "asc";
+            $(this).find("i").addClass("fa-arrow-up");
+        } else {
+            dir = "desc";
+            $(this).find("i").addClass("fa-arrow-down");
+        }
+
+        url = new URL(window.location.href);
+        url.searchParams.set("type", type);
+        url.searchParams.set("key", key);
+        url.searchParams.set("sort", sort);
+        url.searchParams.set("dir", dir);
+        location.href = url;
+    });
+});
