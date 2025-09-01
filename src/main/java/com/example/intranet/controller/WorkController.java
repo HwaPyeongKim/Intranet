@@ -48,8 +48,7 @@ public class WorkController {
             model.addAttribute("key", result.get("key"));
             LocalDate today = LocalDate.now();
             model.addAttribute("today", today);
-            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx(), today);
-            model.addAttribute("work", wdto);
+
 
             url = "work/mywork";
         }
@@ -91,8 +90,6 @@ public class WorkController {
             model.addAttribute("key", result.get("key"));
             LocalDate today = LocalDate.now();
             model.addAttribute("today", today);
-            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx(), today);
-            model.addAttribute("work", wdto);
 
             url = "work/youwork";
         }
