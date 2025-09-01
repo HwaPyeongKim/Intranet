@@ -78,7 +78,8 @@
         </div>
 
         <div class="form-box">
-            <textarea id="content" class="textbox" name="content" placeholder="내용을 입력하세요" required></textarea>
+            <textarea name="content" id="content" style="display: none;"></textarea>
+            <div id="editor"></div>
         </div>
 
         <div class="form-box" style="display: flex;justify-content: space-between;">

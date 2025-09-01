@@ -46,7 +46,8 @@
 
 
     <div class="request-content-box">
-        <pre class="request-content">${rdto.content}</pre>
+        <div id="viewer"><c:out value="${rdto.content}" escapeXml="false" /></div>
+<%--        <pre class="request-content">${rdto.content}</pre>--%>
     </div>
 
     <c:if test="${rdto.fidx > 0}">

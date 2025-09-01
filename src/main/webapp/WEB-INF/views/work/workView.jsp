@@ -62,7 +62,9 @@
 
     <div class="field">
         <label style="line-height: 40px;">내용</label>
-        <div style="line-height: 40px; border-bottom: 1px dotted gray; width: 100px"><pre>${workitem.content}</pre></div>
+        <div style="line-height: 40px; border-bottom: 1px dotted gray; width: 100px">
+        <div id="viewer"><c:out value="${workitem.content}" escapeXml="false" /></div>
+        </div>
     </div>
 
     <c:if test="${workitem.fidx > 0}">
