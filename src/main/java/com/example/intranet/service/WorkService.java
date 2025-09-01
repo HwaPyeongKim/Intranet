@@ -7,15 +7,13 @@ import com.example.intranet.dto.*;
 import com.example.intranet.dto.calendar.CalendarDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @Service
 public class WorkService {
@@ -312,12 +310,12 @@ public class WorkService {
 
         // 시작일, 종료일은 Timestamp형 시간을 String으로 변환
         String writedate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(workdto.getWritedate());
-        String completedate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(workdto.getCompletedate());
+        String deadline = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(workdto.getDeadline());
 
         // 요청자와 수신자 양쪽 모두 CalendarDto 객체 생성하고 DB에 추가
         // new CalendarDto( 일정제목, 일정시작일, 일정종료일, 멤버dto, 사용용도, 용도에 맞는 idx );
-        CalendarDto calendardto1 =  new CalendarDto(title, writedate, completedate, mdao.selectMember(workdto.getMidx()), "work", workdto.getWidx());
-        CalendarDto calendardto2 =  new CalendarDto(title, writedate, completedate, mdao.selectMember(workdto.getWorker()), "work", workdto.getWidx());
+        CalendarDto calendardto1 =  new CalendarDto(title, writedate, deadline, mdao.selectMember(workdto.getMidx()), "work", workdto.getWidx());
+        CalendarDto calendardto2 =  new CalendarDto(title, writedate, deadline, mdao.selectMember(workdto.getWorker()), "work", workdto.getWidx());
 
         try {
             // 요청자와 수신자 양쪽 모두에 일정이 생성됩니다
@@ -361,9 +359,9 @@ public class WorkService {
         // 가져오는 일정 : 요청자의일정 worker의일정 총 두개의 일정
         try {
             for (CalendarDto calendardto : calendarList) {
-                // 수정되는 사항 : title, completedate
+                // 수정되는 사항 : title, deadline
                 calendardto.setTitle("(업무) "+workdto.getTitle());
-                calendardto.setEnd(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(workdto.getCompletedate()));
+                calendardto.setEnd(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(workdto.getDeadline()));
                 cdao.eventUpdate(calendardto);
             }
         } catch (Exception e) {
@@ -377,9 +375,15 @@ public class WorkService {
 
     public void deleteComment(int wcidx) {wdao.deleteComment(wcidx);}
 
-    public void changeStatus(int widx, int status, int next) { wdao.changeStatus(widx, status, next); }
+    public void changeStatus(int widx, int status, int next) {
 
-    public WorkDto myCompleteWork(int midx) {
-        return wdao.myCompleteWork(midx);
+        wdao.changeStatus(widx, status, next);
+        if(next == 6) {
+            wdao.updateCompletedate(widx);
+        }
+    }
+
+    public WorkDto myCompleteWork(int midx, LocalDate today) {
+        return wdao.myCompleteWork(midx, today);
     }
 }

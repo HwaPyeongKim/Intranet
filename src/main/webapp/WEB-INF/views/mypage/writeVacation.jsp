@@ -52,7 +52,8 @@
         <div class="field">
             <label for="content">사유</label>
             <div>
-                <textarea name="content" id="content">${dto.content}</textarea>
+                <textarea name="content" id="content" style="display: none;"></textarea>
+                <div id="editor"></div>
             </div>
         </div>
 

@@ -85,11 +85,13 @@ public class MemberService {
         String sort = "joindate";
         if (request.getParameter("sort") != null) {
             sort = request.getParameter("sort");
+            session.setAttribute("sort", sort);
         }
 
         String dir = "desc";
         if (request.getParameter("dir") != null) {
             dir = request.getParameter("dir");
+            session.setAttribute("dir", dir);
         }
 
         HashMap<String, Object> result = new HashMap<>();
@@ -126,6 +128,7 @@ public class MemberService {
         result.put("type", type);
         result.put("key", key);
         result.put("sort", sort);
+        result.put("dir", dir);
 
         return result;
     }

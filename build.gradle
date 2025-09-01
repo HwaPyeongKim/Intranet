@@ -48,6 +48,8 @@ dependencies {
 
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.429' // S3 서비스와 상호 작용
     implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359' // XML 데이터를 자바 객체로 매핑하는 데 사용
+
+    implementation 'org.jsoup:jsoup:1.15.3'
 }
 
 tasks.named('test') {

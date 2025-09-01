@@ -32,7 +32,7 @@
         <choose>
             <when test="sort == 'title'">w.title</when>
             <when test="sort == 'empname'">mf.name</when>
-            <when test="sort == 'completedate'">w.completedate</when>
+            <when test="sort == 'deadline'">w.deadline</when>
             <when test="sort == 'status'">w.status</when>
             <otherwise>w.writedate</otherwise>
         </choose>
@@ -73,7 +73,7 @@
         <choose>
             <when test="sort == 'title'">w.title</when>
             <when test="sort == 'empname'">mf.name</when>
-            <when test="sort == 'completedate'">w.completedate</when>
+            <when test="sort == 'deadline'">w.deadline</when>
             <when test="sort == 'status'">w.status</when>
             <otherwise>w.writedate</otherwise>
         </choose>
@@ -88,8 +88,8 @@
 <!--    </select>-->
 
     <insert id="insert" parameterType="com.example.intranet.dto.WorkDto" >
-        insert into work( midx, worker, fidx, title, content, status, completedate )
-        values( #{midx},#{worker},#{fidx},#{title},#{content}, #{status} ,#{completedate})
+        insert into work( midx, worker, fidx, title, content, status, deadline )
+        values( #{midx},#{worker},#{fidx},#{title},#{content}, #{status} ,#{deadline})
     </insert>
 
     <select id="selectOne" resultType="com.example.intranet.dto.WorkDto">
@@ -113,7 +113,7 @@
 
     <update id="update" parameterType="com.example.intranet.dto.WorkDto">
         update work set
-        title = #{title}, content = #{content}, fidx = #{fidx}, completedate = #{completedate} where widx = #{widx}
+        title = #{title}, content = #{content}, fidx = #{fidx}, deadline = #{deadline} where widx = #{widx}
     </update>
 
     <insert id="insertComment">
@@ -139,9 +139,16 @@
             )
     </select>
 
-    <select id="myCompleteWork" resultType="com.example.intranet.dto.WorkDto">
-        select count(*) as totalCount, (select count(*) from work where worker = #{midx} and deleteyn= 'N' and completedate is not null and status = 6) as completeCount
-        from work where worker = #{midx}
-    </select>
+<!--    <select id="myCompleteWork" resultType="com.example.intranet.dto.WorkDto">-->
+<!--        select-->
+<!--        (select count(*) from work where worker = #{midx} and writedate >= #{today} and deleteyn = 'N') as newWork-->
+<!--        , (select count(*) from work where worker = #{midx} and completedate >= #{today} and deleteyn = 'N') as completeWork-->
+<!--        , (select count(*) from work where worker = #{midx} and status != 6 and deleteyn = 'N') as noCompleteWork-->
+<!--        from work where worker = #{midx}-->
+<!--    </select>-->
+
+    <update id="updateCompletedate" parameterType="int">
+        UPDATE work SET completedate = NOW() WHERE widx = #{widx}
+    </update>
 
 </mapper>
