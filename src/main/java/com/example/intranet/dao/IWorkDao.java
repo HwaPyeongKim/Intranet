@@ -1,10 +1,10 @@
 package com.example.intranet.dao;
 
-import com.example.intranet.dto.Paging;
 import com.example.intranet.dto.WorkCommentDto;
 import com.example.intranet.dto.WorkDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Mapper
@@ -40,7 +40,7 @@ public interface IWorkDao {
     //  일정관리 수정중 추가
     WorkDto getRecentWork(int midx);
 
-    WorkDto myCompleteWork(int midx);
+    WorkDto myCompleteWork(int midx, LocalDate today);
 
     void updateCompletedate(int widx);
 }

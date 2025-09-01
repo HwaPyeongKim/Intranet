@@ -7,15 +7,13 @@ import com.example.intranet.dto.*;
 import com.example.intranet.dto.calendar.CalendarDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @Service
 public class WorkService {
@@ -385,7 +383,7 @@ public class WorkService {
         }
     }
 
-    public WorkDto myCompleteWork(int midx) {
-        return wdao.myCompleteWork(midx);
+    public WorkDto myCompleteWork(int midx, LocalDate today) {
+        return wdao.myCompleteWork(midx, today);
     }
 }

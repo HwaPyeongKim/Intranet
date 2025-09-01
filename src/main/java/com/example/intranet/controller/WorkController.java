@@ -5,7 +5,6 @@ import com.example.intranet.service.MemberService;
 import com.example.intranet.service.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.jsp.tagext.TagInfo;
 import jakarta.validation.Valid;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -51,7 +49,7 @@ public class WorkController {
             model.addAttribute("key", result.get("key"));
             LocalDate today = LocalDate.now();
             model.addAttribute("today", today);
-            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx());
+            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx(), today);
             model.addAttribute("work", wdto);
 
             url = "work/mywork";
@@ -94,7 +92,7 @@ public class WorkController {
             model.addAttribute("key", result.get("key"));
             LocalDate today = LocalDate.now();
             model.addAttribute("today", today);
-            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx());
+            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx(), today);
             model.addAttribute("work", wdto);
 
             url = "work/youwork";

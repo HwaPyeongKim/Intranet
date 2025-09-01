@@ -4,6 +4,7 @@ import com.example.intranet.dto.*;
 import com.example.intranet.service.BoardService;
 import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
+import com.example.intranet.service.WorkService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class MemberController {
     @Autowired
     FileService fs;
 
+    @Autowired
+    WorkService ws;
+
     @GetMapping("/")
     public String index(HttpSession session, Model model) {
         String url = "member/login";
@@ -52,7 +56,6 @@ public class MemberController {
             int midx = loginUser.getMidx();
             LocalDate today = LocalDate.now();
             model.addAttribute("today", String.valueOf(today));
-            System.out.println(today);
 
             BoardDto noticeBoard = ms.selectMainNotice();
             if (noticeBoard != null) {
@@ -69,6 +72,9 @@ public class MemberController {
 
             List<WorkDto> workList = ms.selectMyWorkList(midx);
             model.addAttribute("workList", workList);
+
+//            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx(), today);
+//            model.addAttribute("work", wdto);
             url = "main";
         }
         return url;
