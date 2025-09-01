@@ -32,7 +32,7 @@
         <choose>
             <when test="sort == 'title'">w.title</when>
             <when test="sort == 'empname'">mf.name</when>
-            <when test="sort == 'completedate'">w.completedate</when>
+            <when test="sort == 'deadline'">w.deadline</when>
             <when test="sort == 'status'">w.status</when>
             <otherwise>w.writedate</otherwise>
         </choose>
