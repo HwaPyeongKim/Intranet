@@ -34,7 +34,7 @@
                 <span data-sort="writedate">등록일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span>
             </div>
             <div class="col">
-                <span data-sort="completedate">마감일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'completedate', 'writedate', 'desc')}"></i></span>
+                <span data-sort="deadline">마감일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'deadline', 'writedate', 'desc')}"></i></span>
             </div>
             <div class="col">
                 <span data-sort="status">진행상태<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'status', 'writedate', 'desc')}"></i></span>
@@ -53,12 +53,17 @@
                         <div class="col title">
                             <a href="workView?widx=${item.widx}" target="_blank">
                                 ${item.title}
-                                <c:if test="${fn:substring(item.writedate, 0, 10) == today}"><span class="new"> New</span></c:if>
+                                <c:if test="${item.status==1}">
+                                    <span style="color: red; font-weight: bold">New</span>
+                                </c:if>
+                                <c:if test="${item.comment_count>0}">
+                                    <span style="color: blue">[${item.comment_count}]</span>
+                                </c:if>
                             </a>
                         </div>
                         <div class="col">${item.empname}</div>
                         <div class="col"><fmt:formatDate value="${item.writedate}" pattern="yyyy-MM-dd" /></div>
-                        <div class="col"><fmt:formatDate value="${item.completedate}" pattern="yyyy-MM-dd" /></div>
+                        <div class="col"><fmt:formatDate value="${item.deadline}" pattern="yyyy-MM-dd" /></div>
                         <div class="col">
                             <c:choose>
                                 <c:when test='${item.status=="1"}'>대기중</c:when>

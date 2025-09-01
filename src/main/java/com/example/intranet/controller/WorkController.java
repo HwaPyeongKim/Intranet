@@ -6,6 +6,7 @@ import com.example.intranet.service.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -132,6 +133,8 @@ public class WorkController {
         model.addAttribute("members", members);
         model.addAttribute("deadline", deadline);
 
+        String plainText = Jsoup.parse(workdto.getContent()).text().trim();
+
 
         String url = "work/insertWork";
         if(result.hasFieldErrors("title"))
@@ -140,8 +143,8 @@ public class WorkController {
             model.addAttribute("msg", "수신자를 선택하세요" );
         else if(deadline.equals(""))
             model.addAttribute("msg", "마감기한을 선택하세요" );
-        else if(result.hasFieldErrors("content"))
-            model.addAttribute("msg", result.getFieldError("content").getDefaultMessage() );
+        else if(plainText.equals(""))
+            model.addAttribute("msg", "내용을 입력하세요" );
         else {
             url = "redirect:/yourwork";
             System.out.println(deadline);
