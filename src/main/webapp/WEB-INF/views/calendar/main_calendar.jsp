@@ -55,24 +55,11 @@
                     domNodes:[]
                 };
             },
-            eventAdd: function (obj) {      // 이벤트 추가 시 발생
-                console.log("eventAdd : " + obj);
-            },
-            eventChange: function (obj) {    // 이벤트 수정 시 발생
-                console.log("eventChange : " + obj);
-            },
-            eventRemove: function (obj) {     // 이벤트 삭제 시 발생
-                console.log("eventRemove : " + obj);
-            },
             select: function () {
-                console.log(location.href="/schedule");
                 location.href="/schedule";
             },
             eventClick: function (arg) {
-            },
-            eventDrop: function(arg) {              // 일정을 이동시킬때, 드래그하여 시작일과 종료일이 변경되는 경우 동작
-            },
-            eventResize: function(arg) {            // 일정의 크기를 변경시킬때 동작(일정을 늘릴때)
+                location.href="/schedule";
             },
             // 이벤트
             events: [
