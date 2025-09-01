@@ -21,23 +21,37 @@
                 <input type="text" name="key" value="${key}"/>
                 <button>검색</button>
             </div>
-            <select name="sort" id="sort" style="margin-right: 10px">
-                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>최신순</option>
-                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성순</option>
-            </select>
+<%--            <select name="sort" id="sort" style="margin-right: 10px">--%>
+<%--                <option value="desc" <c:if test="${sort == 'desc'}"> selected</c:if>>최신순</option>--%>
+<%--                <option value="asc" <c:if test="${sort == 'asc'}"> selected</c:if>>작성순</option>--%>
+<%--            </select>--%>
         </div>
     </form>
 
     <form id="multiDeleteForm" action="deletemsgMulti" method="post" name="multiDeleteForm">
     <input type="hidden" name="activeTab" value="receive">
+
+
         <div class="table">
             <div class="row head">
                 <div style="width: 50px; display: flex; justify-content: space-around">
                     <input type="checkbox" id="checkAll">
                 </div>
-                <div class="col">발신자</div>
-                <div class="col">내용</div>
-                <div class="col">받은 시간</div>
+
+
+
+            <div class="col">
+                <span data-sort="fromname">발신자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'fromname', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="content">내용<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'content', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="writedate">받은시간<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span>
+            </div>
+
+
+
             </div>
 
             <c:choose>
