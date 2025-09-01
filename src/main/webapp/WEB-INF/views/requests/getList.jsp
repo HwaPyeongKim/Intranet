@@ -1,12 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../header.jsp" %>
 <link rel="stylesheet" type="text/css" href="/css/requests.css">
 
-<ul id="sub_menu" style="display: flex;">
-    <li class="sub-menu-btn"><a href="requests">결재발신함</a></li>
-    <li class="sub-menu-btn active"><a href="getList">결재수신함</a></li>
+<ul class="submenu">
+    <li><a href="requests">결재발신함</a></li>
+    <li class="on"><a href="getList">결재수신함</a></li>
 </ul>
 
 <section id="getList" class="section_wrap">
@@ -74,6 +72,9 @@
                             <td style="cursor:pointer;text-align: left">
                                 <a href="getListDetail?ridx=${getList.ridx}">
                                     ${getList.title}
+                                    <c:if test="${getList.status==1}">
+                                        <span style="color: red">(new!)</span>
+                                    </c:if>
                                 </a>
                             </td>
                             <td><fmt:formatDate value="${getList.writedate}" pattern="yyyy-MM-dd"/></td>

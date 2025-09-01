@@ -1,6 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../header.jsp" %>
 <link rel="stylesheet" type="text/css" href="/css/requests.css">
 
@@ -14,7 +12,7 @@
         </c:choose>
     </h2>
 
-    <section class="request-info-box">
+    <div class="request-info-box">
         <div class="info-row"><span class="label">작성자</span> ${loginUser.name}</div>
         <div class="info-row"><span class="label">제목</span> ${rdto.title}</div>
 
@@ -43,13 +41,13 @@
         <c:if test="${rdto.status == '3' || rdto.status == '4'}">
             <div class="info-row"><span class="label">처리일자</span> ${rdto.confirmdate}</div>
         </c:if>
-    </section>
+    </div>
 
 
 
-    <section class="request-content-box">
+    <div class="request-content-box">
         <pre class="request-content">${rdto.content}</pre>
-    </section>
+    </div>
 
     <c:if test="${rdto.fidx > 0}">
         <section class="request-file-box">
@@ -58,12 +56,12 @@
         </section>
     </c:if>
 
-    <section class="button-group">
+    <div class="button-group">
         <c:if test="${rdto.status == '1'}">
             <button type="button" class="btn btn-delete" onclick="openDeleteModal('${rdto.ridx}')">삭제</button>
         </c:if>
         <button type="button" class="btn btn-list" onclick="location.href='/requests'">목록으로</button>
-    </section>
+    </div>
 
     <!-- 삭제 확인 모달 -->
     <div id="confirmModal" class="modal">
