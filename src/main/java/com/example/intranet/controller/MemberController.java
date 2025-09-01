@@ -96,6 +96,8 @@ public class MemberController {
             } else {
                 if (mdto.getConfirmyn().equals("N")) {
                     model.addAttribute("msg", "가입승인 대기상태입니다. 관리자에게 문의해주세요.");
+                } else if (mdto.getLeavedate() != null) {
+                    model.addAttribute("msg", "퇴사처리된 아이디입니다.");
                 } else {
                     session.setAttribute("loginUser", mdto);
                     session.setAttribute("profileImg", fs.getFile(mdto.getImage()).getPath());
@@ -133,8 +135,12 @@ public class MemberController {
             model.addAttribute("msg", "이름을 입력해주세요.");
         } else if (number1.equals("")) {
             model.addAttribute("msg", "주민등록번호를 입력해주세요.");
+        } else if (number1.length() != 6) {
+            model.addAttribute("msg", "주민등록번호 앞자리를 6자리로 입력해주세요.");
         } else if (number2.equals("")) {
             model.addAttribute("msg", "주민등록번호를 입력해주세요.");
+        } else if (number2.length() != 7) {
+            model.addAttribute("msg", "주민등록번호 뒷자리를 7자리로 입력해주세요.");
         } else if (memberdto.getEmail().equals("")) {
             model.addAttribute("msg", "이메일을 입력해주세요.");
         } else if (phone1.equals("")) {
