@@ -6,6 +6,7 @@ import com.example.intranet.dto.MemberDto;
 import com.example.intranet.service.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+
 
 @Controller
 public class BoardController {
@@ -52,11 +55,13 @@ public class BoardController {
     public String writeBoard(@ModelAttribute("dto") BoardDto boarddto, Model model) {
         String url = "board/write";
 
+        String plainText = Jsoup.parse(boarddto.getContent()).text().trim();
+
         if (boarddto.getTitle() == null || boarddto.getTitle().equals("")) {
             model.addAttribute("msg", "제목을 입력해주세요.");
         } else if (boarddto.getCategory() == null) {
             model.addAttribute("msg", "분류를 선택해주세요.");
-        } else if (boarddto.getContent() == null || boarddto.getContent().equals("")) {
+        } else if (boarddto.getContent() == null || boarddto.getContent().equals("") || plainText.equals("")) {
             model.addAttribute("msg", "내용을 입력해주세요.");
         } else if (boarddto.getPwd() == null || boarddto.getPwd().equals("")) {
             model.addAttribute("msg", "비밀번호를 입력해주세요.");
@@ -121,11 +126,13 @@ public class BoardController {
     public String updateBoard(@ModelAttribute("dto") BoardDto boarddto, HttpSession session, Model model) {
         String url = "redirect:/updateBoardForm?bidx="+boarddto.getBidx();
 
+        String plainText = Jsoup.parse(boarddto.getContent()).text().trim();
+
         if (boarddto.getTitle() == null || boarddto.getTitle().equals("")) {
             model.addAttribute("msg", "제목을 입력해주세요.");
         } else if (boarddto.getCategory() == null) {
             model.addAttribute("msg", "분류를 선택해주세요.");
-        } else if (boarddto.getContent() == null || boarddto.getContent().equals("")) {
+        } else if (boarddto.getContent() == null || boarddto.getContent().equals("") || plainText.equals("")) {
             model.addAttribute("msg", "내용을 입력해주세요.");
         } else {
             bs.update(boarddto);
