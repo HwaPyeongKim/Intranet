@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 @Mapper
 public interface IWorkDao {
-    ArrayList<WorkDto> selectWork(String type, String key, String sort, int midx);
+    ArrayList<WorkDto> selectWork(String type, String key, String sort, String dir, int midx);
 
 //    int getAllCountForWork(String key, int midx);
 
-    ArrayList<WorkDto> selectYourWork(String type, String key, String sort, int midx);
+    ArrayList<WorkDto> selectYourWork(String type, String key, String sort, String dir, int midx);
 
 //    int getAllCountForYourWork(String key, int midx);
 

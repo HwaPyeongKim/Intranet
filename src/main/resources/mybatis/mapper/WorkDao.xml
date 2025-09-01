@@ -28,13 +28,17 @@
             </choose>
         </where>
 
+        order by
         <choose>
-            <when test="sort == 'desc'">
-                order by w.writedate desc
-            </when>
-            <when test="sort == 'asc'">
-                order by w.writedate asc
-            </when>
+            <when test="sort == 'title'">w.title</when>
+            <when test="sort == 'empname'">mf.name</when>
+            <when test="sort == 'completedate'">w.completedate</when>
+            <when test="sort == 'status'">w.status</when>
+            <otherwise>w.writedate</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">asc</when>
+            <otherwise>desc</otherwise>
         </choose>
     </select>
 
@@ -60,18 +64,22 @@
                     and (w.title like concat('%', #{key}, '%') OR w.content like concat('%', #{key}, '%'))
                 </when>
                 <when test="type == 'name'">
-                    and mt.name like concat('%', #{key}, '%')
+                    and mf.name like concat('%', #{key}, '%')
                 </when>
             </choose>
         </where>
 
+        order by
         <choose>
-            <when test="sort == 'desc'">
-                order by w.writedate desc
-            </when>
-            <when test="sort == 'asc'">
-                order by w.writedate asc
-            </when>
+            <when test="sort == 'title'">w.title</when>
+            <when test="sort == 'empname'">mf.name</when>
+            <when test="sort == 'completedate'">w.completedate</when>
+            <when test="sort == 'status'">w.status</when>
+            <otherwise>w.writedate</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">asc</when>
+            <otherwise>desc</otherwise>
         </choose>
     </select>
 

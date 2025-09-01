@@ -35,6 +35,8 @@ public class WorkService {
         if (request.getParameter("first") != null) {
             session.removeAttribute("page");
             session.removeAttribute("key");
+            session.removeAttribute("sort");
+            session.removeAttribute("dir");
         }
 
         int page = 1;
@@ -57,13 +59,20 @@ public class WorkService {
             key = (String) session.getAttribute("key");
         }
 
-        String sort = "desc";
+        String sort = "writedate";
         if (request.getParameter("sort") != null) {
             sort = request.getParameter("sort");
+            session.setAttribute("sort", sort);
+        }
+
+        String dir = "desc";
+        if (request.getParameter("dir") != null) {
+            dir = request.getParameter("dir");
+            session.setAttribute("dir", dir);
         }
 
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<WorkDto> lists = wdao.selectWork(type, key, sort, midx);
+        ArrayList<WorkDto> lists = wdao.selectWork(type, key, sort, dir, midx);
         ArrayList<WorkDto> list = new ArrayList<>();
 
         Paging paging = new Paging();
@@ -81,9 +90,9 @@ public class WorkService {
 
         if (lists.size() > 0) {
             for (int i=paging.getStartNum(); i<lists.size(); i++) {
-                WorkDto wdto = lists.get(i);
-                wdto.setLoopnum(i+1);
-                list.add(wdto);
+                WorkDto bdto = lists.get(i);
+                bdto.setLoopnum(i+1);
+                list.add(bdto);
                 if (i == paging.getStartNum() + paging.getDisplayRow() - 1) {
                     break;
                 }
@@ -161,6 +170,8 @@ public class WorkService {
         if (request.getParameter("first") != null) {
             session.removeAttribute("page");
             session.removeAttribute("key");
+            session.removeAttribute("sort");
+            session.removeAttribute("dir");
         }
 
         int page = 1;
@@ -183,13 +194,20 @@ public class WorkService {
             key = (String) session.getAttribute("key");
         }
 
-        String sort = "desc";
+        String sort = "writedate";
         if (request.getParameter("sort") != null) {
             sort = request.getParameter("sort");
+            session.setAttribute("sort", sort);
+        }
+
+        String dir = "desc";
+        if (request.getParameter("dir") != null) {
+            dir = request.getParameter("dir");
+            session.setAttribute("dir", dir);
         }
 
         HashMap<String, Object> result = new HashMap<>();
-        ArrayList<WorkDto> lists = wdao.selectYourWork(type, key, sort, midx);
+        ArrayList<WorkDto> lists = wdao.selectYourWork(type, key, sort, dir, midx);
         ArrayList<WorkDto> list = new ArrayList<>();
 
         Paging paging = new Paging();
@@ -207,9 +225,9 @@ public class WorkService {
 
         if (lists.size() > 0) {
             for (int i=paging.getStartNum(); i<lists.size(); i++) {
-                WorkDto wdto = lists.get(i);
-                wdto.setLoopnum(i+1);
-                list.add(wdto);
+                WorkDto bdto = lists.get(i);
+                bdto.setLoopnum(i+1);
+                list.add(bdto);
                 if (i == paging.getStartNum() + paging.getDisplayRow() - 1) {
                     break;
                 }

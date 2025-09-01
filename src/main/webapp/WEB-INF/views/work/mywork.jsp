@@ -27,11 +27,22 @@
     <div class="table">
         <div class="row head">
             <div class="col">번호</div>
-            <div class="col title">업무명</div>
-            <div class="col">요청자</div>
-            <div class="col">등록일</div>
-            <div class="col">마감일</div>
-            <div class="col">진행상태</div>
+
+            <div class="col title">
+                <span data-sort="title">제목<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'title', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="empname">요청자<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'empname', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="writedate">등록일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'writedate', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="completedate">마감일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'completedate', 'writedate', 'desc')}"></i></span>
+            </div>
+            <div class="col">
+                <span data-sort="status">진행상태<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'status', 'writedate', 'desc')}"></i></span>
+            </div>
         </div>
         <c:choose>
             <c:when test="${empty list}">
