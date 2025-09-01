@@ -60,9 +60,10 @@
             </div>
         </div>
         <div class="field">
-            <label for="content">내용</label>
+            <label>내용</label>
             <div>
-                <textarea name="content" id="content"></textarea>
+                <textarea name="content" id="content" style="display: none;"></textarea>
+                <div id="editor"></div>
             </div>
         </div>
         <div class="field">

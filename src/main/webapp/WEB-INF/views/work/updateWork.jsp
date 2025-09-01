@@ -48,7 +48,8 @@
         <div class="field">
             <label for="content">내용</label>
             <div>
-                <textarea name="content" id="content">${workitem.content}</textarea>
+                <textarea name="content" id="content" style="display: none;"></textarea>
+                <div id="editor">${workitem.content}</div>
             </div>
         </div>
         <div class="field">
