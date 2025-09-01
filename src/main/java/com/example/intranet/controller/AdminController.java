@@ -102,6 +102,7 @@ public class AdminController {
                 model.addAttribute("type", result.get("type"));
                 model.addAttribute("key", result.get("key"));
                 model.addAttribute("sort", result.get("sort"));
+                model.addAttribute("dir", result.get("dir"));
                 url = "admin/memberList";
             }
         }
