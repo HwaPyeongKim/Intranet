@@ -1,7 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../header.jsp" %>
 <link rel="stylesheet" type="text/css" href="/css/requests.css">
-
+<ul class="submenu">
+    <li class="on"><a href="requests">결재발신함</a></li>
+    <li><a href="getList">결재수신함</a></li>
+</ul>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
         // 파일 첨부 필드와 삭제 버튼
@@ -41,16 +44,19 @@
 
             <div class="form-row">
                 <label for="title">제목</label>
-                <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required />
+
+                <input type="text" id="title" name="title" placeholder="제목을 입력하세요" value="${dto.title}" required />
             </div>
 
             <div class="form-row">
                 <label>구분</label>
                 <div>
                     <select name="category">
-                        <option value="1">업무기안</option>
-                        <option value="5">증명서/문서</option>
-                        <option value="6">품의/지출</option>
+
+                        <option value="1" <c:if test="${dto.category == 1}"> selected </c:if> >업무기안</option>
+                        <option value="5" <c:if test="${dto.category == 5}"> selected </c:if>>증명서/문서</option>
+                        <option value="6" <c:if test="${dto.category == 6}"> selected </c:if>>품의/지출</option>
+
                     </select>
                 </div>
             </div>
@@ -63,7 +69,7 @@
                     <option value="">선택하세요</option>
                     <c:forEach var="member" items="${memberList}">
                         <c:if test="${member.team == loginUser.team && member.midx != loginUser.midx}">
-                            <option value="${member.midx}">
+                            <option value="${member.midx}" <c:if test="${dto.confirm_midx == member.midx}"> selected </c:if> >
                                 ${member.name}&nbsp;${member.position}
                             </option>
                         </c:if>
@@ -71,10 +77,6 @@
                 </select>
             </div>
 
-            <div class="form-row">
-                <label>작성일자</label>
-                <div>${today}</div>
-            </div>
         </div>
 
         <div class="form-box">

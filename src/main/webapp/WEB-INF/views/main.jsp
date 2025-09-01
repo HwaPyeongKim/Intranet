@@ -27,7 +27,10 @@
                     </div>
                 </div>
                 <div class="main_inout_btnbox">
-                    <button type="button" onclick="location.href='logout'" class="logout">로그아웃</button>
+                    <c:if test="${loginUser.level > 1}">
+                        <button type="button" onclick="location.href='adminLoginForm'" class="adminBtn">관리자페이지</button>
+                    </c:if>
+
                     <button type="button" data-midx="${loginUser.midx}" id="workoutBtn" class="out">퇴근하기</button>
                 </div>
             </div>
@@ -73,7 +76,7 @@
                     <i class="far fa-file-alt"></i>
                     업무요청
                 </a>
-                <a class="widget" onclick="location.href='writemsg'">
+                <a class="widget" onclick="window.open('writeMessage', 'msgWrite', 'width=600,height=700');">
                     <i class="far fa-envelope"></i>
                     메세지작성
                 </a>

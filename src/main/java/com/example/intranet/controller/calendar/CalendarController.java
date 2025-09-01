@@ -30,11 +30,9 @@ public class CalendarController {
     */
 
     @Autowired
-    FileService fs;
-    @Autowired
     private CalendarService calendarService;
 
-    @GetMapping("/schedule") // 임시적 링크
+    @GetMapping("/schedule")
     public String calendar(HttpSession session, Model model) {
         String url = "member/login";
         MemberDto mdto = (MemberDto) session.getAttribute("loginUser");

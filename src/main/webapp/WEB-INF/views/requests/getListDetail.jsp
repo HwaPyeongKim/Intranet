@@ -1,7 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../header.jsp" %>
 <link rel="stylesheet" type="text/css" href="/css/requests.css">
-
+<ul class="submenu">
+    <li><a href="requests">결재발신함</a></li>
+    <li class="on"><a href="getList">결재수신함</a></li>
+</ul>
 <section id="request-detail-container" class="section_wrap">
     <h2 class="page-title">
         <c:choose>

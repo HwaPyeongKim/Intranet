@@ -95,14 +95,14 @@
     </form>
     <c:if test="${not empty message}">
         <div class="paging" style="height: 50px; line-height: 50px">
-            <c:if test="${paging.prev}"><a href="sentList?page=${paging.beginPage-1}">Prev</a></c:if>
+            <c:if test="${paging.prev}"><a href="sentList?page=${paging.beginPage-1}&type=${type}&key=${key}&sort=${sort}&dir=${dir}">Prev</a></c:if>
 
             <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-                <a href="sentList?page=${index}"<c:if
+                <a href="sentList?page=${index}&type=${type}&key=${key}&sort=${sort}&dir=${dir}"<c:if
                         test="${index == paging.page}"> style="color: red;"</c:if>>${index}</a>
             </c:forEach>
 
-            <c:if test="${paging.next}"><a href="sentList?page=${paging.endPage+1}">Next</a></c:if>
+            <c:if test="${paging.next}"><a href="sentList?page=${paging.endPage+1}&type=${type}&key=${key}&sort=${sort}&dir=${dir}">Next</a></c:if>
         </div>
     </c:if>
 </section>
