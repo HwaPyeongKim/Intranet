@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface IRequestsDao {
 
-    ArrayList<MemberRequestsDto> selectRequestsList(int midx, String type, String key, String sort);
+    ArrayList<MemberRequestsDto> selectRequestsList(int midx, String type, String key, String sort, String dir);
 
     void insertRquests(MemberRequestsDto requestsdto);
 
@@ -21,7 +21,7 @@ public interface IRequestsDao {
 
     MemberDto getUser4(int confirm_midx);
 
-    ArrayList<MemberRequestsDto> selectGetList(int midx, String type, String key, String sort);
+    ArrayList<MemberRequestsDto> selectGetList(int midx, String type, String key, String sort, String dir);
 
 
     MemberRequestsDto selectGetDetail(int ridx);

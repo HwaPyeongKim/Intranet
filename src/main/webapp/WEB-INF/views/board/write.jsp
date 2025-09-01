@@ -57,7 +57,7 @@
         </div>
         <div class="field">
             <label>내용</label>
-            <textarea name="content" id="content"></textarea>
+            <textarea name="content" id="content" style="display: none;"></textarea>
             <div id="editor"></div>
         </div>
         <div class="field">
