@@ -33,6 +33,7 @@
             eventColor
         FROM CALENDAR
         WHERE (category=1 AND midx = #{midx}) OR (category=2 AND tidx = #{team}) OR category=3  -- 유저의 개인일정, 부서일정, 회사전체일정을 가져옵니다
+        order by category desc;
     </select>
 
     <!-- 일정 저장하기 -->
