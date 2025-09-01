@@ -18,6 +18,7 @@ public class WorkDto {
     private String content;
     private int status;
     private Timestamp writedate;
+    private Timestamp deadline;
     private Timestamp completedate;
     private String deleteyn;
     private int loopnum;// 번호를 위한 변수

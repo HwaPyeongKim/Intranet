@@ -51,12 +51,12 @@
         </div>
         <div class="field">
             <div>
-                <label for="completedate">마감기한 &nbsp;&nbsp;</label>
+                <label for="deadline">마감기한 &nbsp;&nbsp;</label>
                 <jsp:useBean id="now" class="java.util.Date"/>
                 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd'T'HH:mm" var="now" />
                 <input type="datetime-local"
                 min="${now}"
-                name="completedate" value="${completedate}" style="width: 250px"/>
+                name="deadline" value="${deadline}" style="width: 250px"/>
             </div>
         </div>
         <div class="field">

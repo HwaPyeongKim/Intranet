@@ -1,5 +1,5 @@
 table tbody td.address {text-align: left;}
-table tbody td .updateMemberBtn {padding: 5px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-size: 1.2em; font-weight: bold; cursor: pointer;}
+table tbody td .updateMemberBtn {padding: 5px; border: 1px solid #32a2c6; border-radius: 10px; background: #50bde2; color: #fff; font-weight: bold; cursor: pointer;}
 
 section#login {display: flex; align-items: center; justify-content: center; height: 100vh;}
 section#login form {width: 100%; max-width: 400px; padding: 20px; border: 1px solid #000; border-radius: 10px;}

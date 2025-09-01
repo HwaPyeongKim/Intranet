@@ -40,7 +40,7 @@ public class AdminController {
         MemberDto mdto = (MemberDto) session.getAttribute("loginUser");
         if (mdto != null) {
             if (mdto.getLevel() > 1) {
-                url = "redirect:/admin";
+                url = "redirect:/adminMemberList";
             }
         }
         return url;
@@ -70,7 +70,7 @@ public class AdminController {
                 if (madto == null) {
                     ms.insertAttendance(mdto.getMidx());
                 }
-                url = "redirect:/admin";
+                url = "redirect:/adminMemberList";
             }
         }
 
@@ -102,6 +102,7 @@ public class AdminController {
                 model.addAttribute("type", result.get("type"));
                 model.addAttribute("key", result.get("key"));
                 model.addAttribute("sort", result.get("sort"));
+                model.addAttribute("dir", result.get("dir"));
                 url = "admin/memberList";
             }
         }

@@ -11,6 +11,7 @@ import com.example.intranet.service.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,8 +58,6 @@ public class MypageController {
             model.addAttribute("key", result.get("key"));
             LocalDate today = LocalDate.now();
             model.addAttribute("today", today);
-            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx());
-            model.addAttribute("work", wdto);
 
             url = "mypage/workList";
         }
@@ -104,13 +103,15 @@ public class MypageController {
     public String writeVacation(@ModelAttribute("dto") MemberRequestsDto mrdto, BindingResult result, HttpSession session, Model model) {
         String url = "member/login";
 
+
         MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
         if (loginUser != null) {
             url = "mypage/writeVacation";
+            String plainText = Jsoup.parse(mrdto.getContent()).text().trim();
 
             if (mrdto.getTitle().equals("")) {
                 model.addAttribute("msg", "제목을 입력해주세요.");
-            } else if (mrdto.getContent().equals("")) {
+            } else if (mrdto.getContent().equals("") || plainText.equals("")) {
                 model.addAttribute("msg", "사유를 입력해주세요.");
             } else {
                 Date today = new Date();

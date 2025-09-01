@@ -399,7 +399,11 @@ $(function (){
             type: "POST",
             data: {tidx: tidx},
             success: function(response) {
-                $("#teamName").text(response.teamName);
+                if (response.teamName != null) {
+                    $("#teamName").text(response.teamName);
+                } else {
+                    $("#teamName").text("팀을 선택해주세요.");
+                }
                 if (response.result == 1) {
                     $("#teamTableBody").empty();
                     var c_html = "";

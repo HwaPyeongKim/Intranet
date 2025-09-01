@@ -4,6 +4,7 @@ import com.example.intranet.dto.*;
 import com.example.intranet.service.BoardService;
 import com.example.intranet.service.FileService;
 import com.example.intranet.service.MemberService;
+import com.example.intranet.service.WorkService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class MemberController {
     @Autowired
     FileService fs;
 
+    @Autowired
+    WorkService ws;
+
     @GetMapping("/")
     public String index(HttpSession session, Model model) {
         String url = "member/login";
@@ -52,7 +56,6 @@ public class MemberController {
             int midx = loginUser.getMidx();
             LocalDate today = LocalDate.now();
             model.addAttribute("today", String.valueOf(today));
-            System.out.println(today);
 
             BoardDto noticeBoard = ms.selectMainNotice();
             if (noticeBoard != null) {
@@ -69,6 +72,9 @@ public class MemberController {
 
             List<WorkDto> workList = ms.selectMyWorkList(midx);
             model.addAttribute("workList", workList);
+
+//            WorkDto wdto = ws.myCompleteWork(loginUser.getMidx(), today);
+//            model.addAttribute("work", wdto);
             url = "main";
         }
         return url;
@@ -96,6 +102,8 @@ public class MemberController {
             } else {
                 if (mdto.getConfirmyn().equals("N")) {
                     model.addAttribute("msg", "가입승인 대기상태입니다. 관리자에게 문의해주세요.");
+                } else if (mdto.getLeavedate() != null) {
+                    model.addAttribute("msg", "퇴사처리된 아이디입니다.");
                 } else {
                     session.setAttribute("loginUser", mdto);
                     session.setAttribute("profileImg", fs.getFile(mdto.getImage()).getPath());
@@ -133,8 +141,12 @@ public class MemberController {
             model.addAttribute("msg", "이름을 입력해주세요.");
         } else if (number1.equals("")) {
             model.addAttribute("msg", "주민등록번호를 입력해주세요.");
+        } else if (number1.length() != 6) {
+            model.addAttribute("msg", "주민등록번호 앞자리를 6자리로 입력해주세요.");
         } else if (number2.equals("")) {
             model.addAttribute("msg", "주민등록번호를 입력해주세요.");
+        } else if (number2.length() != 7) {
+            model.addAttribute("msg", "주민등록번호 뒷자리를 7자리로 입력해주세요.");
         } else if (memberdto.getEmail().equals("")) {
             model.addAttribute("msg", "이메일을 입력해주세요.");
         } else if (phone1.equals("")) {
