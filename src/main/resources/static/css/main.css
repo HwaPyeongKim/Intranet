@@ -67,7 +67,7 @@ body {
 
 .main_inout_btnbox{display: flex;
     justify-content: space-around;}
-
+.main_inout_btnbox .adminBtn {background: #222222;}
 
 .calendar-section {
     width: 260px;

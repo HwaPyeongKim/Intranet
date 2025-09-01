@@ -43,9 +43,7 @@
         <a href="main" id="logo"><img src="/images/logo.png"/></a>
 
         <ul class="nav">
-            <c:if test="${loginUser.level > 1}">
-                <li><a href="adminLoginForm">관리자</a></li>
-            </c:if>
+
             <li><a href="board" class="boardMenu">게시판</a></li>
             <li><a href="schedule" class="scheduleMenu">일정관리</a></li>
             <li><a href="work" class="workMenu">업무관리</a></li>
@@ -59,6 +57,7 @@
                     <img src="/images/message.png" />
                     <i>0</i>
                 </a>
+                <button type="button" onclick="location.href='logout'" class="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
             </li>
         </ul>
 
