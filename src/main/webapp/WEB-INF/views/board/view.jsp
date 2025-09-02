@@ -1,6 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../header.jsp" %>
+<ul class="submenu">
 
+    <li <c:if test="${item.category != 'download'}"> class="on"</c:if>><a href="board">메인게시판</a></li>
+    <li <c:if test="${item.category == 'download'}"> class="on"</c:if>><a href="download">자료실</a></li>
+</ul>
 <section id="viewBoard">
 
     <h2>게시글 보기</h2>
