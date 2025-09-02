@@ -36,6 +36,7 @@ public class CalendarDto {
     private int widx;               // 업무와 관련된 일정인지
     private int tidx;               // 부서와 관련된 일정인지
     private int ridx;               // 휴가의 경우 결재서류 번호
+    private String deleteyn;        // 삭제여부
 
     public CalendarDto() {}
 
