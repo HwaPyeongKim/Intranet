@@ -77,7 +77,6 @@ public class MemberController {
             model.addAttribute("workList", workList);
 
             WorkDto wdto = ws.myCompleteWork(loginUser.getMidx(), today);
-
             model.addAttribute("work", wdto);
 
             url = "main";
