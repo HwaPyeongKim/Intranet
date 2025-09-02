@@ -113,11 +113,11 @@
         where (c.CALENDAR_END &lt; now() AND (c.ridx>=1 OR c.widx>=1 )) -- &lt; : 부등호 왼쪽이 작다 기호, 에러걸려서 바꿈
             OR (c.widx=w.widx AND w.status=6)
             OR (c.widx=w.widx AND w.deleteyn='Y')
-            OR (c.widx>=1 and c.widx != ANY (
-                select w.widx from(
-                    select w.widx from work w, calendar c where w.widx=c.widx
-                )as w)
-            );
+            OR (c.widx>=1 and c.widx not in (
+            select w.widx from(
+                select w.widx from work w, calendar c where w.widx=c.widx
+            )as w)
+        );
         -- 삭제하는 것들
         -- ridx나 widx가 있는 일정중 일정 종료일이 현재시간 이전인 것들
         -- 완료된 업무의 자동생성 일정
