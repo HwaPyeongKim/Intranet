@@ -154,7 +154,11 @@
                 if(!(category==1||category==2||category==3)){
                     alert('일정의 분류가 잘못 입력되었습니다.');
                     return;
-                }else if(category==3 && ${loginUser.level<2}){
+                }else if(category==2 && ${!(loginUser.team>0)}){
+                    alert('권한이 없습니다.');
+                    return;
+                }
+                else if(category==3 && ${loginUser.level<2}){
                     alert('권한이 없습니다.');
                     return;
                 }else if (title) {
