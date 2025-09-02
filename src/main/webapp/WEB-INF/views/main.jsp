@@ -132,9 +132,6 @@
                     </ul>
                 </div>
             </div>
-            <div class="main_cal_week">
-
-            </div>
         </div>
     </div>
 </main>
