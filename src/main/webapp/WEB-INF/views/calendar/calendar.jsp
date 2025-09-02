@@ -15,7 +15,7 @@
     $(document).ready(function () {
         let calendarTag = $('#calendar')[0];                    // full-calendar 생성하기
         let calendar = new FullCalendar.Calendar(calendarTag, {
-            height: '550px',                        // calendar 높이 설정
+            height: '800px',                        // calendar 높이 설정
             expandRows: true,                       // 화면에 맞게 높이 재설정
             slotMinTime: '00:00',                   // Day 캘린더에서 시작 시간
             slotMaxTime: '23:59',                   // Day 캘린더에서 종료 시간
@@ -280,7 +280,6 @@
 </script>
 
 <section>
-    <h2>일정 관리</h2>
 
     <div class="form-group">
         <div id='calendar-container'><%--  여기에 스타일 적용       --%>

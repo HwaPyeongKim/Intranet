@@ -46,7 +46,7 @@
 
             <li><a href="board" class="boardMenu">게시판</a></li>
             <li><a href="schedule" class="scheduleMenu">일정관리</a></li>
-            <li><a href="work" class="workMenu">업무관리</a></li>
+            <li><a href="work?first=y" class="workMenu">업무관리</a></li>
             <li><a href="requests" class="requestsMenu">전자결제</a></li>
             <li><a href="workList" class="mypageMenu">마이페이지</a></li>
 
