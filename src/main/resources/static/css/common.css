@@ -49,8 +49,8 @@ header .nav li.profile .logoutBtn {
     font-size: 21px;
     padding: 0;
 }
-header .nav li a {font-size: 18px;font-weight: bold;}
-
+header .nav li a {font-size: 18px;font-weight: bold;transition: all 0.3s;}
+header .nav li a:hover {color: #50bde2;}
 .submenu {}
 .submenu li {display: inline-block;
     background-color: #8cbad1;

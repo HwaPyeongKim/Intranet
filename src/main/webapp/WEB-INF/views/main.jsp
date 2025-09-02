@@ -97,13 +97,22 @@
                         <c:forEach items="${workList}" var="item">
                              <li>
                                  <a href="workView?widx=${item.widx}">
-                                     <c:if test="${item.cdate == today}">
+                                     <fmt:formatDate var="formattedDate" value="${item.ddate}" pattern="yyyy-MM-dd" />
+                                    <!-- 빨간 점: 오늘 마감 -->
+                                    <c:if test="${formattedDate == today}">
                                         <span class="dot red"></span>
                                     </c:if>
+                                    <!-- 파란 점: 일주일 이내 마감 (오늘 포함) -->
+                                    <c:if test="${formattedDate > today and formattedDate <= plus7}">
+                                        <span class="dot blue"></span>
+                                    </c:if>
+                                    <!-- 마감 지남 -->
+                                    <c:if test="${formattedDate < today}">
+                                        <span class="dot gray"></span>
+                                    </c:if>
                                     <span class="worktitle">${item.title}</span>
-
                                  </a>
-                                 <span class="enddate">~&nbsp;<fmt:formatDate value="${item.completedate}" pattern="MM-dd" /></span>
+                                 <span class="enddate">~&nbsp;<fmt:formatDate value="${item.ddate}" pattern="MM-dd" /></span>
                              </li>
                         </c:forEach>
                     </ul>
