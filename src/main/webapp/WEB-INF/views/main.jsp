@@ -81,6 +81,20 @@
                     메세지작성
                 </a>
             </div>
+            <ul class="workSummaryInfo">
+                <li>
+                    <p>새로운 업무</p>
+                    <span>${work.newWork}</span>
+                </li>
+                <li>
+                    <p>오늘 완료한 업무</p>
+                    <span>${work.completeWork}</span>
+                </li>
+                <li>
+                    <p>미완료</p>
+                    <span>${work.noCompleteWork}</span>
+                </li>
+            </ul>
             <div class="main_apwork_wrap">
                 <div class="approval-docs">
                     <h4 class="title">결재할 문서</h4>

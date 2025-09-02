@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../header.jsp" %>
-
+<ul class="submenu">
+    <li class="on"><a href="board">메인게시판</a></li>
+    <li><a href="download">자료실</a></li>
+</ul>
 <section id="writeBoard">
 
     <form method="post" action="updateBoard" name="updateBoard" enctype="multipart/form-data" class="form fileForm">
@@ -53,7 +56,7 @@
 
         <div class="field">
             <label>내용</label>
-            <textarea name="content" id="content"></textarea>
+            <textarea name="content" id="content" style="display: none;"></textarea>
             <div id="editor">${item.content}</div>
         </div>
 

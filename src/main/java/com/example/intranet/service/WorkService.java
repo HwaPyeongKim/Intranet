@@ -384,6 +384,13 @@ public class WorkService {
     }
 
     public WorkDto myCompleteWork(int midx, LocalDate today) {
-        return wdao.myCompleteWork(midx, today);
+        WorkDto wdto = wdao.myCompleteWork(midx, today);
+        if (wdto == null) {
+            wdto = new WorkDto();
+            wdto.setNewWork(0);
+            wdto.setCompleteWork(0);
+            wdto.setNoCompleteWork(0);
+        }
+        return wdto;
     }
 }

@@ -33,4 +33,7 @@ public class WorkDto {
 
     private int totalCount;
     private int completeCount;
+    private int newWork;
+    private int completeWork;
+    private int noCompleteWork;
 }
