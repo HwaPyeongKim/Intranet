@@ -58,8 +58,12 @@ public class CalendarDto {
 
         }else if(use.equals("vacation")){
             this.ridx = idx;            // 사용목적이 vacation 인 경우 ridx 값 추가되고
-            this.setCategory(2);        // 부서일정으로 생성됨
-            this.tidx = mdto.getTeam(); // 부서 추가
+            if(mdto.getTeam()>=1){
+                this.setCategory(2);        // 부서일정으로 생성됨
+                this.tidx = mdto.getTeam(); // 부서 추가
+            }else{
+                this.setCategory(1);        // 단 부서가 아직 지정되지 않은 직원은 개인일정으로 생성됨
+            }
         }else{
             return;                     // 사용목적을 잘못 입력한 경우 return
         }

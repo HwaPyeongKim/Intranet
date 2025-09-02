@@ -225,14 +225,37 @@ public class RequestsService {
 
         // 휴가(requestsdto.getCategory()==2,3,4)가 승인(status==4)되는 경우 일정 생성
         if( status==4 && ( category == 2 || category == 3 ||  category == 4 ) ) {
-            // startdate, enddate를 String 형변환 후 CalendarDto 객체생성
-            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            // CalendarDto 객체생성 전 startdate, enddate String 형변환 필요
+            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
             String startdate = transFormat.format(requestsdto.getStartdate());
             String enddate = transFormat.format(requestsdto.getEnddate());
 
+            // 현재 추가될 일정 제목 : (휴가) 사원명
+            MemberDto mdto = mdao.selectMember(requestsdto.getMidx());
+            String title = "(휴가) "+mdto.getName();
+
+            // 휴가 유형에 따라 시분초 데이터 넣음
+            switch (category) {
+                case 2:
+                    startdate += " 00:00:00";
+                    enddate += " 23:59:59";
+                    title += " 연차";
+                    break;
+                case 3:
+                    startdate += " 00:00:00";
+                    enddate += " 12:00:00";
+                    title += " 오전반차";
+                    break;
+                case 4:
+                    startdate += " 12:00:00";
+                    enddate += " 23:59:59";
+                    title += " 오후반차";
+                    break;
+            }
+
             // new CalendarDto( 일정제목, 일정시작일, 일정종료일, 멤버dto, 사용용도, 용도에 맞는 idx );
-            // 현재 추가될 일정 제목 : (휴가) 결제서류명 , 다른 제목으로 생성되는것도 괜찮을것 같아요
-            CalendarDto cdto = new CalendarDto("(휴가) "+requestsdto.getTitle(), startdate, enddate, mdao.selectMember(requestsdto.getMidx()), "vacation", ridx);
+            CalendarDto cdto = new CalendarDto(title, startdate, enddate, mdto, "vacation", ridx);
 
             try {
                 // 이후 cdao.calendarSave(cdto) 로 일정생성
