@@ -312,14 +312,12 @@ public class WorkService {
         String writedate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(workdto.getWritedate());
         String deadline = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(workdto.getDeadline());
 
-        // 요청자와 수신자 양쪽 모두 CalendarDto 객체 생성하고 DB에 추가
+        // 수신자 midx로 CalendarDto 객체 생성하고 DB에 추가
         // new CalendarDto( 일정제목, 일정시작일, 일정종료일, 멤버dto, 사용용도, 용도에 맞는 idx );
-        CalendarDto calendardto1 =  new CalendarDto(title, writedate, deadline, mdao.selectMember(workdto.getMidx()), "work", workdto.getWidx());
         CalendarDto calendardto2 =  new CalendarDto(title, writedate, deadline, mdao.selectMember(workdto.getWorker()), "work", workdto.getWidx());
 
         try {
-            // 요청자와 수신자 양쪽 모두에 일정이 생성됩니다
-            cdao.calendarSave(calendardto1);
+            // 수신자 한정으로 일정이 생성됩니다
             cdao.calendarSave(calendardto2);
         } catch (Exception e) {
             throw new RuntimeException(e);

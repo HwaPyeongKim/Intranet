@@ -144,8 +144,9 @@
                 let title = prompt('일정과 분류를 입력하세요.\n\n일정 입력');
                 if(!title) return; // 일정 제목을 입력하지 않으면 취소
 
-                let categoryMsg = '일정과 분류를 입력하세요.\n\n분류 입력, 1:개인, 2:부서'; // 일정은 1, 2, 3중에 입력
-                if(${loginUser.level>=2}) categoryMsg += ', 3:회사'; // 관리자 권한이 있으면 회사일정을 생성할 수 있음
+                let categoryMsg = '일정과 분류를 입력하세요.\n\n분류 입력, 1:개인'; // 일정은 1, 2, 3중에 입력
+                if(${loginUser.team>0}) categoryMsg += ', 2:부서';  // 단 부서가 없는 사람은 부서일정 생성 불가능
+                if(${loginUser.level>=2}) categoryMsg += ', 3:회사'; // 회사일정은 관리자 권한이 있어야 생성할 수 있음
                 let category = prompt(categoryMsg);
 
                 // 부서일정, 회사일정은 개인이 수정할수 없음 (CalendarContoller의 calendarSave 참고)
