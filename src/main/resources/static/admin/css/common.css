@@ -6,7 +6,8 @@ input[type=text], input[type=password], input[type=email] {padding: 5px; border:
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {border-bottom: 2px solid #50bde2;}
 textarea:focus {outline: 2px solid #50bde2;}
 
-#wrap {width: 100%; max-width:1450px; margin: 0 auto; padding-top: 80px;}
+#wrap {float: left; width: 100%; max-width: 1600px; margin-left: 30px; padding-top: 20px;}
+#emptyBox {float: left; width: 200px; height: 100vh;}
 .container {width: 90%; margin: 0 auto;}
 h2 {margin: 10px 0 30px; font-size: 2em;}
 h3 {margin: 10px 0; font-size: 1.5em;}

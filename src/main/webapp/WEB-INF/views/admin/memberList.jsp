@@ -32,7 +32,6 @@
             <thead>
                 <tr>
                     <th><input type="checkbox" /></th>
-                    <th>번호</th>
                     <th>아이디</th>
                     <th>
                         <span data-sort="position">직급<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'position', 'joindate', 'desc')}"></i></span>
@@ -78,7 +77,6 @@
                         <c:forEach items="${list}" var="item">
                             <tr>
                                 <td><input type="checkbox" name="midx" value="${item.midx}" /></td>
-                                <td>${item.loopnum}</td>
                                 <td>${item.userid}</td>
                                 <td>${item.position}</td>
                                 <td>${item.name}</td>

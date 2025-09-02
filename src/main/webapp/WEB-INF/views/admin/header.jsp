@@ -59,4 +59,6 @@
 </header>
 </c:if>
 
+<div id="emptyBox"></div>
+
 <div id="wrap"> <!--wrap 시작-->
