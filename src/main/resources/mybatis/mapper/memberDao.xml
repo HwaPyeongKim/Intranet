@@ -135,8 +135,8 @@
 
     <select id="selectMyWorkList" resultType="com.example.intranet.dto.WorkDto">
         select *
-        , date_format(completedate, '%Y-%m-%d') as cdate
-        from work where worker = #{midx} and status = 1 order by completedate limit 5
+        , date_format(deadline, '%Y-%m-%d') as ddate
+        from work where worker = #{midx} and status = 1 order by deadline limit 5
     </select>
 
     <select id="selectMainNotice" resultType="com.example.intranet.dto.BoardDto">

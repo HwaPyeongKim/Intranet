@@ -68,6 +68,7 @@ body {
 .main_inout_btnbox{display: flex;
     justify-content: space-around;}
 .main_inout_btnbox .adminBtn {background: #222222;}
+.main_inout_btnbox .adminBtn:hover {background: #494949;}
 
 .calendar-section {
     width: 260px;
@@ -123,6 +124,7 @@ body {
     height: 58px;
     width: 740px;
 }
+.announcement-text:hover a {text-decoration: underline;}
 .announcement-text a {
     font-size: 16px;
     font-weight: bold;
@@ -133,6 +135,7 @@ body {
     line-height: 58px;
     display: block;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
 .main_widget_box {
@@ -230,3 +233,4 @@ div.main_cal_week {margin-bottom: 0;}
 .dot.green { border: 3px solid #66bb6a; }
 .dot.orange { border: 3px solid #ffa726; }
 .dot.red { border: 3px solid #ef5350;}
+.dot.gray { border: 3px solid #2b2b2b;}

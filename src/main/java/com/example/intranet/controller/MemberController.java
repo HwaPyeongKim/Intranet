@@ -57,6 +57,9 @@ public class MemberController {
             LocalDate today = LocalDate.now();
             model.addAttribute("today", String.valueOf(today));
 
+            LocalDate plus7 = today.plusDays(7);
+            model.addAttribute("plus7", plus7.toString());
+
             BoardDto noticeBoard = ms.selectMainNotice();
             if (noticeBoard != null) {
                 int mainNotice = noticeBoard.getBidx();
@@ -76,6 +79,7 @@ public class MemberController {
             WorkDto wdto = ws.myCompleteWork(loginUser.getMidx(), today);
 
             model.addAttribute("work", wdto);
+
             url = "main";
         }
         return url;
