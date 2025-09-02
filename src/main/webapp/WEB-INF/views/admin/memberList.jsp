@@ -42,7 +42,7 @@
                     <th>주민등록번호</th>
                     <th>이메일</th>
                     <th>휴대전화번호</th>
-                    <th>주소</th>
+                    <th class="address">주소</th>
                     <th>
                         <span data-sort="joindate">입사일<i class="fa-solid ${sort:getSortIcon(param.sort, param.dir, 'joindate', 'joindate', 'desc')}"></i></span>
                     </th>
