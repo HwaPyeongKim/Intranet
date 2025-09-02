@@ -32,7 +32,7 @@
             editable,
             eventColor
         FROM CALENDAR
-        WHERE (category=1 AND midx = #{midx}) OR (category=2 AND tidx = #{team}) OR category=3  -- 유저의 개인일정, 부서일정, 회사전체일정을 가져옵니다
+        WHERE deleteyn = 'N' AND ((category=1 AND midx = #{midx}) OR (category=2 AND tidx = #{team}) OR category=3)  -- 유저의 개인일정, 부서일정, 회사전체일정을 가져옵니다
         order by category desc;
     </select>
 
@@ -72,11 +72,11 @@
     </insert>
 
     <!-- 일정 삭제하기 -->
-    <delete id="calendarDelete">
-        DELETE
-        FROM CALENDAR
+    <update id="calendarDelete">
+        update CALENDAR
+        SET deleteyn = 'Y'
         WHERE CALENDAR_NO = #{no}
-    </delete>
+    </update>
 
 
     <!-- 일정 수정하기 -->
@@ -107,9 +107,9 @@
     </select>
 
     <!--  오래된 자동생성일정, 완료된 자동생성일정 자동삭제하기, 일정 리스트를 불러올때마다 실행  -->
-    <delete id="deleteOldEvent">
-        delete c
-        from calendar c, work w
+    <update id="deleteOldEvent">
+        update calendar c, work w
+        SET c.deleteyn = 'Y'
         where (c.CALENDAR_END &lt; now() AND (c.ridx>=1 OR c.widx>=1 )) -- &lt; : 부등호 왼쪽이 작다 기호, 에러걸려서 바꿈
             OR (c.widx=w.widx AND w.status=6)
             OR (c.widx=w.widx AND w.deleteyn='Y')
@@ -123,5 +123,5 @@
         -- 완료된 업무의 자동생성 일정
         -- 삭제된 업무 (휴가 취소의 경우는 고려안됨, 이경우 관리자가 삭제할수는 있음)
         -- calendar DB의 widx 값이 work DB에는 없는경우 (주로 sql 파일 임포트하면서 기존 업무 DB를 날렸을 경우 상황발생)
-    </delete>
+    </update>
 </mapper>
