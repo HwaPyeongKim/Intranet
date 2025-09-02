@@ -113,7 +113,7 @@
         where (c.CALENDAR_END &lt; now() AND (c.ridx>=1 OR c.widx>=1 )) -- &lt; : 부등호 왼쪽이 작다 기호, 에러걸려서 바꿈
             OR (c.widx=w.widx AND w.status=6)
             OR (c.widx=w.widx AND w.deleteyn='Y')
-            OR (c.widx>=1 and c.widx != ANY (
+            OR (c.widx>=1 and c.widx not in (
                 select w.widx from(
                     select w.widx from work w, calendar c where w.widx=c.widx
                 )as w)
