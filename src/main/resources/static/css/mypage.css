@@ -16,10 +16,3 @@ section#mypage #profileForm {width: 100%; max-width: 600px; padding: 40px; borde
 .profileInfo .profileBox {flex: 2;}
 .profileInfo .profileBox .field{gap: 29px;}
 .profileInfo .profileBox .field label{font-weight: bold;}
-
-.workSummaryInfo {display: flex; justify-content: space-around; margin-bottom: 30px; padding: 40px; border: 2px solid #ccc; border-radius: 20px;}
-.workSummaryInfo li {width: 33%; border-right: 2px solid #ccc; text-align: center;}
-.workSummaryInfo li:last-child {border-right: 0;}
-.workSummaryInfo li p {margin-bottom: 20px; font-weight: bold;}
-.workSummaryInfo li span {font-size: 1.3em;}
-.workSummaryInfo li span small {font-size: 1rem;}
