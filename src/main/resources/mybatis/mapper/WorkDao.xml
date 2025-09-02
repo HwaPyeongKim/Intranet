@@ -139,13 +139,16 @@
             )
     </select>
 
-<!--    <select id="myCompleteWork" resultType="com.example.intranet.dto.WorkDto">-->
-<!--        select-->
-<!--        (select count(*) from work where worker = #{midx} and writedate >= #{today} and deleteyn = 'N') as newWork-->
-<!--        , (select count(*) from work where worker = #{midx} and completedate >= #{today} and deleteyn = 'N') as completeWork-->
-<!--        , (select count(*) from work where worker = #{midx} and status != 6 and deleteyn = 'N') as noCompleteWork-->
-<!--        from work where worker = #{midx}-->
-<!--    </select>-->
+    <select id="myCompleteWork" resultType="com.example.intranet.dto.WorkDto">
+        SELECT
+            worker
+             , (SELECT COUNT(*) FROM work WHERE worker = #{midx} and writedate >= #{today} AND deleteyn = 'N') AS newWork
+             , (SELECT COUNT(*) FROM work WHERE worker = #{midx} AND completedate >= #{today} AND deleteyn = 'N') AS completeWork
+             , (SELECT COUNT(*) FROM work WHERE worker = #{midx} AND STATUS != 6 AND deleteyn = 'N') AS noCompleteWork
+        FROM work
+        WHERE worker = #{midx}
+        GROUP BY worker
+    </select>
 
     <update id="updateCompletedate" parameterType="int">
         UPDATE work SET completedate = NOW() WHERE widx = #{widx}
