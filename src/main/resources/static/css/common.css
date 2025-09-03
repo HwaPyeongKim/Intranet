@@ -97,8 +97,8 @@ body section:first-of-type {
 .field div textarea {width: 100%; height: 400px; resize: none; padding: 10px;}
 .field div.prevFile {}
 .field div.prevFile a {display: block; margin-bottom: 10px;}
-.field div #imgPrev {display: none; margin-bottom: 10px;}
-.field div #imgPrev img {max-width: 500px;}
+.field div #imgPrev {display: none; margin-bottom: 10px; width: 500px;}
+.field div #imgPrev img {width: 100%}
 
 .btns {display: flex; margin-top: 30px;}
 .btns input, .btns button, .btns a {flex: 1; margin-right: 10px; padding: 25px;}
