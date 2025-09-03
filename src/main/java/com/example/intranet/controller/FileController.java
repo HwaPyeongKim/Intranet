@@ -2,6 +2,7 @@ package com.example.intranet.controller;
 
 import com.example.intranet.dto.FileDto;
 import com.example.intranet.service.FileService;
+import com.example.intranet.service.S3UploadService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class FileController {
     FileService fs;
 
     @Autowired
+    S3UploadService sus;
+
+    @Autowired
     ServletContext context;
 
 
@@ -34,35 +38,42 @@ public class FileController {
     public HashMap<String, Object> imgup(@RequestParam("imgPrev") MultipartFile file, HttpServletRequest request, Model model){
         HashMap<String, Object> result = new HashMap<String, Object>();
 
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        String path = context.getRealPath("/images/"+date);
-        File folder = new File(path);
-        if (!folder.exists()){
-            folder.mkdirs();
-        }
-
-        String filename = file.getOriginalFilename();
-        long size = file.getSize();
-        FileDto fdto = new FileDto();
-        fdto.setOriginalname(filename);
-        // fdto.setPath(path);
-        fdto.setPath("/images/"+date+"/"+filename);
-        fdto.setSize((int) size);
-        fs.insert(fdto);
-        int fidx = fdto.getFidx();
-
-        String uploadPath = path + "/" + filename;
+        HashMap<String, Object> s3file = null;
         try {
-            file.transferTo(new File(uploadPath));
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
+            s3file = sus.saveFile(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-        result.put("fidx", fidx);
-        result.put("filename", filename);
-        result.put("url", "/images/"+date+"/"+filename);
+//        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+//        String path = context.getRealPath("/images/"+date);
+//        File folder = new File(path);
+//        if (!folder.exists()){
+//            folder.mkdirs();
+//        }
+//
+//        String filename = file.getOriginalFilename();
+//        long size = file.getSize();
+//        FileDto fdto = new FileDto();
+//        fdto.setOriginalname(filename);
+//        // fdto.setPath(path);
+//        fdto.setPath("/images/"+date+"/"+filename);
+//        fdto.setSize((int) size);
+//        fs.insert(fdto);
+//        int fidx = fdto.getFidx();
+//
+//        String uploadPath = path + "/" + filename;
+//        try {
+//            file.transferTo(new File(uploadPath));
+//        } catch (IllegalStateException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        result.put("fidx", s3file.get("fidx"));
+        result.put("filename", s3file.get("filename"));
+        result.put("url", s3file.get("url"));
 
         return result;
     }
@@ -72,35 +83,35 @@ public class FileController {
     public HashMap<String, Object> fileup(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model){
         HashMap<String, Object> result = new HashMap<String, Object>();
 
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        String path = context.getRealPath("/files/"+date);
-        File folder = new File(path);
-        if (!folder.exists()){
-            folder.mkdirs();
-        }
-
-        String filename = file.getOriginalFilename();
-        long size = file.getSize();
-        FileDto fdto = new FileDto();
-        fdto.setOriginalname(filename);
-        // fdto.setPath(path);
-        fdto.setPath("/files/"+date+"/"+filename);
-        fdto.setSize((int) size);
-        fs.insert(fdto);
-        int fidx = fdto.getFidx();
-
-        String uploadPath = path + "/" + filename;
+        HashMap<String, Object> s3file = null;
         try {
-            file.transferTo(new File(uploadPath));
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
+            s3file = sus.saveFile(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-        result.put("fidx", fidx);
-        result.put("filename", filename);
-        result.put("url", "/files/"+date+"/"+filename);
+//        String filename = file.getOriginalFilename();
+//        long size = file.getSize();
+//        FileDto fdto = new FileDto();
+//        fdto.setOriginalname(filename);
+//        // fdto.setPath(path);
+//        fdto.setPath("/files/"+date+"/"+filename);
+//        fdto.setSize((int) size);
+//        fs.insert(fdto);
+//        int fidx = fdto.getFidx();
+//
+//        String uploadPath = path + "/" + filename;
+//        try {
+//            file.transferTo(new File(uploadPath));
+//        } catch (IllegalStateException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        result.put("fidx", s3file.get("fidx"));
+        result.put("filename", s3file.get("filename"));
+        result.put("url", s3file.get("url"));
 
         return result;
     }
