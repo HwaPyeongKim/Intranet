@@ -2,7 +2,6 @@
 
 <!-- Toast UI Editor core script -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
 
 <script>
     // 글 작성용 Editor 초기화
